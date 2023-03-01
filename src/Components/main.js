@@ -8,15 +8,15 @@ function getExtension(filename) {
   return filename.split(".").pop();
 }
 
-function Test() {
+function Main() {
   // State to store parsed data
   const [parsedData, setParsedData] = useState([]);
-
   //State to store table Column name
   const [tableRows, setTableRows] = useState([]);
-
   //State to store the values
-  const [values, setValues] = useState([]);
+  const [tableValues, setTableValues] = useState([]);
+
+
 
   const changeHandler = (event) => {
     const rowsArray = [];
@@ -52,7 +52,7 @@ function Test() {
         setTableRows(rowsArray[0]);
 
         // Filtered Values
-        setValues(valuesArray);
+        setTableValues(valuesArray);
       };
 
       const file = event.target.files[0];
@@ -81,7 +81,7 @@ function Test() {
           // Filtered Column Names
           setTableRows(rowsArray[0]);
           // Filtered Values
-          setValues(valuesArray);
+          setTableValues(valuesArray);
         },
       });
     }
@@ -141,7 +141,7 @@ function Test() {
             </tr>
           </thead>
           <tbody>
-            {values.map((value, index) => {
+            {tableValues.map((value, index) => {
               return (
                 <tr className="odd:bg-gray-100 hover:!bg-red-200" key={index}>
                   {value.map((val, i) => {
@@ -165,4 +165,4 @@ function Test() {
   );
 }
 
-export default Test;
+export default Main;
