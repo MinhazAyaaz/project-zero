@@ -11,12 +11,14 @@ import TableTwoTwo from "./TableTwoTwo";
 import TableTwoThreeOne from "./TableTwoThreeOne";
 import TableTwoThreeTwo from "./TableTwoThreeTwo";
 import TableTwoFour from "./TableTwoFour";
+import { OSHUsageData } from '../data/OSHUsage';
 
 function getExtension(filename) {
   return filename.split(".").pop();
 }
 
 function Main() {
+
   // State to store parsed data
   const [parsedData, setParsedData] = useState([]);
   //State to store table Column name
@@ -52,6 +54,13 @@ function Main() {
           "Count of item not sorted": Math.floor(
             item.TotalReceived - item.TotalReceived * item["TotalSorted%"]
           ),
+          "Bay" : OSHUsageData.OSHUsage.map((temp) => {
+
+            if(item["Pickup CF"]==temp["Run #"]){
+              return temp["For OSH usage"]
+            }
+      
+          }),
         }));
 
         newData.map((d) => {
