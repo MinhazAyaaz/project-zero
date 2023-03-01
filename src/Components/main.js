@@ -3,6 +3,14 @@ import { useState } from "react";
 import Papa from "papaparse";
 import * as XLSX from "xlsx";
 import Button from "@mui/material/Button";
+import TableOne from "./TableOne";
+import TableTwoA from "./TableTwoA";
+import TableTwoB from "./TableTwoB";
+import TableTwoOne from "./TableTwoOne";
+import TableTwoTwo from "./TableTwoTwo";
+import TableTwoThreeOne from "./TableTwoThreeOne";
+import TableTwoThreeTwo from "./TableTwoThreeTwo";
+import TableTwoFour from "./TableTwoFour";
 
 function getExtension(filename) {
   return filename.split(".").pop();
@@ -16,7 +24,14 @@ function Main() {
   //State to store the values
   const [tableValues, setTableValues] = useState([]);
 
-
+  const [One, setOne] = useState(false);
+  const [TwoA, setTwoA] = useState(false);
+  const [TwoB, setTwoB] = useState(false);
+  const [TwoOne, setTwoOne] = useState(false);
+  const [TwoTwo, setTwoTwo] = useState(false);
+  const [TwoThreeOne, setTwoThreeOne] = useState(false);
+  const [TwoThreeTwo, setTwoThreeTwo] = useState(false);
+  const [TwoFour, setTwoFour] = useState(false);
 
   const changeHandler = (event) => {
     const rowsArray = [];
@@ -42,7 +57,6 @@ function Main() {
         newData.map((d) => {
           rowsArray.push(Object.keys(d));
           valuesArray.push(Object.values(d));
-          console.log(d);
         });
 
         // Parsed Data Response in array format
@@ -87,6 +101,8 @@ function Main() {
     }
   };
 
+  console.log(parsedData);
+
   return (
     <>
       <div className="flex justify-center mt-[3%]">
@@ -108,58 +124,127 @@ function Main() {
       <div className="flex justify-between mt-[3%]">
         <Button
           color="error"
-          variant="outlined"
+          variant={One ? "contained" : "outlined"}
           onClick={() => {
-            alert("clicked");
+            setOne(true);setTwoA(false);setTwoB(false);setTwoOne(false);setTwoTwo(false);setTwoThreeOne(false);setTwoThreeTwo(false);setTwoFour(false)
           }}
         >
           1. Executive Summary
         </Button>
-        <Button variant="outlined" color="error">2.A Score Table(CF)</Button>
-        <Button variant="outlined" color="error">2.B Score Table(Blu,OSH)</Button>
-        <Button variant="outlined" color="error">2.1 Data Control Tower</Button>
-        <Button variant="outlined" color="error">2.2 Missed Pickup Data</Button>
-        <Button variant="outlined" color="error">2.3.1 Check in-check Analysis</Button>
-        <Button variant="outlined" color="error">2.3.2 Check in-check Data</Button>
-        <Button variant="outlined" color="error">2.4 Cage Scan Compliance</Button>
+        <Button
+          variant={TwoA ? "contained" : "outlined"}
+          color="error"
+          onClick={() => {
+            setOne(false);setTwoA(true);setTwoB(false);setTwoOne(false);setTwoTwo(false);setTwoThreeOne(false);setTwoThreeTwo(false);setTwoFour(false)
+          }}
+        >
+          2.A Score Table(CF)
+        </Button>
+        <Button
+          variant={TwoB ? "contained" : "outlined"}
+          color="error"
+          onClick={() => {
+            setOne(false);setTwoA(false);setTwoB(true);setTwoOne(false);setTwoTwo(false);setTwoThreeOne(false);setTwoThreeTwo(false);setTwoFour(false)
+          }}
+        >
+          2.B Score Table(Blu,OSH)
+        </Button>
+        <Button
+          variant={TwoOne ? "contained" : "outlined"}
+          color="error"
+          onClick={() => {
+            setOne(false);setTwoA(false);setTwoB(false);setTwoOne(true);setTwoTwo(false);setTwoThreeOne(false);setTwoThreeTwo(false);setTwoFour(false)
+          }}
+        >
+          2.1 Data Control Tower
+        </Button>
+        <Button
+          variant={TwoTwo ? "contained" : "outlined"}
+          color="error"
+          onClick={() => {
+            setOne(false);setTwoA(false);setTwoB(false);setTwoOne(false);setTwoTwo(true);setTwoThreeOne(false);setTwoThreeTwo(false);setTwoFour(false)
+          }}
+        >
+          2.2 Missed Pickup Data
+        </Button>
+        <Button
+          variant={TwoThreeOne ? "contained" : "outlined"}
+          color="error"
+          onClick={() => {
+            setOne(false);setTwoA(false);setTwoB(false);setTwoOne(false);setTwoTwo(false);setTwoThreeOne(true);setTwoThreeTwo(false);setTwoFour(false)
+          }}
+        >
+          2.3.1 Check in-check Analysis
+        </Button>
+        <Button
+          variant={TwoThreeTwo ? "contained" : "outlined"}
+          color="error"
+          onClick={() => {
+            setOne(false);setTwoA(false);setTwoB(false);setTwoOne(false);setTwoTwo(false);setTwoThreeOne(false);setTwoThreeTwo(true);setTwoFour(false)
+          }}
+        >
+          2.3.2 Check in-check Data
+        </Button>
+        <Button
+          variant={TwoFour ? "contained" : "outlined"}
+          color="error"
+          onClick={() => {
+            setOne(false);setTwoA(false);setTwoB(false);setTwoOne(false);setTwoTwo(false);setTwoThreeOne(false);setTwoThreeTwo(false);setTwoFour(true)
+          }}
+        >
+          2.4 Cage Scan Compliance
+        </Button>
       </div>
 
       <div className="mt-[3%] flex justify-center">
-        <table class="table-auto border-x border-b w-full text-left text-gray-800">
-          <thead className="">
-            <tr>
-              {tableRows.map((rows, index) => {
-                return (
-                  <th
-                    className="font-bold p-2 border-b border-l border-red-700 text-left bg-red-700 text-white"
-                    key={index}
-                  >
-                    {rows}
-                  </th>
-                );
-              })}
-            </tr>
-          </thead>
-          <tbody>
-            {tableValues.map((value, index) => {
-              return (
-                <tr className="odd:bg-gray-100 hover:!bg-red-200" key={index}>
-                  {value.map((val, i) => {
-                    return (
-                      <td
-                        contenteditable="true"
-                        className="p-2 border-b border-l text-left"
-                        key={i}
-                      >
-                        {val}
-                      </td>
-                    );
-                  })}
-                </tr>
-              );
-            })}
-          </tbody>
-        </table>
+        {One && 
+      <TableOne
+          ParsedData={parsedData}
+          TableRows={tableRows}
+          TableValues={tableValues}
+        />}
+        {TwoA && 
+        <TableTwoA
+          ParsedData={parsedData}
+          TableRows={tableRows}
+          TableValues={tableValues}
+        />}
+        {TwoB && 
+        <TableTwoB
+          ParsedData={parsedData}
+          TableRows={tableRows}
+          TableValues={tableValues}
+        />}
+        {TwoOne && 
+        <TableTwoOne
+          ParsedData={parsedData}
+          TableRows={tableRows}
+          TableValues={tableValues}
+        />}
+        {TwoTwo && 
+        <TableTwoTwo
+          ParsedData={parsedData}
+          TableRows={tableRows}
+          TableValues={tableValues}
+        />}
+        {TwoThreeOne && 
+        <TableTwoThreeOne
+          ParsedData={parsedData}
+          TableRows={tableRows}
+          TableValues={tableValues}
+        />}
+        {TwoThreeTwo && 
+        <TableTwoThreeTwo
+          ParsedData={parsedData}
+          TableRows={tableRows}
+          TableValues={tableValues}
+        />}
+        {TwoFour && 
+        <TableTwoFour
+          ParsedData={parsedData}
+          TableRows={tableRows}
+          TableValues={tableValues}
+        />}
       </div>
     </>
   );
