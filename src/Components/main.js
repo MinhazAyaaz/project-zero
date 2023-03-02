@@ -45,11 +45,31 @@ function Main() {
     ) {
       const processData = (data) => {
         const workbook = XLSX.read(data, { type: "binary" });
-        const sheetName = workbook.SheetNames[0];
+        //const sheetName = workbook.SheetNames[0];
+        //const sheetName = workbook.SheetNames[1];
+        //const sheetName = workbook.SheetNames[2];
+        //const sheetName = workbook.SheetNames[3];
+        //const sheetName = workbook.SheetNames[4];
+        //const sheetName = workbook.SheetNames[5];
+        //const sheetName = workbook.SheetNames[6];
+        //const sheetName = workbook.SheetNames[7];
+        const sheetName = workbook.SheetNames[8];
         const sheet = workbook.Sheets[sheetName];
+        //using range to only pick A to C coulmns, must change for different sheets
         const json = XLSX.utils.sheet_to_json(sheet);
 
-        const newData = json.map((item) => ({
+        const extractedData = json.map(row => {
+          return {
+            "Pickup RF": row['Pickup RF'],
+            'Pickup CF': row['Pickup CF'],
+            'TotalReceived': row['TotalReceived'],
+            'TotalSorted%': row['TotalSorted%'],
+            'TotalDeparted%': row['TotalDeparted%']
+                };
+            });
+
+
+        const newData = extractedData.map((item) => ({
           ...item,
           "Count of item not sorted": Math.floor(
             item.TotalReceived - item.TotalReceived * item["TotalSorted%"]
@@ -109,8 +129,6 @@ function Main() {
       });
     }
   };
-
-  console.log(parsedData);
 
   return (
     <>
