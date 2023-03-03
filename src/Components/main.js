@@ -14,11 +14,32 @@ import { OSHUsageData } from "../data/OSHUsage";
 
 function Main() {
   // State to store parsed data
-  const [parsedData, setParsedData] = useState([]);
+  const [parsedData1, setParsedData1] = useState([]);
+  const [parsedData2, setParsedData2] = useState([]);
+  const [parsedData3, setParsedData3] = useState([]);
+  const [parsedData4, setParsedData4] = useState([]);
+  const [parsedData5, setParsedData5] = useState([]);
+  const [parsedData6, setParsedData6] = useState([]);
+  const [parsedData7, setParsedData7] = useState([]);
+  const [parsedData8, setParsedData8] = useState([]);
   //State to store table Column name
-  const [tableRows, setTableRows] = useState([]);
+  const [tableRows1, setTableRows1] = useState([]);
+  const [tableRows2, setTableRows2] = useState([]);
+  const [tableRows3, setTableRows3] = useState([]);
+  const [tableRows4, setTableRows4] = useState([]);
+  const [tableRows5, setTableRows5] = useState([]);
+  const [tableRows6, setTableRows6] = useState([]);
+  const [tableRows7, setTableRows7] = useState([]);
+  const [tableRows8, setTableRows8] = useState([]);
   //State to store the values
-  const [tableValues, setTableValues] = useState([]);
+  const [tableValues1, setTableValues1] = useState([]);
+  const [tableValues2, setTableValues2] = useState([]);
+  const [tableValues3, setTableValues3] = useState([]);
+  const [tableValues4, setTableValues4] = useState([]);
+  const [tableValues5, setTableValues5] = useState([]);
+  const [tableValues6, setTableValues6] = useState([]);
+  const [tableValues7, setTableValues7] = useState([]);
+  const [tableValues8, setTableValues8] = useState([]);
 
   const [One, setOne] = useState(false);
   const [TwoA, setTwoA] = useState(false);
@@ -30,14 +51,131 @@ function Main() {
   const [TwoFour, setTwoFour] = useState(false);
 
   const changeHandler = (event) => {
-    const rowsArray = [];
-    const valuesArray = [];
 
-    const processData = (data) => {
+    function scanDateFormatter(scanDate){
+
+      const [date, time] = scanDate.split(' ');
+      console.log("date", date);
+      console.log("time", time);
+      const [month,day, year] = date.split('/');
+      console.log("day", day);
+      console.log("month", month);
+      console.log("year", year);
+      const [hours, minutes] = time.split(':');
+
+      return day+"-0"+month+"-"+year+" "+hours+":"+minutes
+
+    }
+
+    function dateChecker(rawDate){
+    
+      const [date, time] = rawDate.split(' ');
+      const [day,month, year] = date.split('-');
+      const [hours, minutes] = time.split(':');
+      const dateTime = new Date(parseInt(year,10)+2000,month-1,day, hours, minutes);
+
+      const now = new Date(2023,1,24,11,59)
+    
+      // const now = new Date();
+      // now.setHours(11);
+      // now.setMinutes(59);
+      // now.setSeconds(0);
+    
+      if (dateTime.getTime() < now.getTime()) {
+        return "AM";
+      } else {
+        return "PM";
+      }
+    }
+
+    const processData6 = (data) => {
+      const rowsArray = [];
+      const valuesArray = [];
+
+      const workbook = XLSX.read(data, { type: "binary" });
+      const sheetName = workbook.SheetNames[6];
+      const sheet = workbook.Sheets[sheetName];
+      const json = XLSX.utils.sheet_to_json(sheet);
+
+      const extractedData = json.map((row) => {
+        return {
+          Bay: row["Bay"],
+          CF: row["CF"],
+          "Courier Name": row["Courier Name"],
+          "CF run converted": row["CF run converted"],
+        };
+      });
+
+      extractedData.map((d) => {
+        rowsArray.push(Object.keys(d));
+        valuesArray.push(Object.values(d));
+      });
+
+      // Parsed Data Response in array format
+      setParsedData6(extractedData);
+
+      // Filtered Column Names
+      setTableRows6(rowsArray[0]);
+
+      // Filtered Values
+      setTableValues6(valuesArray);
+    };
+
+    const processData7 = (data) => {
+      const rowsArray = [];
+      const valuesArray = [];
+
+      const workbook = XLSX.read(data, { type: "binary", cellDates: true });
+      const sheetName = workbook.SheetNames[7];
+      const sheet = workbook.Sheets[sheetName];
+      const json = XLSX.utils.sheet_to_json(sheet,{raw: false, dateNF: 'dd-mm-yy hh:mm' });
+
+      const extractedData = json.map((row) => {
+        return {
+          CourierNo: row["CourierNo"],
+          ScanDate: scanDateFormatter(row["ScanDate"]),
+          Description: row["Description"],
+          Latitude: row["Latitude"],
+          Longitude: row["Longitude"],
+        };
+      });
+
+      const newData = extractedData.map((item) => ({
+        ...item,
+        "CF AM In": (dateChecker(item.ScanDate)=="AM" && item.Description=="Check In") ? item.CourierNo : "",
+        "Check in AM": (dateChecker(item.ScanDate)=="AM" && item.Description=="Check In") ? item.ScanDate : "",
+        "CF AM OUT": (dateChecker(item.ScanDate)=="AM" && item.Description=="Check Out") ? item.CourierNo : "",
+        "Check out AM": (dateChecker(item.ScanDate)=="AM" && item.Description=="Check Out") ? item.ScanDate : "",
+        "CF PM IN" : (dateChecker(item.ScanDate)=="PM" && item.Description=="Check In") ? item.CourierNo : "",
+        "Check in PM": (dateChecker(item.ScanDate)=="PM" && item.Description=="Check In") ? item.ScanDate : "",
+        "CF PM OUT": (dateChecker(item.ScanDate)=="PM" && item.Description=="Check Out") ? item.CourierNo : "",
+        "Check out PM": (dateChecker(item.ScanDate)=="PM" && item.Description=="Check Out") ? item.ScanDate : "",
+        
+      }));
+
+      newData.map((d) => {
+        rowsArray.push(Object.keys(d));
+        valuesArray.push(Object.values(d));
+      });
+
+      // Parsed Data Response in array format
+      setParsedData7(newData);
+
+      // Filtered Column Names
+      setTableRows7(rowsArray[0]);
+
+      // Filtered Values
+      setTableValues7(valuesArray);
+    };
+
+    const processData8 = (data) => {
+      const rowsArray = [];
+      const valuesArray = [];
+
       const workbook = XLSX.read(data, { type: "binary" });
       const sheetName = workbook.SheetNames[8];
       const sheet = workbook.Sheets[sheetName];
-      const json = XLSX.utils.sheet_to_json(sheet);
+      const json = XLSX.utils.sheet_to_json(sheet,{raw: false});
 
       const extractedData = json.map((row) => {
         return {
@@ -52,7 +190,7 @@ function Main() {
       const newData = extractedData.map((item) => ({
         ...item,
         "Count of item not sorted": Math.floor(
-          item.TotalReceived - (item.TotalReceived * item["TotalSorted%"])
+          parseInt(item.TotalReceived,10) - (parseInt(item.TotalReceived,10) * parseFloat(item["TotalSorted%"])/100)
         ),
         Bay: OSHUsageData.OSHUsage.map((temp) => {
           if (item["Pickup CF"] == temp["Run #"]) {
@@ -67,20 +205,22 @@ function Main() {
       });
 
       // Parsed Data Response in array format
-      setParsedData(json);
+      setParsedData8(newData);
 
       // Filtered Column Names
-      setTableRows(rowsArray[0]);
+      setTableRows8(rowsArray[0]);
 
       // Filtered Values
-      setTableValues(valuesArray);
+      setTableValues8(valuesArray);
     };
 
     const file = event.target.files[0];
     const reader = new FileReader();
     reader.onload = (event) => {
       const data = event.target.result;
-      processData(data);
+      processData6(data);
+      processData7(data);
+      processData8(data);
     };
     reader.readAsBinaryString(file);
   };
@@ -237,58 +377,58 @@ function Main() {
       <div className="mt-[3%] flex justify-center">
         {One && (
           <TableOne
-            ParsedData={parsedData}
-            TableRows={tableRows}
-            TableValues={tableValues}
+            ParsedData={parsedData1}
+            TableRows={tableRows1}
+            TableValues={tableValues1}
           />
         )}
         {TwoA && (
           <TableTwoA
-            ParsedData={parsedData}
-            TableRows={tableRows}
-            TableValues={tableValues}
+            ParsedData={parsedData2}
+            TableRows={tableRows2}
+            TableValues={tableValues2}
           />
         )}
         {TwoB && (
           <TableTwoB
-            ParsedData={parsedData}
-            TableRows={tableRows}
-            TableValues={tableValues}
+            ParsedData={parsedData3}
+            TableRows={tableRows3}
+            TableValues={tableValues3}
           />
         )}
         {TwoOne && (
           <TableTwoOne
-            ParsedData={parsedData}
-            TableRows={tableRows}
-            TableValues={tableValues}
+            ParsedData={parsedData4}
+            TableRows={tableRows4}
+            TableValues={tableValues4}
           />
         )}
         {TwoTwo && (
           <TableTwoTwo
-            ParsedData={parsedData}
-            TableRows={tableRows}
-            TableValues={tableValues}
+            ParsedData={parsedData5}
+            TableRows={tableRows5}
+            TableValues={tableValues5}
           />
         )}
         {TwoThreeOne && (
           <TableTwoThreeOne
-            ParsedData={parsedData}
-            TableRows={tableRows}
-            TableValues={tableValues}
+            ParsedData={parsedData6}
+            TableRows={tableRows6}
+            TableValues={tableValues6}
           />
         )}
         {TwoThreeTwo && (
           <TableTwoThreeTwo
-            ParsedData={parsedData}
-            TableRows={tableRows}
-            TableValues={tableValues}
+            ParsedData={parsedData7}
+            TableRows={tableRows7}
+            TableValues={tableValues7}
           />
         )}
         {TwoFour && (
           <TableTwoFour
-            ParsedData={parsedData}
-            TableRows={tableRows}
-            TableValues={tableValues}
+            ParsedData={parsedData8}
+            TableRows={tableRows8}
+            TableValues={tableValues8}
           />
         )}
       </div>
