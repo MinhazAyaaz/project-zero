@@ -74,12 +74,11 @@ function Main() {
       const [hours, minutes] = time.split(':');
       const dateTime = new Date(parseInt(year,10)+2000,month-1,day, hours, minutes);
 
-      const now = new Date(2023,1,24,11,59)
     
-      // const now = new Date();
-      // now.setHours(11);
-      // now.setMinutes(59);
-      // now.setSeconds(0);
+      const now = new Date();
+      now.setHours(11);
+      now.setMinutes(59);
+      now.setSeconds(0);
     
       if (dateTime.getTime() < now.getTime()) {
         return "AM";
