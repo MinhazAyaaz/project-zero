@@ -58,7 +58,10 @@ function Main() {
       const [month,day, year] = date.split('/');
       const [hours, minutes] = time.split(':');
 
-      return "0"+day+"-0"+month+"-"+year+" "+hours+":"+minutes
+      const formattedDay = day.padStart(2, '0');
+      const formattedMonth = month.padStart(2, '0');
+
+      return formattedDay+"-"+formattedMonth+"-"+year+" "+hours+":"+minutes
 
     }
 
@@ -241,6 +244,7 @@ function Main() {
       <div className="flex justify-between mt-[3%]">
         <Button
           color="error"
+          disabled={setOne}
           variant={One ? "contained" : "outlined"}
           onClick={() => {
             setOne(true);
