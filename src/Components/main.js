@@ -55,15 +55,10 @@ function Main() {
     function scanDateFormatter(scanDate){
 
       const [date, time] = scanDate.split(' ');
-      console.log("date", date);
-      console.log("time", time);
       const [month,day, year] = date.split('/');
-      console.log("day", day);
-      console.log("month", month);
-      console.log("year", year);
       const [hours, minutes] = time.split(':');
 
-      return day+"-0"+month+"-"+year+" "+hours+":"+minutes
+      return "0"+day+"-0"+month+"-"+year+" "+hours+":"+minutes
 
     }
 
@@ -138,6 +133,7 @@ function Main() {
           Longitude: row["Longitude"],
         };
       });
+
 
       const newData = extractedData.map((item) => ({
         ...item,
