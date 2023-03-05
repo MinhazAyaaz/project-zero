@@ -1,13 +1,107 @@
 import React from 'react'
-import {useState} from 'react'
+import {useState,useEffect} from 'react'
+import * as XLSX from "xlsx";
 
 function TableTwoThreeTwo(props){
+
+  const [parsedData,setParsedData] = useState([])
+  const [tableRows,setTableRows] = useState([])
+  const [tableValues,setTableValues] = useState([])
+
+    function scanDateFormatter(scanDate){
+
+      const [date, time] = scanDate.split(' ');
+      const [month,day, year] = date.split('/');
+      const [hours, minutes] = time.split(':');
+
+      const formattedDay = day.padStart(2, '0');
+      const formattedMonth = month.padStart(2, '0');
+
+      return formattedDay+"-"+formattedMonth+"-"+year+" "+hours+":"+minutes
+
+    }
+
+    function dateChecker(rawDate){
+    
+      const [date, time] = rawDate.split(' ');
+      const [day,month, year] = date.split('-');
+      const [hours, minutes] = time.split(':');
+      const dateTime = new Date(parseInt(year,10)+2000,month-1,day, hours, minutes);
+    
+      const now = new Date();
+      now.setHours(11);
+      now.setMinutes(59);
+      now.setSeconds(0);
+    
+      if (dateTime.getTime() < now.getTime()) {
+        return "AM";
+      } else {
+        return "PM";
+      }
+    }
+
+    const processData = (data) => {
+      const rowsArray = [];
+      const valuesArray = [];
+
+      const workbook = XLSX.read(data, { type: "binary", cellDates: true });
+      const sheetName = workbook.SheetNames[0];
+      const sheet = workbook.Sheets[sheetName];
+      const json = XLSX.utils.sheet_to_json(sheet,{raw: false, dateNF: 'dd-mm-yy hh:mm' });
+
+      const extractedData = json.map((row) => {
+        return {
+          CourierNo: row["CourierNo"],
+          ScanDate: scanDateFormatter(row["ScanDate"]),
+          Description: row["Description"],
+          Latitude: row["Latitude"],
+          Longitude: row["Longitude"],
+        };
+      });
+
+
+      const newData = extractedData.map((item) => ({
+        ...item,
+        "CF AM In": (dateChecker(item.ScanDate)=="AM" && item.Description=="Check In") ? item.CourierNo : "",
+        "Check in AM": (dateChecker(item.ScanDate)=="AM" && item.Description=="Check In") ? item.ScanDate : "",
+        "CF AM OUT": (dateChecker(item.ScanDate)=="AM" && item.Description=="Check Out") ? item.CourierNo : "",
+        "Check out AM": (dateChecker(item.ScanDate)=="AM" && item.Description=="Check Out") ? item.ScanDate : "",
+        "CF PM IN" : (dateChecker(item.ScanDate)=="PM" && item.Description=="Check In") ? item.CourierNo : "",
+        "Check in PM": (dateChecker(item.ScanDate)=="PM" && item.Description=="Check In") ? item.ScanDate : "",
+        "CF PM OUT": (dateChecker(item.ScanDate)=="PM" && item.Description=="Check Out") ? item.CourierNo : "",
+        "Check out PM": (dateChecker(item.ScanDate)=="PM" && item.Description=="Check Out") ? item.ScanDate : "",
+        
+      }));
+
+      newData.map((d) => {
+        rowsArray.push(Object.keys(d));
+        valuesArray.push(Object.values(d));
+      });
+
+      // Filtered Column Names
+      setTableRows(rowsArray[0]);
+
+      // Filtered Values
+      setTableValues(valuesArray);
+    };
+
+    useEffect(() => {
+      const file = props.uploadTwoThreeTwo.target.files[0];
+      const reader = new FileReader();
+      reader.onload = (event) => {
+        const data = event.target.result;
+        processData(data);
+      };
+      reader.readAsBinaryString(file);
+    }, [props.uploadTwoThreeTwo]);
+
+
 
 return(
     <table class="table-auto border-x border-b w-full text-left text-gray-800">
           <thead className="">
             <tr>
-              {props.TableRows.map((rows, index) => {
+              {tableRows.map((rows, index) => {
                 return (
                   <th
                     className="font-bold p-2 border-b border-l border-red-700 text-left bg-red-700 text-white"
@@ -20,7 +114,7 @@ return(
             </tr>
           </thead>
           <tbody>
-            {props.TableValues.map((value, index) => {
+            {tableValues.map((value, index) => {
               return (
                 <tr className="odd:bg-gray-100 hover:!bg-red-200" key={index}>
                   {value.map((val, i) => {
