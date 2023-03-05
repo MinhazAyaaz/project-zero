@@ -9,16 +9,24 @@ import TableTwoTwo from "./TableTwoTwo";
 import TableTwoThreeOne from "./TableTwoThreeOne";
 import TableTwoThreeTwo from "./TableTwoThreeTwo";
 import TableTwoFour from "./TableTwoFour";
+import Logo from "../data/logo.png";
 
 function Main() {
+  const [disabledTwoA, setDisabledTwoA] = useState(true);
+  const [disabledTwoB, setDisabledTwoB] = useState(true);
+  const [disabledTwoOne, setDisabledTwoOne] = useState(true);
+  const [disabledTwoTwo, setDisabledTwoTwo] = useState(true);
+  const [disabledTwoThreeOne, setDisabledTwoThreeOne] = useState(true);
+  const [disabledTwoThreeTwo, setDisabledTwoThreeTwo] = useState(true);
+  const [disabledTwoFour, setDisabledTwoFour] = useState(true);
 
-  const [uploadTwoA,setUploadTwoA] = useState([])
-  const [uploadTwoB,setUploadTwoB] = useState([])
-  const [uploadTwoOne,setUploadTwoOne] = useState([])
-  const [uploadTwoTwo,setUploadTwoTwo] = useState([])
-  const [uploadTwoThreeOne,setUploadTwoThreeOne] = useState([])
-  const [uploadTwoThreeTwo,setUploadTwoThreeTwo] = useState([])
-  const [uploadTwoFour,setUploadTwoFour] = useState([])
+  const [uploadTwoA, setUploadTwoA] = useState([]);
+  const [uploadTwoB, setUploadTwoB] = useState([]);
+  const [uploadTwoOne, setUploadTwoOne] = useState([]);
+  const [uploadTwoTwo, setUploadTwoTwo] = useState([]);
+  const [uploadTwoThreeOne, setUploadTwoThreeOne] = useState([]);
+  const [uploadTwoThreeTwo, setUploadTwoThreeTwo] = useState([]);
+  const [uploadTwoFour, setUploadTwoFour] = useState([]);
 
   const [One, setOne] = useState(false);
   const [TwoA, setTwoA] = useState(false);
@@ -30,22 +38,23 @@ function Main() {
   const [TwoFour, setTwoFour] = useState(false);
 
   const changeHandler6 = (event) => {
-
-    setUploadTwoFour(event)
-
-  }
+    setDisabledTwoFour(false);
+    setUploadTwoFour(event);
+  };
 
   const changeHandler5 = (event) => {
-
-    setUploadTwoThreeTwo(event)
-
-  }
+    setDisabledTwoThreeTwo(false);
+    setUploadTwoThreeTwo(event);
+  };
 
   return (
     <>
-      <div className="flex justify-center mt-[3%]">
+      <div className="flex justify-center">
+        <img className="w-[12%]" src={Logo} alt="My Image" />
+      </div>
+      <div className="flex justify-center">
         <div className="flex flex-col px-[3%]">
-          <h1 className="text-2xl text-neutral-700">Upload File Here:</h1>
+          <h1 className="text-xl text-neutral-700">Upload File Here:</h1>
           {/* File Uploader */}
           <input
             type="file"
@@ -55,11 +64,11 @@ function Main() {
             class="mt-[5%] relative m-0 block w-full min-w-0 flex-auto cursor-pointer rounded border border-solid border-neutral-300 bg-white bg-clip-padding px-3 py-1.5 text-base font-normal text-neutral-700 outline-none transition duration-300 ease-in-out file:-mx-3 file:-my-1.5 file:cursor-pointer file:overflow-hidden file:rounded-none file:border-0 file:border-solid file:border-inherit file:bg-neutral-100 file:px-3 file:py-1.5 file:text-neutral-700 file:transition file:duration-150 file:ease-in-out file:[margin-inline-end:0.75rem] file:[border-inline-end-width:1px] hover:file:bg-neutral-200 focus:border-primary focus:bg-white focus:text-neutral-700 focus:shadow-[0_0_0_1px] focus:shadow-primary focus:outline-none dark:bg-transparent dark:text-neutral-400 dark:focus:bg-transparent"
           />
           <label className="text-neutral-500 mt-[2%] ml-[2%]">
-            Upload .xlsm or .xlxs files only
+            Upload .csv or .xlxs files only
           </label>
         </div>
         <div className="flex flex-col px-[3%]">
-          <h1 className="text-2xl text-neutral-700">Upload File Here:</h1>
+          <h1 className="text-xl text-neutral-700">Upload File Here:</h1>
           {/* File Uploader */}
           <input
             type="file"
@@ -69,11 +78,11 @@ function Main() {
             class="mt-[5%] relative m-0 block w-full min-w-0 flex-auto cursor-pointer rounded border border-solid border-neutral-300 bg-white bg-clip-padding px-3 py-1.5 text-base font-normal text-neutral-700 outline-none transition duration-300 ease-in-out file:-mx-3 file:-my-1.5 file:cursor-pointer file:overflow-hidden file:rounded-none file:border-0 file:border-solid file:border-inherit file:bg-neutral-100 file:px-3 file:py-1.5 file:text-neutral-700 file:transition file:duration-150 file:ease-in-out file:[margin-inline-end:0.75rem] file:[border-inline-end-width:1px] hover:file:bg-neutral-200 focus:border-primary focus:bg-white focus:text-neutral-700 focus:shadow-[0_0_0_1px] focus:shadow-primary focus:outline-none dark:bg-transparent dark:text-neutral-400 dark:focus:bg-transparent"
           />
           <label className="text-neutral-500 mt-[2%] ml-[2%]">
-            Upload .xlsm or .xlxs files only
+            Upload .csv or .xlxs files only
           </label>
         </div>
         <div className="flex flex-col px-[3%]">
-          <h1 className="text-2xl text-neutral-700">Upload 2.3.2 Here:</h1>
+          <h1 className="text-xl text-neutral-700">Upload 2.3.2 Here:</h1>
           {/* File Uploader */}
           <input
             type="file"
@@ -83,11 +92,11 @@ function Main() {
             class="mt-[5%] relative m-0 block w-full min-w-0 flex-auto cursor-pointer rounded border border-solid border-neutral-300 bg-white bg-clip-padding px-3 py-1.5 text-base font-normal text-neutral-700 outline-none transition duration-300 ease-in-out file:-mx-3 file:-my-1.5 file:cursor-pointer file:overflow-hidden file:rounded-none file:border-0 file:border-solid file:border-inherit file:bg-neutral-100 file:px-3 file:py-1.5 file:text-neutral-700 file:transition file:duration-150 file:ease-in-out file:[margin-inline-end:0.75rem] file:[border-inline-end-width:1px] hover:file:bg-neutral-200 focus:border-primary focus:bg-white focus:text-neutral-700 focus:shadow-[0_0_0_1px] focus:shadow-primary focus:outline-none dark:bg-transparent dark:text-neutral-400 dark:focus:bg-transparent"
           />
           <label className="text-neutral-500 mt-[2%] ml-[2%]">
-            Upload .xlsm or .xlxs files only
+            Upload .csv or .xlxs files only
           </label>
         </div>
         <div className="flex flex-col px-[3%]">
-          <h1 className="text-2xl text-neutral-700">Upload 2.4 Here:</h1>
+          <h1 className="text-xl text-neutral-700">Upload 2.4 Here:</h1>
           {/* File Uploader */}
           <input
             type="file"
@@ -97,11 +106,11 @@ function Main() {
             class="mt-[5%] relative m-0 block w-full min-w-0 flex-auto cursor-pointer rounded border border-solid border-neutral-300 bg-white bg-clip-padding px-3 py-1.5 text-base font-normal text-neutral-700 outline-none transition duration-300 ease-in-out file:-mx-3 file:-my-1.5 file:cursor-pointer file:overflow-hidden file:rounded-none file:border-0 file:border-solid file:border-inherit file:bg-neutral-100 file:px-3 file:py-1.5 file:text-neutral-700 file:transition file:duration-150 file:ease-in-out file:[margin-inline-end:0.75rem] file:[border-inline-end-width:1px] hover:file:bg-neutral-200 focus:border-primary focus:bg-white focus:text-neutral-700 focus:shadow-[0_0_0_1px] focus:shadow-primary focus:outline-none dark:bg-transparent dark:text-neutral-400 dark:focus:bg-transparent"
           />
           <label className="text-neutral-500 mt-[2%] ml-[2%]">
-            Upload .xlsm or .xlxs files only
+            Upload .csv or .xlxs files only
           </label>
         </div>
       </div>
-      
+
       <div className="flex justify-between mt-[3%]">
         <Button
           color="error"
@@ -121,6 +130,7 @@ function Main() {
           1. Executive Summary
         </Button>
         <Button
+          disabled={disabledTwoA}
           variant={TwoA ? "contained" : "outlined"}
           color="error"
           onClick={() => {
@@ -137,6 +147,7 @@ function Main() {
           2.A Score Table(CF)
         </Button>
         <Button
+          disabled={disabledTwoB}
           variant={TwoB ? "contained" : "outlined"}
           color="error"
           onClick={() => {
@@ -153,6 +164,7 @@ function Main() {
           2.B Score Table(Blu,OSH)
         </Button>
         <Button
+          disabled={disabledTwoOne}
           variant={TwoOne ? "contained" : "outlined"}
           color="error"
           onClick={() => {
@@ -169,6 +181,7 @@ function Main() {
           2.1 Data Control Tower
         </Button>
         <Button
+          disabled={disabledTwoTwo}
           variant={TwoTwo ? "contained" : "outlined"}
           color="error"
           onClick={() => {
@@ -185,6 +198,7 @@ function Main() {
           2.2 Missed Pickup Data
         </Button>
         <Button
+          disabled={disabledTwoThreeOne}
           variant={TwoThreeOne ? "contained" : "outlined"}
           color="error"
           onClick={() => {
@@ -201,6 +215,7 @@ function Main() {
           2.3.1 Check in-check Analysis
         </Button>
         <Button
+          disabled={disabledTwoThreeTwo}
           variant={TwoThreeTwo ? "contained" : "outlined"}
           color="error"
           onClick={() => {
@@ -217,6 +232,7 @@ function Main() {
           2.3.2 Check in-check Data
         </Button>
         <Button
+          disabled={disabledTwoFour}
           variant={TwoFour ? "contained" : "outlined"}
           color="error"
           onClick={() => {
@@ -278,15 +294,9 @@ function Main() {
           />
         )} */}
         {TwoThreeTwo && (
-          <TableTwoThreeTwo
-            uploadTwoThreeTwo={uploadTwoThreeTwo}
-          />
+          <TableTwoThreeTwo uploadTwoThreeTwo={uploadTwoThreeTwo} />
         )}
-        {TwoFour && (
-          <TableTwoFour
-            uploadTwoFour={uploadTwoFour}
-          />
-        )}
+        {TwoFour && <TableTwoFour uploadTwoFour={uploadTwoFour} />}
       </div>
     </>
   );

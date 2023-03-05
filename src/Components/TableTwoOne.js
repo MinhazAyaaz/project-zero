@@ -10,7 +10,7 @@ return(
               {props.TableRows.map((rows, index) => {
                 return (
                   <th
-                    className="font-bold p-2 border-b border-l border-red-700 text-left bg-red-700 text-white"
+                    className="font-bold p-2 border-b border-l border-[#dc291e] text-left bg-[#dc291e] text-white"
                     key={index}
                   >
                     {rows}
