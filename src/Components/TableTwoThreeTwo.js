@@ -31,11 +31,13 @@ function TableTwoThreeTwo(props){
     }
 
     function dateChecker(rawDate){
+
+      console.log(rawDate)
     
       const [date, time] = rawDate.split(' ');
-      const [day,month, year] = date.split('-');
+      const [month,day, year] = date.split('-');
       const [hours, minutes] = time.split(':');
-      const dateTime = new Date(parseInt(year,10)+2000,month-1,day, hours, minutes);
+      const dateTime = new Date(parseInt(year,10),month-1,day, hours, minutes);
     
       const now = new Date();
       now.setHours(11);
@@ -53,8 +55,6 @@ function TableTwoThreeTwo(props){
       const rowsArray = [];
       const valuesArray = [];
       let json = [];
-
-      console.log(getFileExtension(fileName))
 
       if(getFileExtension(fileName)=="xlsx"){
         const workbook = XLSX.read(data, { type: "binary", cellDates: true });

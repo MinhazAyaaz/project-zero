@@ -144,7 +144,7 @@ function Main() {
             setTwoFour(false);
           }}
         >
-          2.A Score Table(CF)
+          2.A Score Table
         </Button>
         <Button
           disabled={disabledTwoB}
@@ -161,7 +161,7 @@ function Main() {
             setTwoFour(false);
           }}
         >
-          2.B Score Table(Blu,OSH)
+          2.B Score Table
         </Button>
         <Button
           disabled={disabledTwoOne}
