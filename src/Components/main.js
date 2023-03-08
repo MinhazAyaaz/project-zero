@@ -47,6 +47,11 @@ function Main() {
     setUploadTwoThreeTwo(event);
   };
 
+  const changeHandler4 = (event) => {
+    setDisabledTwoOne(false)
+    setUploadTwoOne(event)
+  }
+
   return (
     <>
       <div className="flex justify-center">
@@ -68,12 +73,12 @@ function Main() {
           </label>
         </div>
         <div className="flex flex-col px-[3%]">
-          <h1 className="text-xl text-neutral-700">Upload File Here:</h1>
+          <h1 className="text-xl text-neutral-700">Upload 2.1 Here:</h1>
           {/* File Uploader */}
           <input
             type="file"
             name="file"
-            onChange={changeHandler6}
+            onChange={changeHandler4}
             accept=".xlsm,.csv,.xlsx"
             class="mt-[5%] relative m-0 block w-full min-w-0 flex-auto cursor-pointer rounded border border-solid border-neutral-300 bg-white bg-clip-padding px-3 py-1.5 text-base font-normal text-neutral-700 outline-none transition duration-300 ease-in-out file:-mx-3 file:-my-1.5 file:cursor-pointer file:overflow-hidden file:rounded-none file:border-0 file:border-solid file:border-inherit file:bg-neutral-100 file:px-3 file:py-1.5 file:text-neutral-700 file:transition file:duration-150 file:ease-in-out file:[margin-inline-end:0.75rem] file:[border-inline-end-width:1px] hover:file:bg-neutral-200 focus:border-primary focus:bg-white focus:text-neutral-700 focus:shadow-[0_0_0_1px] focus:shadow-primary focus:outline-none dark:bg-transparent dark:text-neutral-400 dark:focus:bg-transparent"
           />
@@ -271,15 +276,13 @@ function Main() {
             TableRows={tableRows3}
             TableValues={tableValues3}
           />
-        )}
+        )} */}
         {TwoOne && (
           <TableTwoOne
-            ParsedData={parsedData4}
-            TableRows={tableRows4}
-            TableValues={tableValues4}
+            uploadTwoOne={uploadTwoOne}
           />
         )}
-        {TwoTwo && (
+        {/* {TwoTwo && (
           <TableTwoTwo
             ParsedData={parsedData5}
             TableRows={tableRows5}

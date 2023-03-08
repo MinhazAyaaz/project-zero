@@ -5,10 +5,6 @@
         "Payment method": "Parcel rate"
       },
       {
-        "Run": "003",
-        "Payment method": "Parcel rate"
-      },
-      {
         "Run": "006",
         "Payment method": "Parcel rate"
       },
