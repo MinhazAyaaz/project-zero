@@ -53,8 +53,14 @@ function TableTwoOne(props){
       const headers = ['RF Code', 'CF', 'Scanner','Courier Group','Stem Time',"Stops Per Hour","Overdue","Due Today",
       "Total Due","Days Behind","MultiONB Scans","In Transit","In Transit-Arrived Dest","Start Time","Finish Time",
       "Pickup Total","Delivery Total","Onboard Total","Given to Blu","OOT","Avg Daily Pickup","Avg Daily Delivery","Avg Performence","Yesterday Performence"];
-      const sheetData = XLSX.utils.sheet_to_json(sheet, { header: headers,defval: '',raw: false, dateNF: 'dd-mm-yy hh:mm' });
-      const trimmedSheetData = sheetData.slice(2);
+      json = XLSX.utils.sheet_to_json(sheet, { header: headers,defval: '',raw: false, dateNF: 'dd-mm-yy hh:mm' });
+      
+    } else if (getFileExtension(fileName) == "csv") {
+      const results = Papa.parse(data, { header: true });
+      json = results.data;
+    }
+
+      const trimmedSheetData = json.slice(2);
 
       let newData = trimmedSheetData.map((item) => {
         const typicalPaymentTime = PaymentData.payment.reduce((acc, temp) => {
@@ -101,12 +107,6 @@ function TableTwoOne(props){
   
       // Filtered Values
       setTableValues(valuesArray);
-  
-      
-    } else if (getFileExtension(fileName) == "csv") {
-      const results = Papa.parse(data, { header: true });
-      
-      }
     }
 
 

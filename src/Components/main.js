@@ -48,23 +48,28 @@ function Main() {
   };
 
   const changeHandler4 = (event) => {
-    setDisabledTwoOne(false)
-    setUploadTwoOne(event)
-  }
+    setDisabledTwoOne(false);
+    setUploadTwoOne(event);
+  };
+
+  const changeHandler3 = (event) => {
+    setDisabledTwoTwo(false);
+    setUploadTwoTwo(event);
+  };
 
   return (
     <>
       <div className="flex justify-center">
-        <img className="w-[12%]" src={Logo} alt="My Image" />
+        <img className="w-[12%]" src={Logo} />
       </div>
       <div className="flex justify-center">
         <div className="flex flex-col px-[3%]">
-          <h1 className="text-xl text-neutral-700">Upload File Here:</h1>
+          <h1 className="text-xl text-neutral-700">Upload 2.1 Here:</h1>
           {/* File Uploader */}
           <input
             type="file"
             name="file"
-            onChange={changeHandler6}
+            onChange={changeHandler4}
             accept=".xlsm,.csv,.xlsx"
             class="mt-[5%] relative m-0 block w-full min-w-0 flex-auto cursor-pointer rounded border border-solid border-neutral-300 bg-white bg-clip-padding px-3 py-1.5 text-base font-normal text-neutral-700 outline-none transition duration-300 ease-in-out file:-mx-3 file:-my-1.5 file:cursor-pointer file:overflow-hidden file:rounded-none file:border-0 file:border-solid file:border-inherit file:bg-neutral-100 file:px-3 file:py-1.5 file:text-neutral-700 file:transition file:duration-150 file:ease-in-out file:[margin-inline-end:0.75rem] file:[border-inline-end-width:1px] hover:file:bg-neutral-200 focus:border-primary focus:bg-white focus:text-neutral-700 focus:shadow-[0_0_0_1px] focus:shadow-primary focus:outline-none dark:bg-transparent dark:text-neutral-400 dark:focus:bg-transparent"
           />
@@ -73,12 +78,12 @@ function Main() {
           </label>
         </div>
         <div className="flex flex-col px-[3%]">
-          <h1 className="text-xl text-neutral-700">Upload 2.1 Here:</h1>
+          <h1 className="text-xl text-neutral-700">Upload 2.2 Here:</h1>
           {/* File Uploader */}
           <input
             type="file"
             name="file"
-            onChange={changeHandler4}
+            onChange={changeHandler3}
             accept=".xlsm,.csv,.xlsx"
             class="mt-[5%] relative m-0 block w-full min-w-0 flex-auto cursor-pointer rounded border border-solid border-neutral-300 bg-white bg-clip-padding px-3 py-1.5 text-base font-normal text-neutral-700 outline-none transition duration-300 ease-in-out file:-mx-3 file:-my-1.5 file:cursor-pointer file:overflow-hidden file:rounded-none file:border-0 file:border-solid file:border-inherit file:bg-neutral-100 file:px-3 file:py-1.5 file:text-neutral-700 file:transition file:duration-150 file:ease-in-out file:[margin-inline-end:0.75rem] file:[border-inline-end-width:1px] hover:file:bg-neutral-200 focus:border-primary focus:bg-white focus:text-neutral-700 focus:shadow-[0_0_0_1px] focus:shadow-primary focus:outline-none dark:bg-transparent dark:text-neutral-400 dark:focus:bg-transparent"
           />
@@ -256,49 +261,13 @@ function Main() {
       </div>
 
       <div className="mt-[3%] flex justify-center">
-        {/* {One && (
-          <TableOne
-            ParsedData={parsedData1}
-            TableRows={tableRows1}
-            TableValues={tableValues1}
-          />
-        )}
-        {TwoA && (
-          <TableTwoA
-            ParsedData={parsedData2}
-            TableRows={tableRows2}
-            TableValues={tableValues2}
-          />
-        )}
-        {TwoB && (
-          <TableTwoB
-            ParsedData={parsedData3}
-            TableRows={tableRows3}
-            TableValues={tableValues3}
-          />
-        )} */}
-        {TwoOne && (
-          <TableTwoOne
-            uploadTwoOne={uploadTwoOne}
-          />
-        )}
-        {/* {TwoTwo && (
-          <TableTwoTwo
-            ParsedData={parsedData5}
-            TableRows={tableRows5}
-            TableValues={tableValues5}
-          />
-        )}
-        {TwoThreeOne && (
-          <TableTwoThreeOne
-            ParsedData={parsedData6}
-            TableRows={tableRows6}
-            TableValues={tableValues6}
-          />
-        )} */}
-        {TwoThreeTwo && (
-          <TableTwoThreeTwo uploadTwoThreeTwo={uploadTwoThreeTwo} />
-        )}
+        {One && <TableOne uploadTwoOne={uploadTwoOne} />}
+        {TwoA && <TableTwoA uploadTwoA={uploadTwoA} />}
+        {TwoB && <TableTwoB uploadTwoB={uploadTwoB} />}
+        {TwoOne && <TableTwoOne uploadTwoOne={uploadTwoOne} />}
+        {TwoTwo && <TableTwoTwo uploadTwoTwo={uploadTwoTwo} />}
+        {TwoThreeOne && <TableTwoThreeOne uploadTwoThreeOne={uploadTwoThreeOne} />}
+        {TwoThreeTwo && <TableTwoThreeTwo uploadTwoThreeTwo={uploadTwoThreeTwo} />}
         {TwoFour && <TableTwoFour uploadTwoFour={uploadTwoFour} />}
       </div>
     </>
