@@ -101,6 +101,7 @@ function TableTwoOne(props){
       });
   
       // Parsed Data Response in array format
+      props.setDataTwoOne(newData)
   
       // Filtered Column Names
       setTableRows(rowsArray[0]);

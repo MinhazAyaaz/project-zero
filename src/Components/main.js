@@ -12,16 +12,15 @@ import TableTwoFour from "./TableTwoFour";
 import Logo from "../data/logo.png";
 
 function Main() {
-  const [disabledTwoA, setDisabledTwoA] = useState(true);
-  const [disabledTwoB, setDisabledTwoB] = useState(true);
+  const [DataTwoOne, setDataTwoOne] = useState([]);
+  const [DataTwoTwo, setDataTwoTwo] = useState([]);
+
   const [disabledTwoOne, setDisabledTwoOne] = useState(true);
   const [disabledTwoTwo, setDisabledTwoTwo] = useState(true);
   const [disabledTwoThreeOne, setDisabledTwoThreeOne] = useState(true);
   const [disabledTwoThreeTwo, setDisabledTwoThreeTwo] = useState(true);
   const [disabledTwoFour, setDisabledTwoFour] = useState(true);
 
-  const [uploadTwoA, setUploadTwoA] = useState([]);
-  const [uploadTwoB, setUploadTwoB] = useState([]);
   const [uploadTwoOne, setUploadTwoOne] = useState([]);
   const [uploadTwoTwo, setUploadTwoTwo] = useState([]);
   const [uploadTwoThreeOne, setUploadTwoThreeOne] = useState([]);
@@ -140,7 +139,7 @@ function Main() {
           1. Executive Summary
         </Button>
         <Button
-          disabled={disabledTwoA}
+          //disabled={DataTwoOne.length===0 && DataTwoTwo.length===0}
           variant={TwoA ? "contained" : "outlined"}
           color="error"
           onClick={() => {
@@ -157,7 +156,7 @@ function Main() {
           2.A Score Table
         </Button>
         <Button
-          disabled={disabledTwoB}
+          disabled={DataTwoOne.length===0 && DataTwoTwo.length===0}
           variant={TwoB ? "contained" : "outlined"}
           color="error"
           onClick={() => {
@@ -262,10 +261,10 @@ function Main() {
 
       <div className="mt-[3%] flex justify-center">
         {One && <TableOne uploadTwoOne={uploadTwoOne} />}
-        {TwoA && <TableTwoA uploadTwoA={uploadTwoA} />}
-        {TwoB && <TableTwoB uploadTwoB={uploadTwoB} />}
-        {TwoOne && <TableTwoOne uploadTwoOne={uploadTwoOne} />}
-        {TwoTwo && <TableTwoTwo uploadTwoTwo={uploadTwoTwo} />}
+        {TwoA && <TableTwoA TheDataTwoOne={DataTwoOne} TheDataTwoTwo={DataTwoTwo}/>}
+        {TwoB && <TableTwoB  DataTwoOne={DataTwoOne} DataTwoTwo={DataTwoTwo}/>}
+        {TwoOne && <TableTwoOne uploadTwoOne={uploadTwoOne} setDataTwoOne={setDataTwoOne}/>}
+        {TwoTwo && <TableTwoTwo uploadTwoTwo={uploadTwoTwo} setDataTwoTwo={setDataTwoTwo}/>}
         {TwoThreeOne && <TableTwoThreeOne uploadTwoThreeOne={uploadTwoThreeOne} />}
         {TwoThreeTwo && <TableTwoThreeTwo uploadTwoThreeTwo={uploadTwoThreeTwo} />}
         {TwoFour && <TableTwoFour uploadTwoFour={uploadTwoFour} />}
@@ -274,4 +273,4 @@ function Main() {
   );
 }
 
-export default Main;
+export default React.memo(Main);

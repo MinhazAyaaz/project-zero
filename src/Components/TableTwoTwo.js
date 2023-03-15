@@ -129,6 +129,7 @@ function TableTwoTwo(props) {
     });
 
     // Parsed Data Response in array format
+    props.setDataTwoTwo(finalData)
 
     // Filtered Column Names
     setTableRows(rowsArray[0]);
