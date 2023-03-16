@@ -14,6 +14,7 @@ import Logo from "../data/logo.png";
 function Main() {
   const [DataTwoOne, setDataTwoOne] = useState([]);
   const [DataTwoTwo, setDataTwoTwo] = useState([]);
+  const [DataTwoFour, setDataTwoFour] = useState([]);
 
   const [disabledTwoOne, setDisabledTwoOne] = useState(true);
   const [disabledTwoTwo, setDisabledTwoTwo] = useState(true);
@@ -139,7 +140,7 @@ function Main() {
           1. Executive Summary
         </Button>
         <Button
-          //disabled={DataTwoOne.length===0 && DataTwoTwo.length===0}
+          disabled={DataTwoOne.length===0 || DataTwoTwo.length===0 || DataTwoFour.length===0}
           variant={TwoA ? "contained" : "outlined"}
           color="error"
           onClick={() => {
@@ -156,7 +157,7 @@ function Main() {
           2.A Score Table
         </Button>
         <Button
-          disabled={DataTwoOne.length===0 && DataTwoTwo.length===0}
+          disabled={DataTwoOne.length===0 || DataTwoTwo.length===0 || DataTwoFour.length===0}
           variant={TwoB ? "contained" : "outlined"}
           color="error"
           onClick={() => {
@@ -261,13 +262,13 @@ function Main() {
 
       <div className="mt-[3%] flex justify-center">
         {One && <TableOne uploadTwoOne={uploadTwoOne} />}
-        {TwoA && <TableTwoA TheDataTwoOne={DataTwoOne} TheDataTwoTwo={DataTwoTwo}/>}
-        {TwoB && <TableTwoB  DataTwoOne={DataTwoOne} DataTwoTwo={DataTwoTwo}/>}
+        {TwoA && <TableTwoA DataTwoOne={DataTwoOne} DataTwoTwo={DataTwoTwo} DataTwoFour={DataTwoFour}/>}
+        {TwoB && <TableTwoB  DataTwoOne={DataTwoOne} DataTwoTwo={DataTwoTwo} DataTwoFour={DataTwoFour}/>}
         {TwoOne && <TableTwoOne uploadTwoOne={uploadTwoOne} setDataTwoOne={setDataTwoOne}/>}
         {TwoTwo && <TableTwoTwo uploadTwoTwo={uploadTwoTwo} setDataTwoTwo={setDataTwoTwo}/>}
         {TwoThreeOne && <TableTwoThreeOne uploadTwoThreeOne={uploadTwoThreeOne} />}
         {TwoThreeTwo && <TableTwoThreeTwo uploadTwoThreeTwo={uploadTwoThreeTwo} />}
-        {TwoFour && <TableTwoFour uploadTwoFour={uploadTwoFour} />}
+        {TwoFour && <TableTwoFour uploadTwoFour={uploadTwoFour} setDataTwoFour={setDataTwoFour}/>}
       </div>
     </>
   );

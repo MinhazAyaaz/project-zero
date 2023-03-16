@@ -77,6 +77,7 @@ function TableTwoFour(props) {
     });
 
     // Parsed Data Response in array format
+    props.setDataTwoFour(newData)
 
     // Filtered Column Names
     setTableRows(rowsArray[0]);
