@@ -23,6 +23,10 @@ function TableTwoA(props){
       let SortCageScore
       let RunStatus
       let OnTimeDelivery
+      let OverDue
+      let StopsPerHour
+      let HoursWorked
+      let TotalReceived
 
       props?.DataTwoOne?.map((temp1) => {
         if(item["Run #"]==temp1["Scanner"]){
@@ -30,7 +34,11 @@ function TableTwoA(props){
           DeliveryTotal = temp1["Delivery Total"]
           OnboardTotal = temp1["Onboard Total"]
           OOT = temp1["OOT"]
-          OnTimeDelivery = temp1["Yesterday Performance"]
+          console.log("temp1",temp1)
+          OnTimeDelivery = temp1["Yesterday Performence"]
+          OverDue = temp1["Overdue"]
+          StopsPerHour = temp1["Stops Per Hour"]
+          HoursWorked = temp1["Hours worked"]
         }
       })
       props?.DataTwoTwo?.map((temp2) => {
@@ -45,6 +53,7 @@ function TableTwoA(props){
       props?.DataTwoFour?.map((temp3) => {
         if(item["Run #"]==temp3["Pickup CF"]){
           SortCageScore = temp3["TotalSorted%"]
+          TotalReceived = temp3["TotalReceived"]
         }
       })
       if((parseInt(PickupTotal)+parseInt(DeliveryTotal)+(OnboardTotal - DeliveryTotal)+parseInt(SortCageScore))==0){
@@ -63,10 +72,14 @@ function TableTwoA(props){
         "2.2 Not delivered" : OnboardTotal - DeliveryTotal,
         "2.3 OOT" : (OOT=="") ? 0 : OOT,
         "2.4 On-Time Delivery(%)-Yestarday" : OnTimeDelivery,
+        "2.5 Overdue freight" : (OverDue=="") ? 0 : OverDue,
         "Run Active Status" : RunStatus,
+        "3.1 Onboard Compliance": (parseInt(DeliveryTotal) > parseInt(OnboardTotal)) ? "Fail" : "Pass",
+        "3.2 Compliance OOT" : (((OnboardTotal - DeliveryTotal) != 0) && OOT=="") ? "Fail" : "Pass",
+        "4.0 Productivity Stops Per Hour" : Math.round(StopsPerHour),
+        "4.1 Productivity Hours worked" : HoursWorked,
         "4.3 Sort To Cage Score(%)" : (SortCageScore==undefined) ? "0%" : SortCageScore,
-        
-
+        "4.4 Count of item sorted" : (TotalReceived==undefined) ? 0 : TotalReceived
       };
     });
 

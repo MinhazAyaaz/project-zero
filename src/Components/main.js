@@ -12,19 +12,18 @@ import TableTwoFour from "./TableTwoFour";
 import Logo from "../data/logo.png";
 
 function Main() {
+  const [DataTwoThreeTwo, setDataTwoThreeTwo] = useState([]);
   const [DataTwoOne, setDataTwoOne] = useState([]);
   const [DataTwoTwo, setDataTwoTwo] = useState([]);
   const [DataTwoFour, setDataTwoFour] = useState([]);
 
   const [disabledTwoOne, setDisabledTwoOne] = useState(true);
   const [disabledTwoTwo, setDisabledTwoTwo] = useState(true);
-  const [disabledTwoThreeOne, setDisabledTwoThreeOne] = useState(true);
   const [disabledTwoThreeTwo, setDisabledTwoThreeTwo] = useState(true);
   const [disabledTwoFour, setDisabledTwoFour] = useState(true);
 
   const [uploadTwoOne, setUploadTwoOne] = useState([]);
   const [uploadTwoTwo, setUploadTwoTwo] = useState([]);
-  const [uploadTwoThreeOne, setUploadTwoThreeOne] = useState([]);
   const [uploadTwoThreeTwo, setUploadTwoThreeTwo] = useState([]);
   const [uploadTwoFour, setUploadTwoFour] = useState([]);
 
@@ -120,8 +119,9 @@ function Main() {
           </label>
         </div>
       </div>
+      <div className="flex mt-[2%] justify-center"><h2>Note: Click Available Tables to reveal the Unavailable Tables after upload</h2></div>
 
-      <div className="flex justify-between mt-[3%]">
+      <div className="flex justify-between mt-[1%]">
         <Button
           color="error"
           disabled={setOne}
@@ -208,7 +208,7 @@ function Main() {
           2.2 Missed Pickup Data
         </Button>
         <Button
-          disabled={disabledTwoThreeOne}
+          disabled={DataTwoOne.length===0 || DataTwoThreeTwo.length===0}
           variant={TwoThreeOne ? "contained" : "outlined"}
           color="error"
           onClick={() => {
@@ -266,8 +266,8 @@ function Main() {
         {TwoB && <TableTwoB  DataTwoOne={DataTwoOne} DataTwoTwo={DataTwoTwo} DataTwoFour={DataTwoFour}/>}
         {TwoOne && <TableTwoOne uploadTwoOne={uploadTwoOne} setDataTwoOne={setDataTwoOne}/>}
         {TwoTwo && <TableTwoTwo uploadTwoTwo={uploadTwoTwo} setDataTwoTwo={setDataTwoTwo}/>}
-        {TwoThreeOne && <TableTwoThreeOne uploadTwoThreeOne={uploadTwoThreeOne} />}
-        {TwoThreeTwo && <TableTwoThreeTwo uploadTwoThreeTwo={uploadTwoThreeTwo} />}
+        {TwoThreeOne && <TableTwoThreeOne DataTwoOne={DataTwoOne} DataTwoThreeTwo={DataTwoThreeTwo}/>}
+        {TwoThreeTwo && <TableTwoThreeTwo uploadTwoThreeTwo={uploadTwoThreeTwo} setDataTwoThreeTwo={setDataTwoThreeTwo}/>}
         {TwoFour && <TableTwoFour uploadTwoFour={uploadTwoFour} setDataTwoFour={setDataTwoFour}/>}
       </div>
     </>

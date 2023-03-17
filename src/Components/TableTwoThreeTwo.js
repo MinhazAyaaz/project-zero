@@ -31,8 +31,6 @@ function TableTwoThreeTwo(props){
     }
 
     function dateChecker(rawDate){
-
-      console.log(rawDate)
     
       const [date, time] = rawDate.split(' ');
       const [month,day, year] = date.split('-');
@@ -67,8 +65,6 @@ function TableTwoThreeTwo(props){
         json = results.data;
       }
 
-      console.log("csv",json)
-
       const extractedData = json.map((row) => {
         return {
           CourierNo: row["CourierNo"],
@@ -91,6 +87,8 @@ function TableTwoThreeTwo(props){
         "CF PM OUT": (item.ScanDate && dateChecker(item.ScanDate)=="PM" && item.Description=="Check Out") ? item.CourierNo : "",
         "Check out PM": (item.ScanDate && dateChecker(item.ScanDate)=="PM" && item.Description=="Check Out") ? item.ScanDate : "",
       }));
+
+      props.setDataTwoThreeTwo(newData)
       
 
       newData.map((d) => {
