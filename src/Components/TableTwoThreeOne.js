@@ -1,6 +1,7 @@
 import React from 'react'
 import {useState,useEffect} from 'react'
 import { TwoThreeOneData } from "../data/TwoThreeOne";
+import { TwoA } from "../data/TwoA";
 
 function TableTwoThreeOne(props){
   const [tableRows, setTableRows] = useState([]);
@@ -11,11 +12,20 @@ function TableTwoThreeOne(props){
     const valuesArray = [];
 
     const json = TwoThreeOneData['TwoThreeOne'];
+    const TwoAData = TwoA['TwoA']
     console.log(json)
 
     const newData = json.map((item) => {
       let PickupTotal
       let freight
+      let checkInAM
+      let checkOutAM
+      let checkInPM
+      let checkOutPM
+      let firstCheckIn
+      let lastCheckOut
+      let runActivity = "Inactive"
+      let totalCheck = 0
 
       props?.DataTwoOne?.map((temp1) => {
         if(item["CF run converted"]==temp1["Scanner"]){
@@ -24,10 +34,72 @@ function TableTwoThreeOne(props){
         }
       });
 
+      props?.DataTwoThreeTwo?.map((temp2) => {
+        if(item["CF"]==temp2["CF AM In"]){
+          checkInAM = temp2["Check in AM"]
+          totalCheck++;
+        }
+        if(item["CF"]==temp2["CF AM OUT"]){
+          checkOutAM = temp2["Check out AM"]
+          totalCheck++;
+        }
+        if(item["CF"]==temp2["CF PM IN"]){
+          checkInPM = temp2["Check in PM"]
+          totalCheck++;
+        }
+        if(item["CF"]==temp2["CF PM OUT"]){
+          checkOutPM = temp2["Check out PM"]
+          totalCheck++;
+        }
+      });
+
+      TwoAData?.map((temp3) => {
+        if(item["CF"]==temp3["Run #"])
+        runActivity = "Active"
+      })
+
+      if(checkInAM != undefined){
+        firstCheckIn = checkInAM
+      }
+      else if(checkOutAM != undefined){
+        firstCheckIn = checkOutAM
+      }
+      else if(checkInPM != undefined){
+        firstCheckIn = checkInPM
+      }
+      else if(checkOutPM != undefined){
+        firstCheckIn = checkOutPM
+      }
+
+      if(checkOutPM != undefined){
+        lastCheckOut = checkOutPM
+      }
+      else if(checkInPM != undefined){
+        lastCheckOut = checkInPM
+      }
+      else if(checkOutAM != undefined){
+        lastCheckOut = checkOutAM
+      }
+      else if(checkInAM != undefined){
+        lastCheckOut = checkInAM
+      }
+
+      
+
       return {
         ...item,
         "Pickup" : PickupTotal,
         "Undelivered freight" : (freight>0) ? freight : 0,
+        "Check In AM" : (checkInAM==undefined) ? "No AM Check In" : checkInAM,
+        "Check Out AM" : (checkOutAM==undefined) ? "No AM Check Out" : checkOutAM,
+        "Check In PM" : (checkInPM==undefined) ? "No PM Check In" : checkInPM,
+        "Check Out PM" : (checkOutPM==undefined) ? "No PM Check Out" : checkOutPM,
+        "First Check In" : firstCheckIn,
+        "Last Check Out" : lastCheckOut,
+        "Run Activity" : runActivity,
+        "Total Check In/Out" : totalCheck,
+        "No PM Return" : (checkInPM==undefined && checkOutPM==undefined) ? "No PM Return" : "PM Return",
+        "Exclude from PM check in checkout" : "No"
       };
     },[])
 

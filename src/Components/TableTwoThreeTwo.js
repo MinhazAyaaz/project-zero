@@ -37,9 +37,9 @@ function TableTwoThreeTwo(props){
       const [hours, minutes] = time.split(':');
       const dateTime = new Date(parseInt(year,10),month-1,day, hours, minutes);
     
-      const now = new Date();
+      const now = new Date(2023,2,15);
       now.setHours(11);
-      now.setMinutes(59);
+      now.setMinutes(30);
       now.setSeconds(0);
     
       if (dateTime.getTime() < now.getTime()) {
