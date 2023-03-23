@@ -6,6 +6,8 @@ import { TwoA } from "../data/TwoA";
 function TableTwoThreeOne(props){
   const [tableRows, setTableRows] = useState([]);
   const [tableValues, setTableValues] = useState([]);
+  let exclude = [];
+
 
   useEffect(() => {
     const rowsArray = [];
@@ -13,7 +15,6 @@ function TableTwoThreeOne(props){
 
     const json = TwoThreeOneData['TwoThreeOne'];
     const TwoAData = TwoA['TwoA']
-    console.log(json)
 
     const newData = json.map((item) => {
       let PickupTotal
@@ -58,6 +59,31 @@ function TableTwoThreeOne(props){
         runActivity = "Active"
       })
 
+      exclude.push("237".padStart(3, '0'))
+      exclude.push("A02".padStart(3, '0'))
+      exclude.push("A03".padStart(3, '0'))
+      exclude.push("A04".padStart(3, '0'))
+      exclude.push("A05".padStart(3, '0'))
+      exclude.push("255".padStart(3, '0'))
+      exclude.push("414".padStart(3, '0'))
+      exclude.push("339".padStart(3, '0'))
+      exclude.push("439".padStart(3, '0'))
+      exclude.push("34".padStart(3, '0'))
+      exclude.push("734".padStart(3, '0'))
+      exclude.push("633".padStart(3, '0'))
+      exclude.push("132".padStart(3, '0'))
+      exclude.push("232".padStart(3, '0'))
+      exclude.push("244".padStart(3, '0'))
+      exclude.push("832".padStart(3, '0'))
+      exclude.push("233".padStart(3, '0'))
+      exclude.push("116".padStart(3, '0'))
+      exclude.push("935".padStart(3, '0'))
+      exclude.push("251".padStart(3, '0'))
+      exclude.push("304".padStart(3, '0'))
+      exclude.push("601".padStart(3, '0'))
+      exclude.push("036".padStart(3, '0'))
+
+
       if(checkInAM != undefined){
         firstCheckIn = checkInAM
       }
@@ -84,7 +110,6 @@ function TableTwoThreeOne(props){
         lastCheckOut = checkInAM
       }
 
-      
 
       return {
         ...item,
@@ -99,7 +124,7 @@ function TableTwoThreeOne(props){
         "Run Activity" : runActivity,
         "Total Check In/Out" : totalCheck,
         "No PM Return" : (checkInPM==undefined && checkOutPM==undefined) ? "No PM Return" : "PM Return",
-        "Exclude from PM check in checkout" : "No"
+        "Exclude from PM check in checkout" : exclude.includes(item["CF run converted"]) ? "No" : "Yes"
       };
     },[])
 
