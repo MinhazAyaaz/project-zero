@@ -17,9 +17,12 @@ function TableTwoTwo(props) {
     const [date, time] = rawDate.split(" ");
     const [day, month, year] = date.split("/");
 
-    const now = new Date();
-
-    if (parseInt(now.getMonth() + 1) === parseInt(month)) {
+    const now = new Date(2023,2,15);
+    const currentDay = now.getDate();
+    const currentMonth = now.getMonth() + 1;
+    const currentYear = now.getFullYear();
+  
+    if (parseInt(day) === currentDay && parseInt(month) === currentMonth && parseInt(year) === currentYear) {
       return true;
     } else {
       return false;

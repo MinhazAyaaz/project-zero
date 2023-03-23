@@ -60,6 +60,13 @@ function TableTwoOne(props){
       json = results.data;
     }
 
+    // Loop through each row of the object and round the value of the "Stops Per Hour" column
+  json.forEach((row) => {
+    if (row["Stops Per Hour"]) {
+      row["Stops Per Hour"] = Math.round(row["Stops Per Hour"]);
+    }
+  });
+
       const trimmedSheetData = json.slice(2);
 
       let newData = trimmedSheetData.map((item) => {

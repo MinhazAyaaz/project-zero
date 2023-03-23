@@ -13,52 +13,6 @@ function TableTwoThreeOne(props){
     const rowsArray = [];
     const valuesArray = [];
 
-    const json = TwoThreeOneData['TwoThreeOne'];
-    const TwoAData = TwoA['TwoA']
-
-    const newData = json.map((item) => {
-      let PickupTotal
-      let freight
-      let checkInAM
-      let checkOutAM
-      let checkInPM
-      let checkOutPM
-      let firstCheckIn
-      let lastCheckOut
-      let runActivity = "Inactive"
-      let totalCheck = 0
-
-      props?.DataTwoOne?.map((temp1) => {
-        if(item["CF run converted"]==temp1["Scanner"]){
-          PickupTotal = temp1["Pickup Total"]
-          freight = temp1["Onboard Total"] - temp1["Delivery Total"]
-        }
-      });
-
-      props?.DataTwoThreeTwo?.map((temp2) => {
-        if(item["CF"]==temp2["CF AM In"]){
-          checkInAM = temp2["Check in AM"]
-          totalCheck++;
-        }
-        if(item["CF"]==temp2["CF AM OUT"]){
-          checkOutAM = temp2["Check out AM"]
-          totalCheck++;
-        }
-        if(item["CF"]==temp2["CF PM IN"]){
-          checkInPM = temp2["Check in PM"]
-          totalCheck++;
-        }
-        if(item["CF"]==temp2["CF PM OUT"]){
-          checkOutPM = temp2["Check out PM"]
-          totalCheck++;
-        }
-      });
-
-      TwoAData?.map((temp3) => {
-        if(item["CF"]==temp3["Run #"])
-        runActivity = "Active"
-      })
-
       exclude.push("237".padStart(3, '0'))
       exclude.push("A02".padStart(3, '0'))
       exclude.push("A03".padStart(3, '0'))
@@ -83,6 +37,64 @@ function TableTwoThreeOne(props){
       exclude.push("601".padStart(3, '0'))
       exclude.push("036".padStart(3, '0'))
 
+    const json = TwoThreeOneData['TwoThreeOne'];
+    const TwoAData = TwoA['TwoA']
+
+    const newData = json.map((item) => {
+      let PickupTotal
+      let freight
+      let checkInAM
+      let checkOutAM
+      let checkInPM
+      let checkOutPM
+      let firstCheckIn
+      let lastCheckOut
+      let runActivity = "Inactive"
+      let totalCheck = 0
+      let PMReturn
+
+      if(exclude.includes(item["CF run converted"])){
+        checkInPM = "No Check In Required";
+        checkOutPM = "No Check Out Required";
+        PMReturn = "No PM Check In Required"
+      }
+          
+
+      props?.DataTwoOne?.map((temp1) => {
+        if(item["CF run converted"]==temp1["Scanner"]){
+          PickupTotal = temp1["Pickup Total"]
+          freight = temp1["Onboard Total"] - temp1["Delivery Total"]
+        }
+      });
+
+      props?.DataTwoThreeTwo?.map((temp2) => {
+        if(item["CF"]==temp2["CF AM In"]){
+          checkInAM = temp2["Check in AM"]
+          totalCheck++;
+        }
+        if(item["CF"]==temp2["CF AM OUT"]){
+          checkOutAM = temp2["Check out AM"]
+          totalCheck++;
+        }
+        if(checkInPM==undefined){
+          if(item["CF"]==temp2["CF PM IN"]){
+            checkInPM = temp2["Check in PM"]
+            totalCheck++;
+          }
+        }
+        if(checkOutPM==undefined){
+          if(item["CF"]==temp2["CF PM OUT"]){
+            checkOutPM = temp2["Check out PM"]
+            totalCheck++;
+          }
+        }
+        
+      });
+
+      TwoAData?.map((temp3) => {
+        if(item["CF"]==temp3["Run #"])
+        runActivity = "Active"
+      })
 
       if(checkInAM != undefined){
         firstCheckIn = checkInAM
@@ -90,26 +102,39 @@ function TableTwoThreeOne(props){
       else if(checkOutAM != undefined){
         firstCheckIn = checkOutAM
       }
-      else if(checkInPM != undefined){
+      else if(checkInPM && checkInPM !== "No Check In Required"){
         firstCheckIn = checkInPM
       }
-      else if(checkOutPM != undefined){
+      else if(checkOutPM && checkOutPM !== "No Check Out Required"){
         firstCheckIn = checkOutPM
       }
 
-      if(checkOutPM != undefined){
+      if(checkOutPM && checkOutPM !== "No Check Out Required"){
         lastCheckOut = checkOutPM
       }
-      else if(checkInPM != undefined){
+      else if(checkInPM && checkInPM !== "No Check In Required"){
         lastCheckOut = checkInPM
       }
-      else if(checkOutAM != undefined){
+      else if(checkOutAM){
         lastCheckOut = checkOutAM
       }
-      else if(checkInAM != undefined){
+      else if(checkInAM){
         lastCheckOut = checkInAM
       }
 
+      if(!firstCheckIn && !lastCheckOut){
+        firstCheckIn = "Check In Missing"
+        lastCheckOut = "Check Out Missing"
+      }
+
+      if(!PMReturn){
+        if(checkInPM==undefined && checkOutPM==undefined){
+          PMReturn = "No PM Return"
+        }
+        else{
+          PMReturn = "PM Return"
+        }
+      }
 
       return {
         ...item,
@@ -123,7 +148,7 @@ function TableTwoThreeOne(props){
         "Last Check Out" : lastCheckOut,
         "Run Activity" : runActivity,
         "Total Check In/Out" : totalCheck,
-        "No PM Return" : (checkInPM==undefined && checkOutPM==undefined) ? "No PM Return" : "PM Return",
+        "No PM Return" : PMReturn,
         "Exclude from PM check in checkout" : exclude.includes(item["CF run converted"]) ? "No" : "Yes"
       };
     },[])
