@@ -12,7 +12,6 @@ function TableTwoA(props){
 
     const json = TwoA['TwoA'];
 
-
     const newData = json.map((item) => {
       let PickupTotal
       let FutilePickup = 0
@@ -27,6 +26,7 @@ function TableTwoA(props){
       let StopsPerHour
       let HoursWorked
       let TotalReceived
+      let checkCompliance
 
       props?.DataTwoOne?.map((temp1) => {
         if(item["Run #"]==temp1["Scanner"]){
@@ -96,6 +96,7 @@ function TableTwoA(props){
 
 
 return(
+  <div style={{ width: "100%", overflowX: "auto",overflow: "visible" }}>
     <table class="table-auto border-x border-b w-full text-left text-gray-800">
           <thead className="">
             <tr>
@@ -130,6 +131,7 @@ return(
             })}
           </tbody>
         </table>
+        </div>
 )
 
 

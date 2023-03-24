@@ -17,12 +17,16 @@ function TableTwoTwo(props) {
     const [date, time] = rawDate.split(" ");
     const [day, month, year] = date.split("/");
 
-    const now = new Date(2023,2,15);
+    const now = new Date(2023, 2, 15);
     const currentDay = now.getDate();
     const currentMonth = now.getMonth() + 1;
     const currentYear = now.getFullYear();
-  
-    if (parseInt(day) === currentDay && parseInt(month) === currentMonth && parseInt(year) === currentYear) {
+
+    if (
+      parseInt(day) === currentDay &&
+      parseInt(month) === currentMonth &&
+      parseInt(year) === currentYear
+    ) {
       return true;
     } else {
       return false;
@@ -83,42 +87,38 @@ function TableTwoTwo(props) {
       const messageDate = new Date(year, month - 1, day, hour, minute, second);
 
       // Check if the message date is before 3AM today
-      return (
-        messageDate < new Date(currentYear, currentMonth, currentDay, 3, 0, 0)
-      );
+      return messageDate < new Date(currentYear, currentMonth, 15, 3, 0, 0);
     });
 
     const finalData = newFilteredData.map((item) => {
-      function KPIStatus(data){
+      function KPIStatus(data) {
         if (data["CourierMessageResultText"] == "Accepted") {
           return "Fail";
+        } else if (data["CourierMessageResultText"] == "Attempted") {
+          return "Futile";
+        } else if (data["CourierMessageResultText"] == "Completed") {
+          return "Futile";
+        } else if (data["CourierMessageResultText"] == "NoResult") {
+          return "Fail";
+        } else if (data["CourierMessageResultText"] == "Pending") {
+          return "Fail";
+        } else if (data["CourierMessageResultText"] == "PendingReturn") {
+          return "Fail";
+        } else if (data["CourierMessageResultText"] == "Rejected") {
+          return "Futile";
+        } else {
+          return "Fail";
         }
-        else if(data["CourierMessageResultText"] == "Attempted"){
-          return "Futile"
-        }
-        else if(data["CourierMessageResultText"] == "Completed"){
-          return "Futile"
-        }
-        else if(data["CourierMessageResultText"] == "NoResult"){
-          return "Fail"
-        }
-        else if(data["CourierMessageResultText"] == "Pending"){
-          return "Fail"
-        }
-        else if(data["CourierMessageResultText"] == "PendingReturn"){
-          return "Fail"
-        }
-        else if(data["CourierMessageResultText"] == "Rejected"){
-          return "Futile"
-        }
-        else{return "Fail"}
       }
 
       return {
         ...item,
         "KPI Status": KPIStatus(item),
-        "Final Run" : (item["PickupCourierNumber"]=="") ? "Pickup CF detail missing" : item["PickupCourierNumber"],
-        "Bay" : OSHUsageData.OSHUsage.map((temp) => {
+        "Final Run":
+          item["PickupCourierNumber"] == ""
+            ? "Pickup CF detail missing"
+            : item["PickupCourierNumber"],
+        Bay: OSHUsageData.OSHUsage.map((temp) => {
           if (item["PickupCourierNumber"] == temp["Run #"]) {
             return temp["For OSH usage"];
           }
@@ -132,7 +132,7 @@ function TableTwoTwo(props) {
     });
 
     // Parsed Data Response in array format
-    props.setDataTwoTwo(finalData)
+    props.setDataTwoTwo(finalData);
 
     // Filtered Column Names
     setTableRows(rowsArray[0]);
