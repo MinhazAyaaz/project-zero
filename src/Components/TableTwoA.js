@@ -26,7 +26,7 @@ function TableTwoA(props){
       let StopsPerHour
       let HoursWorked
       let TotalReceived
-      let checkCompliance
+      let checkCompliance = "Pass"
 
       props?.DataTwoOne?.map((temp1) => {
         if(item["Run #"]==temp1["Scanner"]){
@@ -34,7 +34,6 @@ function TableTwoA(props){
           DeliveryTotal = temp1["Delivery Total"]
           OnboardTotal = temp1["Onboard Total"]
           OOT = temp1["OOT"]
-          console.log("temp1",temp1)
           OnTimeDelivery = temp1["Yesterday Performence"]
           OverDue = temp1["Overdue"]
           StopsPerHour = temp1["Stops Per Hour"]
@@ -43,11 +42,15 @@ function TableTwoA(props){
       })
       props?.DataTwoTwo?.map((temp2) => {
         if(item["Run #"]==temp2["PickupCourierNumber"] && temp2["KPI Status"]=="Futile"){
-          console.log(item["Run #"])
           FutilePickup = FutilePickup + 1;
         }
         if(item["Run #"]==temp2["PickupCourierNumber"] && temp2["KPI Status"]=="Fail"){
           FailPickup = FailPickup + 1;
+        }
+      })
+      props?.DataTwoThreeOne?.map((temp4) => {
+        if(item["Run #"]==temp4["CF run converted"] && temp4["No PM Return"] == "No PM Return"){
+          checkCompliance = "Fail"
         }
       })
       props?.DataTwoFour?.map((temp3) => {
@@ -74,6 +77,7 @@ function TableTwoA(props){
         "2.4 On-Time Delivery(%)-Yestarday" : OnTimeDelivery,
         "2.5 Overdue freight" : (OverDue=="") ? 0 : OverDue,
         "Run Active Status" : RunStatus,
+        "3.0 Check In and Out Compliance" : checkCompliance,
         "3.1 Onboard Compliance": (parseInt(DeliveryTotal) > parseInt(OnboardTotal)) ? "Fail" : "Pass",
         "3.2 Compliance OOT" : (((OnboardTotal - DeliveryTotal) != 0) && OOT=="") ? "Fail" : "Pass",
         "4.0 Productivity Stops Per Hour" : Math.round(StopsPerHour),
@@ -87,8 +91,6 @@ function TableTwoA(props){
       rowsArray.push(Object.keys(d));
       valuesArray.push(Object.values(d));
     });
-
-
 
     setTableRows(rowsArray[0]);
     setTableValues(valuesArray);

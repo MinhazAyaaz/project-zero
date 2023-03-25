@@ -36,8 +36,6 @@ function TableTwoFour(props) {
       (item) => item["Pickup RF"] == "SYD" && item["Pickup CF"] != "Total"
     );
 
-    console.log(filteredData);
-
     const extractedData = filteredData.map((row) => {
       return {
         "Pickup RF": row["Pickup RF"],
@@ -51,7 +49,6 @@ function TableTwoFour(props) {
       };
     });
 
-    console.log(extractedData);
 
     setParsedData(extractedData);
 

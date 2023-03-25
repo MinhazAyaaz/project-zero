@@ -12,6 +12,7 @@ import TableTwoFour from "./TableTwoFour";
 import Logo from "../data/logo.png";
 
 function Main() {
+  const [DataTwoThreeOne, setDataTwoThreeOne] = useState([]);
   const [DataTwoThreeTwo, setDataTwoThreeTwo] = useState([]);
   const [DataTwoOne, setDataTwoOne] = useState([]);
   const [DataTwoTwo, setDataTwoTwo] = useState([]);
@@ -140,7 +141,7 @@ function Main() {
           1. Executive Summary
         </Button>
         <Button
-          disabled={DataTwoOne.length===0 || DataTwoTwo.length===0 || DataTwoFour.length===0}
+          disabled={DataTwoOne.length===0 || DataTwoTwo.length===0 || DataTwoFour.length===0 || DataTwoThreeOne.length===0}
           variant={TwoA ? "contained" : "outlined"}
           color="error"
           onClick={() => {
@@ -157,7 +158,7 @@ function Main() {
           2.A Score Table
         </Button>
         <Button
-          disabled={DataTwoOne.length===0 || DataTwoTwo.length===0 || DataTwoFour.length===0}
+          disabled={DataTwoOne.length===0 || DataTwoTwo.length===0 || DataTwoFour.length===0 || DataTwoThreeOne.length===0}
           variant={TwoB ? "contained" : "outlined"}
           color="error"
           onClick={() => {
@@ -208,7 +209,7 @@ function Main() {
           2.2 Missed Pickup Data
         </Button>
         <Button
-          disabled={DataTwoOne.length===0 || DataTwoThreeTwo.length===0}
+          disabled={DataTwoOne.length===0 || DataTwoThreeTwo.length===0 || DataTwoFour===0}
           variant={TwoThreeOne ? "contained" : "outlined"}
           color="error"
           onClick={() => {
@@ -262,11 +263,11 @@ function Main() {
 
       <div className="mt-[3%] flex justify-center">
         {One && <TableOne uploadTwoOne={uploadTwoOne} />}
-        {TwoA && <TableTwoA DataTwoOne={DataTwoOne} DataTwoTwo={DataTwoTwo} DataTwoFour={DataTwoFour}/>}
+        {TwoA && <TableTwoA DataTwoOne={DataTwoOne} DataTwoTwo={DataTwoTwo} DataTwoFour={DataTwoFour} DataTwoThreeOne={DataTwoThreeOne}/>}
         {TwoB && <TableTwoB  DataTwoOne={DataTwoOne} DataTwoTwo={DataTwoTwo} DataTwoFour={DataTwoFour}/>}
         {TwoOne && <TableTwoOne uploadTwoOne={uploadTwoOne} setDataTwoOne={setDataTwoOne}/>}
         {TwoTwo && <TableTwoTwo uploadTwoTwo={uploadTwoTwo} setDataTwoTwo={setDataTwoTwo}/>}
-        {TwoThreeOne && <TableTwoThreeOne DataTwoOne={DataTwoOne} DataTwoThreeTwo={DataTwoThreeTwo}/>}
+        {TwoThreeOne && <TableTwoThreeOne DataTwoOne={DataTwoOne} DataTwoThreeTwo={DataTwoThreeTwo} DataTwoFour={DataTwoFour} setDataTwoThreeOne={setDataTwoThreeOne}/>}
         {TwoThreeTwo && <TableTwoThreeTwo uploadTwoThreeTwo={uploadTwoThreeTwo} setDataTwoThreeTwo={setDataTwoThreeTwo}/>}
         {TwoFour && <TableTwoFour uploadTwoFour={uploadTwoFour} setDataTwoFour={setDataTwoFour}/>}
       </div>
