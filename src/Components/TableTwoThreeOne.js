@@ -102,18 +102,12 @@ function TableTwoThreeOne(props){
         checkOutPM = "No Check out required"
       }
 
-      console.log("Run Number",item["CF run converted"])
-      console.log("Delivery Total", DeliveryTotal)
-      console.log("Freight", freight)
-      console.log("Pickup Total", PickupTotal)
-      console.log("Total Sorted", TotalSorted)
       if(DeliveryTotal+freight+PickupTotal==0 && (TotalSorted==undefined || TotalSorted=="0%")){
         runActivity = "Inactive"
       }
       else{
         runActivity = "Active"
       }
-      console.log("Run Activity", runActivity)
 
 
       if(checkInAM){

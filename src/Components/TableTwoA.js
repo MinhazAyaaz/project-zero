@@ -19,7 +19,7 @@ function TableTwoA(props){
       let DeliveryTotal
       let OnboardTotal
       let OOT
-      let SortCageScore
+      let SortCageScore = "0%"
       let RunStatus
       let OnTimeDelivery
       let OverDue
@@ -27,6 +27,13 @@ function TableTwoA(props){
       let HoursWorked
       let TotalReceived
       let checkCompliance = "Pass"
+      let PMReturn
+      let pickupScore
+      let deliveryScore
+      let complianceScore
+      let sortedCageScore
+      let productivityScore
+      let overallScore
 
       props?.DataTwoOne?.map((temp1) => {
         if(item["Run #"]==temp1["Scanner"]){
@@ -52,21 +59,98 @@ function TableTwoA(props){
         if(item["Run #"]==temp4["CF run converted"] && temp4["No PM Return"] == "No PM Return"){
           checkCompliance = "Fail"
         }
+        if(item["Run #"]==temp4["CF run converted"]){
+          PMReturn = temp4["No PM Return"]
+        }
       })
       props?.DataTwoFour?.map((temp3) => {
         if(item["Run #"]==temp3["Pickup CF"]){
+          sortedCageScore  = temp3["TotalSorted%"]
           SortCageScore = temp3["TotalSorted%"]
           TotalReceived = temp3["TotalReceived"]
         }
       })
-      if((parseInt(PickupTotal)+parseInt(DeliveryTotal)+(OnboardTotal - DeliveryTotal)+parseInt(SortCageScore))==0){
+
+      if((PickupTotal+DeliveryTotal+(OnboardTotal - DeliveryTotal))==0 && (SortCageScore==undefined || SortCageScore=="0%")){
         RunStatus="Inactive"
       }
       else{
         RunStatus="Active"
       }
+
+      //Caculating Pickup Score
+      if(RunStatus=="Inactive"){
+        pickupScore = "NA"
+      }
+      else if(PickupTotal+FutilePickup+FailPickup==0){
+        pickupScore = "100%"
+      }
+      else{
+        if(!PickupTotal){
+          PickupTotal = 0
+        }
+        const PickupTotalTemp = parseInt(PickupTotal)
+        pickupScore = Math.round((PickupTotalTemp+FutilePickup) / (PickupTotalTemp+FutilePickup+FailPickup) * 100) + "%"
+      }
+
+      //Calculating Delivery Score
+      if(RunStatus=="Inactive"){
+        deliveryScore = "NA"
+      }
+      else if(OverDue < 15 && !(parseInt(DeliveryTotal) > parseInt(OnboardTotal))){
+        deliveryScore = "100%"
+      }
+      else if(OverDue < 15 || !(parseInt(DeliveryTotal) > parseInt(OnboardTotal))){
+        deliveryScore = "50%"
+      }
+      else{
+        deliveryScore = "0%"
+      }
+
+      //Calculating Compliance Score
+      if (RunStatus == "Inactive") {
+        complianceScore = "NA";
+      }
+      else{
+        complianceScore = (parseInt(SortCageScore) / 100) * (100 / 3);
+      if (checkCompliance === "Pass") {
+        complianceScore += 100 / 3;
+      }
+      if (!(((OnboardTotal - DeliveryTotal) != 0) && OOT=="")) {
+        complianceScore += 100 / 3;
+      }
+      complianceScore = Math.round(complianceScore) + "%"
+      }
+
+      //Calculating Productivity Score
+      if (RunStatus == "Inactive") {
+        productivityScore = "NA";
+      }
+      else{
+        const xRatio =  HoursWorked / 9;
+        const wRatio = StopsPerHour / 15;
+        const xScore = xRatio > 1 ? 50 : xRatio * 50;
+        const wScore = wRatio > 1 ? 50 : wRatio * 50;
+        productivityScore = Math.round((xScore + wScore)) + "%";
+      }
+
+      //Calculating Overall Score
+      if(RunStatus == "Inactive"){
+        overallScore = "Run not active"
+      }
+      else{
+        overallScore = Math.round((parseInt(pickupScore)*0.35)+(parseInt(deliveryScore)*0.35)+(parseInt(complianceScore)*0.25)+(parseInt(productivityScore)*0.05)) + "%"
+      }
+
+
       return {
         ...item,
+        "Pickup Score": pickupScore,
+        "Delivery Score" : deliveryScore,
+        "Compliance Score" : complianceScore,
+        "Sorted to Cage Score" : (sortedCageScore) ? sortedCageScore : "No interstate pickups",
+        "Productivity Score" : productivityScore,
+        "Overall Score" : overallScore,
         "1.0 Pickup Total" : (PickupTotal=="") ? 0 : PickupTotal,
         "1.1 Futile Pickup" : FutilePickup,
         "1.2 Failed Pickup" : FailPickup,
@@ -82,8 +166,9 @@ function TableTwoA(props){
         "3.2 Compliance OOT" : (((OnboardTotal - DeliveryTotal) != 0) && OOT=="") ? "Fail" : "Pass",
         "4.0 Productivity Stops Per Hour" : Math.round(StopsPerHour),
         "4.1 Productivity Hours worked" : HoursWorked,
-        "4.3 Sort To Cage Score(%)" : (SortCageScore==undefined) ? "0%" : SortCageScore,
-        "4.4 Count of item sorted" : (TotalReceived==undefined) ? 0 : TotalReceived
+        "4.3 Sort To Cage Score(%)" : SortCageScore,
+        "4.4 Count of item sorted" : (TotalReceived==undefined) ? 0 : TotalReceived,
+        "PM checkout status" : PMReturn
       };
     });
 
@@ -99,7 +184,7 @@ function TableTwoA(props){
 
 return(
   <div style={{ width: "100%", overflowX: "auto",overflow: "visible" }}>
-    <table class="table-auto border-x border-b w-full text-left text-gray-800">
+    <table class="table-auto border-x border-b w-full text-left text-gray-800" style={{ tableLayout: 'fixed', width: '200%' }}>
           <thead className="">
             <tr>
               {tableRows.map((rows, index) => {
