@@ -43,7 +43,7 @@ function TableTwoA(props){
           OOT = temp1["OOT"]
           OnTimeDelivery = temp1["Yesterday Performence"]
           OverDue = temp1["Overdue"]
-          StopsPerHour = temp1["Stops Per Hour"]
+          StopsPerHour =temp1["Stops Per Hour"]
           HoursWorked = temp1["Hours worked"]
         }
       })
