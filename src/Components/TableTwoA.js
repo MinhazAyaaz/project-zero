@@ -16,8 +16,8 @@ function TableTwoA(props){
       let PickupTotal
       let FutilePickup = 0
       let FailPickup = 0
-      let DeliveryTotal
-      let OnboardTotal
+      let DeliveryTotal = 0
+      let OnboardTotal = 0
       let OOT
       let SortCageScore = "0%"
       let RunStatus
@@ -38,8 +38,8 @@ function TableTwoA(props){
       props?.DataTwoOne?.map((temp1) => {
         if(item["Run #"]==temp1["Scanner"]){
           PickupTotal = temp1["Pickup Total"]
-          DeliveryTotal = temp1["Delivery Total"]
-          OnboardTotal = temp1["Onboard Total"]
+          if(temp1["Delivery Total"]!=""){DeliveryTotal = temp1["Delivery Total"]}
+          if(temp1["Onboard Total"]!=""){OnboardTotal = temp1["Onboard Total"]}
           OOT = temp1["OOT"]
           OnTimeDelivery = temp1["Yesterday Performence"]
           OverDue = temp1["Overdue"]
@@ -90,17 +90,17 @@ function TableTwoA(props){
           PickupTotal = 0
         }
         const PickupTotalTemp = parseInt(PickupTotal)
-        pickupScore = Math.round((PickupTotalTemp+FutilePickup) / (PickupTotalTemp+FutilePickup+FailPickup) * 100) + "%"
+        pickupScore = ((PickupTotalTemp+FutilePickup) / (PickupTotalTemp+FutilePickup+FailPickup)) * 100
       }
 
       //Calculating Delivery Score
       if(RunStatus=="Inactive"){
         deliveryScore = "NA"
       }
-      else if(OverDue < 15 && !(parseInt(DeliveryTotal) > parseInt(OnboardTotal))){
+      else if(OverDue < 15 && (parseInt(DeliveryTotal) <= parseInt(OnboardTotal))){
         deliveryScore = "100%"
       }
-      else if(OverDue < 15 || !(parseInt(DeliveryTotal) > parseInt(OnboardTotal))){
+      else if(OverDue < 15 || (parseInt(DeliveryTotal) <= parseInt(OnboardTotal))){
         deliveryScore = "50%"
       }
       else{
@@ -119,7 +119,7 @@ function TableTwoA(props){
       if (!(((OnboardTotal - DeliveryTotal) != 0) && OOT=="")) {
         complianceScore += 100 / 3;
       }
-      complianceScore = Math.round(complianceScore) + "%"
+      complianceScore = complianceScore
       }
 
       //Calculating Productivity Score
@@ -131,7 +131,7 @@ function TableTwoA(props){
         const wRatio = StopsPerHour / 15;
         const xScore = xRatio > 1 ? 50 : xRatio * 50;
         const wScore = wRatio > 1 ? 50 : wRatio * 50;
-        productivityScore = Math.round((xScore + wScore)) + "%";
+        productivityScore = (xScore + wScore);
       }
 
       //Calculating Overall Score
@@ -142,14 +142,13 @@ function TableTwoA(props){
         overallScore = Math.round((parseInt(pickupScore)*0.35)+(parseInt(deliveryScore)*0.35)+(parseInt(complianceScore)*0.25)+(parseInt(productivityScore)*0.05)) + "%"
       }
 
-
       return {
         ...item,
-        "Pickup Score": pickupScore,
+        "Pickup Score": (pickupScore=="NA") ? pickupScore : Math.round(pickupScore) + "%",
         "Delivery Score" : deliveryScore,
-        "Compliance Score" : complianceScore,
+        "Compliance Score" : (complianceScore=="NA") ? complianceScore : Math.round(complianceScore) + "%",
         "Sorted to Cage Score" : (sortedCageScore) ? sortedCageScore : "No interstate pickups",
-        "Productivity Score" : productivityScore,
+        "Productivity Score" : (productivityScore=="NA") ? productivityScore : Math.round(productivityScore) + "%",
         "Overall Score" : overallScore,
         "1.0 Pickup Total" : (PickupTotal=="") ? 0 : PickupTotal,
         "1.1 Futile Pickup" : FutilePickup,
@@ -162,10 +161,10 @@ function TableTwoA(props){
         "2.5 Overdue freight" : (OverDue=="") ? 0 : OverDue,
         "Run Active Status" : RunStatus,
         "3.0 Check In and Out Compliance" : checkCompliance,
-        "3.1 Onboard Compliance": (parseInt(DeliveryTotal) > parseInt(OnboardTotal)) ? "Fail" : "Pass",
+        "3.1 Onboard Compliance": (parseInt(DeliveryTotal) <= parseInt(OnboardTotal)) ? "Pass" : "Fail",
         "3.2 Compliance OOT" : (((OnboardTotal - DeliveryTotal) != 0) && OOT=="") ? "Fail" : "Pass",
         "4.0 Productivity Stops Per Hour" : Math.round(StopsPerHour),
-        "4.1 Productivity Hours worked" : HoursWorked,
+        "4.1 Productivity Hours worked" : Math.round(HoursWorked),
         "4.3 Sort To Cage Score(%)" : SortCageScore,
         "4.4 Count of item sorted" : (TotalReceived==undefined) ? 0 : TotalReceived,
         "PM checkout status" : PMReturn

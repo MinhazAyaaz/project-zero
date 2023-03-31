@@ -144,7 +144,7 @@ function TableTwoThreeOne(props){
       if(checkInPM=="No Check in required" && checkOutPM=="No Check out required"){
         PMReturn = "No PM check in required"
       }
-      else if(checkInPM!="No Pm Check In" && checkOutPM!="No PM Check Out"){
+      else if(checkInPM!="No Pm Check In" || checkOutPM!="No PM Check Out"){
         PMReturn = "PM Return"
       }
       else{
