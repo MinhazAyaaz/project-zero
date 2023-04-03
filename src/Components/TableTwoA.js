@@ -7,6 +7,12 @@ function TableTwoA(props){
   const [tableValues, setTableValues] = useState([]);
 
   useEffect(() => {
+
+    if (tableRows.length > 0) {
+      // Data has already been fetched and processed, no need to do it again
+      return;
+    }
+    
     const rowsArray = [];
     const valuesArray = [];
 

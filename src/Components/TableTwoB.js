@@ -7,17 +7,23 @@ function TableTwoB(props){
   const [tableValues, setTableValues] = useState([]);
 
   useEffect(() => {
+
+    if (tableRows.length > 0) {
+      // Data has already been fetched and processed, no need to do it again
+      return;
+    }
+
     const rowsArray = [];
     const valuesArray = [];
 
     const json = TwoB['TwoB'];
 
     const newData = json.map((item) => {
-      let PickupTotal
+      let PickupTotal = 0
       let FutilePickup = 0
       let FailPickup = 0
-      let DeliveryTotal
-      let OnboardTotal
+      let DeliveryTotal = 0
+      let OnboardTotal = 0
       let OOT
       let SortCageScore = "0%"
       let RunStatus
@@ -26,8 +32,10 @@ function TableTwoB(props){
       let StopsPerHour
       let HoursWorked
       let TotalReceived
-      let checkCompliance = "Pass"
-      let PMReturn
+      let checkCompliance = "NA"
+      let onBoardCompliance = "NA"
+      let ootCompliance = "NA"
+      let PMReturn = "Run ID not registered"
       let pickupScore
       let deliveryScore
       let complianceScore
@@ -38,12 +46,12 @@ function TableTwoB(props){
       props?.DataTwoOne?.map((temp1) => {
         if(item["Run #"]==temp1["Scanner"]){
           PickupTotal = temp1["Pickup Total"]
-          DeliveryTotal = temp1["Delivery Total"]
-          OnboardTotal = temp1["Onboard Total"]
+          if(temp1["Delivery Total"]!=""){DeliveryTotal = temp1["Delivery Total"]}
+          if(temp1["Onboard Total"]!=""){OnboardTotal = temp1["Onboard Total"]}
           OOT = temp1["OOT"]
           OnTimeDelivery = temp1["Yesterday Performence"]
           OverDue = temp1["Overdue"]
-          StopsPerHour = temp1["Stops Per Hour"]
+          StopsPerHour =temp1["Stops Per Hour"]
           HoursWorked = temp1["Hours worked"]
         }
       })
@@ -56,9 +64,13 @@ function TableTwoB(props){
         }
       })
       props?.DataTwoThreeOne?.map((temp4) => {
-        if(item["Run #"]==temp4["CF run converted"] && temp4["No PM Return"] == "No PM Return"){
+        if(item["Run #"]==temp4["CF run converted"] && parseInt(temp4["Total Check In/Out"]) < 3){
           checkCompliance = "Fail"
         }
+        else if(item["Run #"]==temp4["CF run converted"] && !parseInt(temp4["Total Check In/Out"]) < 3){
+          checkCompliance = "Pass"
+        }
+
         if(item["Run #"]==temp4["CF run converted"]){
           PMReturn = temp4["No PM Return"]
         }
@@ -71,8 +83,27 @@ function TableTwoB(props){
         }
       })
 
+      //Calculating Onboard Compliance
+      if(!(parseInt(DeliveryTotal) <= parseInt(OnboardTotal)) || DeliveryTotal || OnboardTotal){
+        onBoardCompliance = "Pass"
+      }
+      else{onBoardCompliance = "Fail"}
+
+      //Calculating OOT Compliance
+      if((((OnboardTotal - DeliveryTotal) != 0) && OOT=="")){
+        ootCompliance = "Fail"
+      }
+      else{
+        ootCompliance = "Pass"
+      }
+
+
+      //Checking if run status is active, if not, the compliances will be "NA"
       if((PickupTotal+DeliveryTotal+(OnboardTotal - DeliveryTotal))==0 && (SortCageScore==undefined || SortCageScore=="0%")){
         RunStatus="Inactive"
+        checkCompliance = "NA"
+        onBoardCompliance = "NA"
+        ootCompliance = "NA"
       }
       else{
         RunStatus="Active"
@@ -90,17 +121,17 @@ function TableTwoB(props){
           PickupTotal = 0
         }
         const PickupTotalTemp = parseInt(PickupTotal)
-        pickupScore = Math.round((PickupTotalTemp+FutilePickup) / (PickupTotalTemp+FutilePickup+FailPickup) * 100) + "%"
+        pickupScore = ((PickupTotalTemp+FutilePickup) / (PickupTotalTemp+FutilePickup+FailPickup)) * 100
       }
 
       //Calculating Delivery Score
       if(RunStatus=="Inactive"){
         deliveryScore = "NA"
       }
-      else if(OverDue < 15 && !(parseInt(DeliveryTotal) > parseInt(OnboardTotal))){
+      else if(OverDue < 15 && (parseInt(DeliveryTotal) <= parseInt(OnboardTotal))){
         deliveryScore = "100%"
       }
-      else if(OverDue < 15 || !(parseInt(DeliveryTotal) > parseInt(OnboardTotal))){
+      else if(OverDue < 15 || (parseInt(DeliveryTotal) <= parseInt(OnboardTotal))){
         deliveryScore = "50%"
       }
       else{
@@ -110,6 +141,7 @@ function TableTwoB(props){
       //Calculating Compliance Score
       if (RunStatus == "Inactive") {
         complianceScore = "NA";
+        onBoardCompliance = "NA"
       }
       else{
         complianceScore = (parseInt(SortCageScore) / 100) * (100 / 3);
@@ -119,7 +151,7 @@ function TableTwoB(props){
       if (!(((OnboardTotal - DeliveryTotal) != 0) && OOT=="")) {
         complianceScore += 100 / 3;
       }
-      complianceScore = Math.round(complianceScore) + "%"
+      complianceScore = complianceScore
       }
 
       //Calculating Productivity Score
@@ -131,7 +163,7 @@ function TableTwoB(props){
         const wRatio = StopsPerHour / 15;
         const xScore = xRatio > 1 ? 50 : xRatio * 50;
         const wScore = wRatio > 1 ? 50 : wRatio * 50;
-        productivityScore = Math.round((xScore + wScore)) + "%";
+        productivityScore = (xScore + wScore);
       }
 
       //Calculating Overall Score
@@ -142,15 +174,13 @@ function TableTwoB(props){
         overallScore = Math.round((parseInt(pickupScore)*0.35)+(parseInt(deliveryScore)*0.35)+(parseInt(complianceScore)*0.25)+(parseInt(productivityScore)*0.05)) + "%"
       }
 
-      
-
       return {
         ...item,
-        "Pickup Score": pickupScore,
+        "Pickup Score": (pickupScore=="NA") ? pickupScore : Math.round(parseInt(pickupScore)) + "%",
         "Delivery Score" : deliveryScore,
-        "Compliance Score" : complianceScore,
+        "Compliance Score" : (complianceScore=="NA") ? complianceScore : Math.round(complianceScore) + "%",
         "Sorted to Cage Score" : (sortedCageScore) ? sortedCageScore : "No interstate pickups",
-        "Productivity Score" : productivityScore,
+        "Productivity Score" : (productivityScore=="NA") ? productivityScore : Math.round(productivityScore) + "%",
         "Overall Score" : overallScore,
         "1.0 Pickup Total" : (PickupTotal=="") ? 0 : PickupTotal,
         "1.1 Futile Pickup" : FutilePickup,
@@ -159,14 +189,14 @@ function TableTwoB(props){
         "2.1 Onboard Total" : (OnboardTotal=="") ? 0 : OnboardTotal,
         "2.2 Not delivered" : OnboardTotal - DeliveryTotal,
         "2.3 OOT" : (OOT=="") ? 0 : OOT,
-        "2.4 On-Time Delivery(%)-Yestarday" : (OnTimeDelivery) ? Math.round(parseFloat(OnTimeDelivery)) + "%" : "NA",
+        "2.4 On-Time Delivery(%)-Yestarday" : (OnTimeDelivery=="" || !OnTimeDelivery) ? "NA" : OnTimeDelivery,
         "2.5 Overdue freight" : (OverDue=="") ? 0 : OverDue,
         "Run Active Status" : RunStatus,
         "3.0 Check In and Out Compliance" : checkCompliance,
-        "3.1 Onboard Compliance": (parseInt(DeliveryTotal) > parseInt(OnboardTotal)) ? "Fail" : "Pass",
-        "3.2 Compliance OOT" : (((OnboardTotal - DeliveryTotal) != 0) && OOT=="") ? "Fail" : "Pass",
+        "3.1 Onboard Compliance": onBoardCompliance,
+        "3.2 Compliance OOT" : ootCompliance,
         "4.0 Productivity Stops Per Hour" : Math.round(StopsPerHour),
-        "4.1 Productivity Hours worked" : HoursWorked,
+        "4.1 Productivity Hours worked" : Math.round(HoursWorked),
         "4.3 Sort To Cage Score(%)" : SortCageScore,
         "4.4 Count of item sorted" : (TotalReceived==undefined) ? 0 : TotalReceived,
         "PM checkout status" : PMReturn
