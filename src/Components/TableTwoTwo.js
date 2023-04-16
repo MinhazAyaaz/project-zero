@@ -17,7 +17,7 @@ function TableTwoTwo(props) {
     const [date, time] = rawDate.split(" ");
     const [day, month, year] = date.split("/");
 
-    const now = new Date(2023, 2, 15);
+    const now = new Date(2023, 3, 14);
     const currentDay = now.getDate();
     const currentMonth = now.getMonth() + 1;
     const currentYear = now.getFullYear();
@@ -87,7 +87,7 @@ function TableTwoTwo(props) {
       const messageDate = new Date(year, month - 1, day, hour, minute, second);
 
       // Check if the message date is before 3AM today
-      return messageDate < new Date(currentYear, currentMonth, 15, 3, 0, 0);
+      return messageDate < new Date(currentYear,3, 14, 3, 0, 0);
     });
 
     const finalData = newFilteredData.map((item) => {
@@ -120,7 +120,7 @@ function TableTwoTwo(props) {
             : item["PickupCourierNumber"],
         Bay: OSHUsageData.OSHUsage.map((temp) => {
           if (item["PickupCourierNumber"] == temp["Run #"]) {
-            return temp["For OSH usage"];
+            return temp["Subdepot codes"];
           }
         }),
       };
@@ -156,7 +156,7 @@ function TableTwoTwo(props) {
     <table class="table-auto border-x border-b w-full text-left text-gray-800">
       <thead className="">
         <tr>
-          {tableRows.map((rows, index) => {
+          {tableRows?.map((rows, index) => {
             return (
               <th
                 className="font-bold p-2 border-b border-l border-[#dc291e] text-left bg-[#dc291e] text-white"
@@ -169,7 +169,7 @@ function TableTwoTwo(props) {
         </tr>
       </thead>
       <tbody>
-        {tableValues.map((value, index) => {
+        {tableValues?.map((value, index) => {
           return (
             <tr className="odd:bg-gray-100 hover:!bg-red-200" key={index}>
               {value.map((val, i) => {

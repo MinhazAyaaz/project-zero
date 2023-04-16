@@ -62,7 +62,7 @@ function TableTwoFour(props) {
       ),
       Bay: OSHUsageData.OSHUsage.map((temp) => {
         if (item["Pickup CF"] == temp["Run #"]) {
-          return temp["For OSH usage"];
+          return temp["Subdepot codes"];
         }
       }),
       "TotalSorted%": Math.round((parseFloat(item["TotalSorted%"]) * 100)/100) + "%"

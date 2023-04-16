@@ -5,6 +5,7 @@ import { TwoA } from "../data/TwoA";
 function TableTwoA(props){
   const [tableRows, setTableRows] = useState([]);
   const [tableValues, setTableValues] = useState([]);
+  
 
   useEffect(() => {
 
@@ -40,6 +41,8 @@ function TableTwoA(props){
       let sortedCageScore
       let productivityScore
       let overallScore
+
+      //Convert run value to integer with 0 prefix
 
       props?.DataTwoOne?.map((temp1) => {
         if(item["Run #"]==temp1["Scanner"]){
@@ -176,6 +179,8 @@ function TableTwoA(props){
         "PM checkout status" : PMReturn
       };
     });
+
+    props.setDataTwoA(newData)
 
     newData.map((d) => {
       rowsArray.push(Object.keys(d));

@@ -3,6 +3,8 @@ import { useState, useEffect } from "react";
 import * as XLSX from "xlsx";
 import Papa from "papaparse";
 import { PaymentData } from "../data/PaymentMethod";
+import { OSHUsageData } from "../data/OSHUsage";
+import { FinalData } from "../data/Final";
 
 function TableTwoOne(props) {
   const [parsedData, setParsedData] = useState([]);
@@ -89,22 +91,33 @@ function TableTwoOne(props) {
     const trimmedSheetData = json.slice(2);
 
     let newData = trimmedSheetData.map((item) => {
+
+      let finalBay = ""
+
       const typicalPaymentTime = PaymentData.payment.reduce((acc, temp) => {
         if (item["Scanner"] === temp["Run"]) {
           return temp["Payment method"];
         }
         return acc;
       }, undefined);
-      const paymentTime = typicalPaymentTime || "Not OSH"; // Use the || operator to assign "Not OSH" if paymentTime is falsy
+
+
+      const paymentTime = typicalPaymentTime || "Not OSH"; // Use the || operator to assign "Not OSH" if paymentTime is false
+
+      OSHUsageData.OSHUsage.map((temp) => {
+        if (item["Scanner"] == temp["Run #"]) {
+          finalBay = temp["Subdepot codes"]
+        }
+      })
+
       return {
         ...item,
         "Hours worked": isNaN(
           getHoursBetween(item["Start Time"], item["Finish Time"])
         )
           ? 0
-          :
-              getHoursBetween(item["Start Time"], item["Finish Time"])
-            ,
+          : getHoursBetween(item["Start Time"], item["Finish Time"]),
+        "Final Bay": finalBay ? finalBay : "Other",
         "Active status": item["Onboard Total"] > 1 ? "Active" : "Inactive",
         "Typical Payment Time":
           paymentTime !== null && paymentTime !== "" ? paymentTime : "Not OSH", // Check for empty string or null
@@ -132,15 +145,13 @@ function TableTwoOne(props) {
       if (row["Stops Per Hour"]) {
         row["Stops Per Hour"] = parseFloat(row["Stops Per Hour"]);
       }
-      if(row["Hours worked"]){
+      if (row["Hours worked"]) {
         row["Hours worked"] = parseFloat(row["Hours worked"]);
       }
     });
 
-    console.log("First",newData)
 
     props.setDataTwoOne(newData);
-    console.log(newData)
 
     // // Loop through each row of the object and round the value of the "Stops Per Hour" column
     // newData.forEach((row) => {

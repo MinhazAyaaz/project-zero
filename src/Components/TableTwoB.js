@@ -203,6 +203,8 @@ function TableTwoB(props){
       };
     });
 
+    props.setDataTwoB(newData)
+
     newData.map((d) => {
       rowsArray.push(Object.keys(d));
       valuesArray.push(Object.values(d));

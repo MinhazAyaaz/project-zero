@@ -10,8 +10,16 @@ import TableTwoThreeOne from "./TableTwoThreeOne";
 import TableTwoThreeTwo from "./TableTwoThreeTwo";
 import TableTwoFour from "./TableTwoFour";
 import Logo from "../data/logo.png";
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
+import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
+import { DatePicker } from '@mui/x-date-pickers/DatePicker';
+import dayjs from 'dayjs';
 
 function Main() {
+  const [selectedDate, setSelectedDate] = useState(new Date())
+
+  const [DataTwoA, setDataTwoA] = useState([]);
+  const [DataTwoB, setDataTwoB] = useState([]);
   const [DataTwoThreeOne, setDataTwoThreeOne] = useState([]);
   const [DataTwoThreeTwo, setDataTwoThreeTwo] = useState([]);
   const [DataTwoOne, setDataTwoOne] = useState([]);
@@ -59,6 +67,11 @@ function Main() {
 
   return (
     <>
+    <div className="absolute ml-[8%] mt-[3%]">
+    <LocalizationProvider dateAdapter={AdapterDayjs}>
+      <DatePicker label="Date Picker" value={dayjs(selectedDate)} onChange={(newValue) => setSelectedDate(newValue)}/>
+    </LocalizationProvider>
+    </div>
       <div className="flex justify-center">
         <img className="w-[12%]" src={Logo} />
       </div>
@@ -125,7 +138,7 @@ function Main() {
       <div className="flex justify-between mt-[1%]">
         <Button
           color="error"
-          disabled={setOne}
+          disabled={DataTwoOne.length===0 || DataTwoFour.length===0 || DataTwoA.length===0 || DataTwoB.length===0}
           variant={One ? "contained" : "outlined"}
           onClick={() => {
             setOne(true);
@@ -262,9 +275,9 @@ function Main() {
       </div>
 
       <div className="mt-[3%] flex justify-center">
-        {One && <TableOne uploadTwoOne={uploadTwoOne} />}
-        {TwoA && <TableTwoA DataTwoOne={DataTwoOne} DataTwoTwo={DataTwoTwo} DataTwoFour={DataTwoFour} DataTwoThreeOne={DataTwoThreeOne}/>}
-        {TwoB && <TableTwoB  DataTwoOne={DataTwoOne} DataTwoTwo={DataTwoTwo} DataTwoFour={DataTwoFour} DataTwoThreeOne={DataTwoThreeOne}/>}
+        {One && <TableOne uploadTwoOne={uploadTwoOne} DataTwoA={DataTwoA} DataTwoB={DataTwoB} DataTwoOne={DataTwoOne}/>}
+        {TwoA && <TableTwoA DataTwoOne={DataTwoOne} DataTwoTwo={DataTwoTwo} DataTwoFour={DataTwoFour} DataTwoThreeOne={DataTwoThreeOne} setDataTwoA={setDataTwoA}/>}
+        {TwoB && <TableTwoB  DataTwoOne={DataTwoOne} DataTwoTwo={DataTwoTwo} DataTwoFour={DataTwoFour} DataTwoThreeOne={DataTwoThreeOne} setDataTwoB={setDataTwoB}/>}
         {TwoOne && <TableTwoOne uploadTwoOne={uploadTwoOne} setDataTwoOne={setDataTwoOne}/>}
         {TwoTwo && <TableTwoTwo uploadTwoTwo={uploadTwoTwo} setDataTwoTwo={setDataTwoTwo}/>}
         {TwoThreeOne && <TableTwoThreeOne DataTwoOne={DataTwoOne} DataTwoThreeTwo={DataTwoThreeTwo} DataTwoFour={DataTwoFour} setDataTwoThreeOne={setDataTwoThreeOne}/>}
