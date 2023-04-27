@@ -138,7 +138,7 @@ function Main() {
       <div className="flex justify-between mt-[1%]">
         <Button
           color="error"
-          disabled={DataTwoOne.length===0 || DataTwoFour.length===0 || DataTwoA.length===0 || DataTwoB.length===0}
+          disabled={DataTwoOne.length===0 || DataTwoFour.length===0 || DataTwoA.length===0 }
           variant={One ? "contained" : "outlined"}
           onClick={() => {
             setOne(true);
@@ -275,7 +275,7 @@ function Main() {
       </div>
 
       <div className="mt-[3%] flex justify-center">
-        {One && <TableOne uploadTwoOne={uploadTwoOne} DataTwoA={DataTwoA} DataTwoB={DataTwoB} DataTwoOne={DataTwoOne}/>}
+        {One && <TableOne uploadTwoOne={uploadTwoOne} DataTwoA={DataTwoA} DataTwoOne={DataTwoOne}/>}
         {TwoA && <TableTwoA DataTwoOne={DataTwoOne} DataTwoTwo={DataTwoTwo} DataTwoFour={DataTwoFour} DataTwoThreeOne={DataTwoThreeOne} setDataTwoA={setDataTwoA}/>}
         {/* {TwoB && <TableTwoB  DataTwoOne={DataTwoOne} DataTwoTwo={DataTwoTwo} DataTwoFour={DataTwoFour} DataTwoThreeOne={DataTwoThreeOne} setDataTwoB={setDataTwoB}/>} */}
         {TwoOne && <TableTwoOne uploadTwoOne={uploadTwoOne} setDataTwoOne={setDataTwoOne}/>}
