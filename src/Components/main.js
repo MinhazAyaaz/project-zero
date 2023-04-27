@@ -3,7 +3,7 @@ import { useState } from "react";
 import Button from "@mui/material/Button";
 import TableOne from "./TableOne";
 import TableTwoA from "./TableTwoA";
-import TableTwoB from "./TableTwoB";
+// import TableTwoB from "./TableTwoB";
 import TableTwoOne from "./TableTwoOne";
 import TableTwoTwo from "./TableTwoTwo";
 import TableTwoThreeOne from "./TableTwoThreeOne";
@@ -170,7 +170,7 @@ function Main() {
         >
           2.A Score Table
         </Button>
-        <Button
+        {/* <Button
           disabled={DataTwoOne.length===0 || DataTwoTwo.length===0 || DataTwoFour.length===0 || DataTwoThreeOne.length===0}
           variant={TwoB ? "contained" : "outlined"}
           color="error"
@@ -186,7 +186,7 @@ function Main() {
           }}
         >
           2.B Score Table
-        </Button>
+        </Button> */}
         <Button
           disabled={disabledTwoOne}
           variant={TwoOne ? "contained" : "outlined"}
@@ -277,7 +277,7 @@ function Main() {
       <div className="mt-[3%] flex justify-center">
         {One && <TableOne uploadTwoOne={uploadTwoOne} DataTwoA={DataTwoA} DataTwoB={DataTwoB} DataTwoOne={DataTwoOne}/>}
         {TwoA && <TableTwoA DataTwoOne={DataTwoOne} DataTwoTwo={DataTwoTwo} DataTwoFour={DataTwoFour} DataTwoThreeOne={DataTwoThreeOne} setDataTwoA={setDataTwoA}/>}
-        {TwoB && <TableTwoB  DataTwoOne={DataTwoOne} DataTwoTwo={DataTwoTwo} DataTwoFour={DataTwoFour} DataTwoThreeOne={DataTwoThreeOne} setDataTwoB={setDataTwoB}/>}
+        {/* {TwoB && <TableTwoB  DataTwoOne={DataTwoOne} DataTwoTwo={DataTwoTwo} DataTwoFour={DataTwoFour} DataTwoThreeOne={DataTwoThreeOne} setDataTwoB={setDataTwoB}/>} */}
         {TwoOne && <TableTwoOne uploadTwoOne={uploadTwoOne} setDataTwoOne={setDataTwoOne}/>}
         {TwoTwo && <TableTwoTwo uploadTwoTwo={uploadTwoTwo} setDataTwoTwo={setDataTwoTwo}/>}
         {TwoThreeOne && <TableTwoThreeOne DataTwoOne={DataTwoOne} DataTwoThreeTwo={DataTwoThreeTwo} DataTwoFour={DataTwoFour} setDataTwoThreeOne={setDataTwoThreeOne}/>}

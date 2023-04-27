@@ -14,6 +14,7 @@ function TableTwoThreeOne(props){
     const valuesArray = [];
 
       exclude.push("237".padStart(3, '0'))
+      exclude.push("A01".padStart(3, '0'))
       exclude.push("A02".padStart(3, '0'))
       exclude.push("A03".padStart(3, '0'))
       exclude.push("A04".padStart(3, '0'))
@@ -28,14 +29,8 @@ function TableTwoThreeOne(props){
       exclude.push("132".padStart(3, '0'))
       exclude.push("232".padStart(3, '0'))
       exclude.push("244".padStart(3, '0'))
-      exclude.push("832".padStart(3, '0'))
-      exclude.push("233".padStart(3, '0'))
-      exclude.push("116".padStart(3, '0'))
-      exclude.push("935".padStart(3, '0'))
-      exclude.push("251".padStart(3, '0'))
-      exclude.push("304".padStart(3, '0'))
-      exclude.push("601".padStart(3, '0'))
-      exclude.push("036".padStart(3, '0'))
+      exclude.push("124".padStart(3, '0'))
+      exclude.push("413".padStart(3, '0'))
 
     const json = TwoThreeOneData['TwoThreeOne'];
     const TwoAData = TwoA['TwoA']

@@ -17,7 +17,7 @@ function TableTwoTwo(props) {
     const [date, time] = rawDate.split(" ");
     const [day, month, year] = date.split("/");
 
-    const now = new Date(2023, 3, 14);
+    const now = new Date(2023, 3, 26);
     const currentDay = now.getDate();
     const currentMonth = now.getMonth() + 1;
     const currentYear = now.getFullYear();
@@ -87,7 +87,7 @@ function TableTwoTwo(props) {
       const messageDate = new Date(year, month - 1, day, hour, minute, second);
 
       // Check if the message date is before 3AM today
-      return messageDate < new Date(currentYear,3, 14, 3, 0, 0);
+      return messageDate < new Date(currentYear,3, 26, 3, 0, 0);
     });
 
     const finalData = newFilteredData.map((item) => {
