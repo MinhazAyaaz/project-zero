@@ -1,5 +1,5 @@
 import React from "react";
-import { useState } from "react";
+import { useState,useEffect } from "react";
 import Button from "@mui/material/Button";
 import TableOne from "./TableOne";
 import TableTwoA from "./TableTwoA";
@@ -19,7 +19,7 @@ function Main() {
   const [selectedDate, setSelectedDate] = useState(new Date())
 
   const [DataTwoA, setDataTwoA] = useState([]);
-  const [DataTwoB, setDataTwoB] = useState([]);
+  // const [DataTwoB, setDataTwoB] = useState([]);
   const [DataTwoThreeOne, setDataTwoThreeOne] = useState([]);
   const [DataTwoThreeTwo, setDataTwoThreeTwo] = useState([]);
   const [DataTwoOne, setDataTwoOne] = useState([]);
@@ -45,6 +45,15 @@ function Main() {
   const [TwoThreeTwo, setTwoThreeTwo] = useState(false);
   const [TwoFour, setTwoFour] = useState(false);
 
+  useEffect(() => {
+    console.log(selectedDate)
+  },[selectedDate]);
+
+  const handleDateChange = (newValue) => {
+    const selectedDateAsDate = newValue.toDate(); // create a new Date object from the dayjs value
+    setSelectedDate(selectedDateAsDate);
+  };
+
   const changeHandler6 = (event) => {
     setDisabledTwoFour(false);
     setUploadTwoFour(event);
@@ -69,7 +78,7 @@ function Main() {
     <>
     <div className="absolute ml-[8%] mt-[3%]">
     <LocalizationProvider dateAdapter={AdapterDayjs}>
-      <DatePicker label="Date Picker" value={dayjs(selectedDate)} onChange={(newValue) => setSelectedDate(newValue)}/>
+      <DatePicker label="Date Picker" value={dayjs(selectedDate)} onChange={handleDateChange}/>
     </LocalizationProvider>
     </div>
       <div className="flex justify-center">
