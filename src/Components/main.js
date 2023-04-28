@@ -288,9 +288,9 @@ function Main() {
         {TwoA && <TableTwoA DataTwoOne={DataTwoOne} DataTwoTwo={DataTwoTwo} DataTwoFour={DataTwoFour} DataTwoThreeOne={DataTwoThreeOne} setDataTwoA={setDataTwoA}/>}
         {/* {TwoB && <TableTwoB  DataTwoOne={DataTwoOne} DataTwoTwo={DataTwoTwo} DataTwoFour={DataTwoFour} DataTwoThreeOne={DataTwoThreeOne} setDataTwoB={setDataTwoB}/>} */}
         {TwoOne && <TableTwoOne uploadTwoOne={uploadTwoOne} setDataTwoOne={setDataTwoOne}/>}
-        {TwoTwo && <TableTwoTwo uploadTwoTwo={uploadTwoTwo} setDataTwoTwo={setDataTwoTwo}/>}
+        {TwoTwo && <TableTwoTwo uploadTwoTwo={uploadTwoTwo} setDataTwoTwo={setDataTwoTwo} selectedDate={selectedDate}/>}
         {TwoThreeOne && <TableTwoThreeOne DataTwoOne={DataTwoOne} DataTwoThreeTwo={DataTwoThreeTwo} DataTwoFour={DataTwoFour} setDataTwoThreeOne={setDataTwoThreeOne}/>}
-        {TwoThreeTwo && <TableTwoThreeTwo uploadTwoThreeTwo={uploadTwoThreeTwo} setDataTwoThreeTwo={setDataTwoThreeTwo}/>}
+        {TwoThreeTwo && <TableTwoThreeTwo uploadTwoThreeTwo={uploadTwoThreeTwo} setDataTwoThreeTwo={setDataTwoThreeTwo} selectedDate={selectedDate}/>}
         {TwoFour && <TableTwoFour uploadTwoFour={uploadTwoFour} setDataTwoFour={setDataTwoFour}/>}
       </div>
     </>

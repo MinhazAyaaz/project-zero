@@ -17,7 +17,7 @@ function TableTwoTwo(props) {
     const [date, time] = rawDate.split(" ");
     const [day, month, year] = date.split("/");
 
-    const now = new Date(2023, 3, 26);
+    const now = props.selectedDate
     const currentDay = now.getDate();
     const currentMonth = now.getMonth() + 1;
     const currentYear = now.getFullYear();
@@ -86,8 +86,12 @@ function TableTwoTwo(props) {
       const [hour, minute, second] = time.split(":");
       const messageDate = new Date(year, month - 1, day, hour, minute, second);
 
+      const tempDate = props.selectedDate
+      tempDate.setHours(3)
+      tempDate.setMinutes(0)
+      tempDate.setSeconds(0)
       // Check if the message date is before 3AM today
-      return messageDate < new Date(currentYear,3, 26, 3, 0, 0);
+      return messageDate < tempDate
     });
 
     const finalData = newFilteredData.map((item) => {
@@ -150,7 +154,7 @@ function TableTwoTwo(props) {
       processData(data, fileName);
     };
     reader.readAsBinaryString(file);
-  }, [props.uploadTwoTwo]);
+  }, [props.uploadTwoTwo,props.selectedDate]);
 
   return (
     <table class="table-auto border-x border-b w-full text-left text-gray-800">
