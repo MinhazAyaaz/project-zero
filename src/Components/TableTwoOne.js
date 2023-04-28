@@ -150,25 +150,12 @@ function TableTwoOne(props) {
       }
     });
 
-
     props.setDataTwoOne(newData);
-
-    // // Loop through each row of the object and round the value of the "Stops Per Hour" column
-    // newData.forEach((row) => {
-    //   if (row["Stops Per Hour"]) {
-    //     row["Stops Per Hour"] = Math.round(row["Stops Per Hour"]);
-    //   }
-    //   if(row["Hours worked"]){
-    //     row["Hours worked"] = Math.round(row["Hours worked"]);
-    //   }
-    // });
 
     newData.map((d) => {
       rowsArray.push(Object.keys(d));
       valuesArray.push(Object.values(d));
     });
-
-    // Parsed Data Response in array format
 
     // Filtered Column Names
     setTableRows(rowsArray[0]);

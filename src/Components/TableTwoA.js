@@ -20,7 +20,7 @@ function TableTwoA(props){
     const json = TwoA['TwoA'];
 
     const newData = json.map((item) => {
-      let PickupTotal
+      let PickupTotal = 0
       let FutilePickup = 0
       let FailPickup = 0
       let DeliveryTotal = 0
@@ -30,8 +30,8 @@ function TableTwoA(props){
       let RunStatus
       let OnTimeDelivery
       let OverDue
-      let StopsPerHour
-      let HoursWorked
+      let StopsPerHour = 0
+      let HoursWorked = 0
       let TotalReceived
       let checkCompliance = "Pass"
       let PMReturn
@@ -80,7 +80,12 @@ function TableTwoA(props){
         }
       })
 
-      if((PickupTotal+DeliveryTotal+(OnboardTotal - DeliveryTotal))==0 && (SortCageScore==undefined || SortCageScore=="0%")){
+      //If PickupTotal,HoursWorked or StopsPerHour is undefined or empty, we equal the value to 0
+      if(PickupTotal=="" || PickupTotal==undefined){PickupTotal=0}
+      if(StopsPerHour=="" || StopsPerHour==undefined){StopsPerHour=0}
+      if(HoursWorked=="" || HoursWorked==undefined){HoursWorked=0}
+
+      if((PickupTotal+parseInt(DeliveryTotal)+(OnboardTotal - DeliveryTotal))==0 && (SortCageScore==undefined || SortCageScore=="0%")){
         RunStatus="Inactive"
       }
       else{
@@ -159,7 +164,7 @@ function TableTwoA(props){
         "Sorted to Cage Score" : (sortedCageScore) ? sortedCageScore : "No interstate pickups",
         "Productivity Score" : (productivityScore=="NA") ? productivityScore : Math.round(productivityScore) + "%",
         "Overall Score" : overallScore,
-        "1.0 Pickup Total" : (PickupTotal=="") ? 0 : PickupTotal,
+        "1.0 Pickup Total" : PickupTotal,
         "1.1 Futile Pickup" : FutilePickup,
         "1.2 Failed Pickup" : FailPickup,
         "2.0 Delivery Total" : (DeliveryTotal=="") ? 0 : DeliveryTotal,
