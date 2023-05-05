@@ -3,16 +3,18 @@ import {useState,useEffect} from 'react'
 import { TwoThreeOneData } from "../data/TwoThreeOne";
 import { TwoA } from "../data/TwoA";
 
+
 function TableTwoThreeOne(props){
   const [tableRows, setTableRows] = useState([]);
   const [tableValues, setTableValues] = useState([]);
   let exclude = [];
 
-
+  //Using useEffect hook to make sure page doesn't render infinite times
   useEffect(() => {
     const rowsArray = [];
     const valuesArray = [];
 
+      //Adding all the excluded run values by storing them in an array
       exclude.push("237".padStart(3, '0'))
       exclude.push("A01".padStart(3, '0'))
       exclude.push("A02".padStart(3, '0'))
@@ -32,10 +34,12 @@ function TableTwoThreeOne(props){
       exclude.push("124".padStart(3, '0'))
       exclude.push("413".padStart(3, '0'))
 
+    //Storing data imported from 2.3.1 and 2.A
     const json = TwoThreeOneData['TwoThreeOne'];
     const TwoAData = TwoA['TwoA']
 
     const newData = json.map((item) => {
+      //Defining all the variables which are needed to populate the tables
       let PickupTotal
       let freight
       let checkInAM
