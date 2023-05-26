@@ -187,7 +187,24 @@ function TableTwoA(props){
 
     props.setDataTwoA(newData)
 
-    newData.map((d) => {
+    const filteredData = newData.sort((a, b) => {
+      const overallScoreA = a["Overall Score"];
+      const overallScoreB = b["Overall Score"];
+    
+      // Sort the data based on the "Overall Score" values
+      if (overallScoreA === "Run not active") {
+        return 1; // "Run not active" comes after percentage values
+      } else if (overallScoreB === "Run not active") {
+        return -1; // Percentage values come before "Run not active"
+      } else {
+        // Parse the percentage values and compare numerically
+        const percentageA = parseInt(overallScoreA);
+        const percentageB = parseInt(overallScoreB);
+        return percentageA - percentageB; // Sort in descending order
+      }
+    });
+
+    filteredData.map((d) => {
       rowsArray.push(Object.keys(d));
       valuesArray.push(Object.values(d));
     });
