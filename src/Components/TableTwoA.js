@@ -153,7 +153,16 @@ function TableTwoA(props){
         overallScore = "Run not active"
       }
       else{
-        overallScore = Math.round((parseInt(pickupScore)*0.35)+(parseInt(deliveryScore)*0.35)+(parseInt(complianceScore)*0.25)+(parseInt(productivityScore)*0.05)) + "%"
+        console.log("Run",item["Run #"])
+        console.log("pickupScore",pickupScore)
+        console.log("pickupScore",parseFloat(pickupScore))
+        console.log("deliveryScore",deliveryScore)
+        console.log("deliveryScore",parseFloat(deliveryScore))
+        console.log("complianceScore",complianceScore)
+        console.log("complianceScore",parseFloat(complianceScore))
+        console.log("productivityScore",productivityScore)
+        console.log("productivityScore",parseFloat(productivityScore))
+        overallScore = Math.round((parseFloat(pickupScore)*0.35)+(parseFloat(deliveryScore)*0.35)+(parseFloat(complianceScore)*0.25)+(parseFloat(productivityScore)*0.05)) + "%"
       }
 
       return {
@@ -185,9 +194,8 @@ function TableTwoA(props){
       };
     });
 
-    props.setDataTwoA(newData)
-
-    const filteredData = newData.sort((a, b) => {
+    const filteredData = newData.filter((item) => item["Overall Score"] != "Run not active")
+    .sort((a, b) => {
       const overallScoreA = a["Overall Score"];
       const overallScoreB = b["Overall Score"];
     
@@ -203,6 +211,8 @@ function TableTwoA(props){
         return percentageA - percentageB; // Sort in descending order
       }
     });
+
+    props.setDataTwoA(filteredData)
 
     filteredData.map((d) => {
       rowsArray.push(Object.keys(d));

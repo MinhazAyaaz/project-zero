@@ -92,7 +92,13 @@ function TableTwoThreeOne(props){
               checkInPM = temp2["Check in PM"]
           }
             if(item["CF run converted"]==temp2["CF PM OUT"]){
-              checkOutPM = temp2["Check out PM"]
+              if(checkInPM == "No Pm Check In"){
+                checkOutPM = "No PM Check Out"
+              }
+              else{
+                checkOutPM = temp2["Check out PM"]
+              }
+              
             }
         });
       }
@@ -150,10 +156,12 @@ function TableTwoThreeOne(props){
         PMReturn = "No PM Return"
       }
 
+      
       if(checkInAM){totalCheck++}
       if (checkOutAM){totalCheck++}
       if (checkInPM!= "No Pm Check In"){totalCheck++}
       if (checkOutPM != "No PM Check Out"){totalCheck++}
+
 
 
       return {

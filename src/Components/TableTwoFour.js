@@ -60,11 +60,12 @@ function TableTwoFour(props) {
             parseFloat(item["TotalSorted%"])) /
             100
       ),
-      Bay: OSHUsageData.OSHUsage.map((temp) => {
-        if (item["Pickup CF"] == temp["Run #"]) {
+      Bay: OSHUsageData.OSHUsage.reduce((accumulator, temp) => {
+        if (item["Pickup CF"] === temp["Run #"]) {
           return temp["Subdepot codes"];
         }
-      }),
+        return accumulator;
+      }, null),
       "TotalSorted%": Math.round((parseFloat(item["TotalSorted%"]) * 100)/100) + "%"
     }));
 

@@ -16,35 +16,24 @@ function TableOne(props){
     let json = [
     {
       "Bays": "Blu",
-      "Total map run" : "-",
     },
     {
       "Bays": "Chullora",
-      "Total map run" : "36",
-    },
-    {
-      "Bays": "Courier Lite",
-      "Total map run" : "-",
     },
     {
       "Bays": "Matraville",
-      "Total map run" : "27",
     },
     {
       "Bays": "OSH",
-      "Total map run" : "77",
     },
     {
       "Bays": "Other",
-      "Total map run" : "-",
     },
     {
       "Bays": "Parcel connect",
-      "Total map run" : "-",
     },
     {
       "Bays": "Wetherill Park",
-      "Total map run" : "59",
     },
   ];
 
@@ -52,18 +41,53 @@ function TableOne(props){
 
     let activeCount = 0
     let pmCheckInCount = 0
+    let overallScore = 0
+    let pickupTotal = 0
+    let deliveryTotal = 0
+    let onboardTotal = 0
+    let overdue = 0
+    let sortedCageScore = 0
+    let count = 0
+    
 
-    console.log(props.DataTwoA)
 
-    props.DataTwoOne?.map((temp) => {
-      if(item["Bays"]==temp["Final Bay"] && temp["Active status"]=="Active"){
+    props.DataTwoA?.map((temp) => {
+      if(item["Bays"]==temp["Bay"] && temp["Run Active Status"]=="Active"){
         activeCount = activeCount + 1;
+      }
+      if(item["Bays"]==temp["Bay"] && temp["PM checkout status"]=="No PM Return"){
+        pmCheckInCount = pmCheckInCount + 1;
+      }
+      if(item["Bays"]==temp["Bay"]){
+        overallScore = overallScore + parseInt(temp["Overall Score"])
       }
     })
 
-    props.DataTwoA?.map((temp) => {
+    props.DataTwoOne?.map((temp) => {
+      if(item["Bays"]==temp["Final Bay"]){
+        if (temp["Pickup Total"] !== "") {
+          pickupTotal += parseInt(temp["Pickup Total"]);
+        }
+        if (temp["Delivery Total"] !== "") {
+          deliveryTotal += parseInt(temp["Delivery Total"]);
+        }
+        if (temp["Onboard Total"] !== "") {
+          onboardTotal += parseInt(temp["Onboard Total"]);
+        }
+        if (temp["Overdue"] !== "") {
+          overdue += parseInt(temp["Overdue"]);
+        }
+      }
+    })
+
+    console.log("yes",props.DataTwoFour)
+
+    props.DataTwoFour?.map((temp) => {
+
       if(item["Bays"]==temp["Bay"]){
-        pmCheckInCount = pmCheckInCount + 1;
+        console.log(temp["TotalSorted%"])
+        count += 1;
+        sortedCageScore = sortedCageScore + parseInt(temp["TotalSorted%"])
       }
     })
 
@@ -71,14 +95,17 @@ function TableOne(props){
       ...item,
       "Active" : activeCount,
       "No PM check in" : pmCheckInCount,
-      "Overall score (%)" : "",
-      "Pickup Total" : "",
-      "Delivery Total" : "",
-      "Onboard Total" : "",
-      "Average onboard per Courier/OSH" : "",
-      "Average Delivery per Courier/OSH" : "",
-      "Overdue" : "",
-      "Sorted to cage score" : "",
+      "Avg hours worked per active ID" : 0,
+      "Total load time:(hour)" : 0,
+      "Load speed: Item/min, per active  ID": 0,
+      "Overall score (%)" : (activeCount==0) ? 0 : Math.round(overallScore / activeCount),
+      "Pickup Total" : pickupTotal,
+      "Delivery Total" : deliveryTotal,
+      "Onboard Total" : onboardTotal,
+      "Average onboard per Courier/OSH" : (activeCount==0) ? 0 : Math.round(onboardTotal / activeCount),
+      "Average Delivery per Courier/OSH" : (activeCount==0) ? 0 : Math.round(deliveryTotal / activeCount),
+      "Overdue" : overdue,
+      "Sorted to cage score" : (count==0) ? 0 : Math.round(sortedCageScore / count) + "%",
     };
   })
 
