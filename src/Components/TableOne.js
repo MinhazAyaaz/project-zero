@@ -80,16 +80,15 @@ function TableOne(props){
       }
     })
 
-    console.log("yes",props.DataTwoFour)
-
     props.DataTwoFour?.map((temp) => {
 
       if(item["Bays"]==temp["Bay"]){
-        console.log(temp["TotalSorted%"])
         count += 1;
         sortedCageScore = sortedCageScore + parseInt(temp["TotalSorted%"])
       }
     })
+
+    console.log("Overall Score",overallScore/activeCount)
 
     return {
       ...item,
@@ -98,14 +97,14 @@ function TableOne(props){
       "Avg hours worked per active ID" : 0,
       "Total load time:(hour)" : 0,
       "Load speed: Item/min, per active  ID": 0,
-      "Overall score (%)" : (activeCount==0) ? 0 : Math.round(overallScore / activeCount),
+      "Overall score (%)" : (activeCount==0) ? 0 + "%" : Math.round(overallScore / activeCount) + "%",
       "Pickup Total" : pickupTotal,
       "Delivery Total" : deliveryTotal,
       "Onboard Total" : onboardTotal,
       "Average onboard per Courier/OSH" : (activeCount==0) ? 0 : Math.round(onboardTotal / activeCount),
       "Average Delivery per Courier/OSH" : (activeCount==0) ? 0 : Math.round(deliveryTotal / activeCount),
       "Overdue" : overdue,
-      "Sorted to cage score" : (count==0) ? 0 : Math.round(sortedCageScore / count) + "%",
+      "Sorted to cage score" : (count==0) ? 0 + "%" : Math.round(sortedCageScore / count) + "%",
     };
   })
 

@@ -153,15 +153,6 @@ function TableTwoA(props){
         overallScore = "Run not active"
       }
       else{
-        console.log("Run",item["Run #"])
-        console.log("pickupScore",pickupScore)
-        console.log("pickupScore",parseFloat(pickupScore))
-        console.log("deliveryScore",deliveryScore)
-        console.log("deliveryScore",parseFloat(deliveryScore))
-        console.log("complianceScore",complianceScore)
-        console.log("complianceScore",parseFloat(complianceScore))
-        console.log("productivityScore",productivityScore)
-        console.log("productivityScore",parseFloat(productivityScore))
         overallScore = Math.round((parseFloat(pickupScore)*0.35)+(parseFloat(deliveryScore)*0.35)+(parseFloat(complianceScore)*0.25)+(parseFloat(productivityScore)*0.05)) + "%"
       }
 
