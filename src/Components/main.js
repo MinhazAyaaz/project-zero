@@ -1,30 +1,33 @@
 import React from "react";
-import { useState,useEffect } from "react";
+import { useState, useEffect } from "react";
 import Button from "@mui/material/Button";
 import TableOne from "./TableOne";
 import TableTwoA from "./TableTwoA";
-// import TableTwoB from "./TableTwoB";
 import TableTwoOne from "./TableTwoOne";
 import TableTwoTwo from "./TableTwoTwo";
 import TableTwoThreeOne from "./TableTwoThreeOne";
 import TableTwoThreeTwo from "./TableTwoThreeTwo";
 import TableTwoFour from "./TableTwoFour";
+import Chullora from "./Chullora";
 import Logo from "../data/logo.png";
-import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
-import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
-import { DatePicker } from '@mui/x-date-pickers/DatePicker';
-import dayjs from 'dayjs';
+import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
+import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
+import { DatePicker } from "@mui/x-date-pickers/DatePicker";
+import dayjs from "dayjs";
+import Matraville from "./Matraville";
+import Wetherill from "./Wetherill";
+
 
 function Main() {
-  const [selectedDate, setSelectedDate] = useState(new Date())
+  const [selectedDate, setSelectedDate] = useState(new Date());
 
   const [DataTwoA, setDataTwoA] = useState([]);
-  // const [DataTwoB, setDataTwoB] = useState([]);
   const [DataTwoThreeOne, setDataTwoThreeOne] = useState([]);
   const [DataTwoThreeTwo, setDataTwoThreeTwo] = useState([]);
   const [DataTwoOne, setDataTwoOne] = useState([]);
   const [DataTwoTwo, setDataTwoTwo] = useState([]);
   const [DataTwoFour, setDataTwoFour] = useState([]);
+  const [DataOne, setDataOne] = useState([]);
 
   const [disabledTwoOne, setDisabledTwoOne] = useState(true);
   const [disabledTwoTwo, setDisabledTwoTwo] = useState(true);
@@ -38,16 +41,18 @@ function Main() {
 
   const [One, setOne] = useState(false);
   const [TwoA, setTwoA] = useState(false);
-  const [TwoB, setTwoB] = useState(false);
   const [TwoOne, setTwoOne] = useState(false);
   const [TwoTwo, setTwoTwo] = useState(false);
   const [TwoThreeOne, setTwoThreeOne] = useState(false);
   const [TwoThreeTwo, setTwoThreeTwo] = useState(false);
   const [TwoFour, setTwoFour] = useState(false);
+  const [chullora, setChullora] = useState(false);
+  const [matraville, setMatraville] = useState(false);
+  const [wetherill, setWetherill] = useState(false);
 
   useEffect(() => {
-    console.log(selectedDate)
-  },[selectedDate]);
+    console.log(selectedDate);
+  }, [selectedDate]);
 
   const handleDateChange = (newValue) => {
     const selectedDateAsDate = newValue.toDate(); // create a new Date object from the dayjs value
@@ -76,11 +81,15 @@ function Main() {
 
   return (
     <>
-    <div className="absolute ml-[8%] mt-[3%]">
-    <LocalizationProvider dateAdapter={AdapterDayjs}>
-      <DatePicker label="Date Picker" value={dayjs(selectedDate)} onChange={handleDateChange}/>
-    </LocalizationProvider>
-    </div>
+      <div className="absolute ml-[8%] mt-[3%]">
+        <LocalizationProvider dateAdapter={AdapterDayjs}>
+          <DatePicker
+            label="Date Picker"
+            value={dayjs(selectedDate)}
+            onChange={handleDateChange}
+          />
+        </LocalizationProvider>
+      </div>
       <div className="flex justify-center">
         <img className="w-[12%]" src={Logo} />
       </div>
@@ -142,60 +151,61 @@ function Main() {
           </label>
         </div>
       </div>
-      <div className="flex mt-[2%] justify-center"><h2>Note: Click Available Tables to reveal the Unavailable Tables after upload</h2></div>
+      <div className="flex mt-[2%] justify-center">
+        <h2>
+          Note: Click Available Tables to reveal the Unavailable Tables after
+          upload
+        </h2>
+      </div>
 
       <div className="flex justify-between mt-[1%]">
         <Button
           color="error"
-          disabled={DataTwoOne.length===0 || DataTwoFour.length===0 || DataTwoA.length===0 }
+          disabled={
+            DataTwoOne.length === 0 ||
+            DataTwoFour.length === 0 ||
+            DataTwoA.length === 0
+          }
           variant={One ? "contained" : "outlined"}
           onClick={() => {
             setOne(true);
             setTwoA(false);
-            setTwoB(false);
             setTwoOne(false);
             setTwoTwo(false);
             setTwoThreeOne(false);
             setTwoThreeTwo(false);
             setTwoFour(false);
+            setChullora(false);
+            setMatraville(false);
+            setWetherill(false);
           }}
         >
           1. Executive Summary
         </Button>
         <Button
-          disabled={DataTwoOne.length===0 || DataTwoTwo.length===0 || DataTwoFour.length===0 || DataTwoThreeOne.length===0}
+          disabled={
+            DataTwoOne.length === 0 ||
+            DataTwoTwo.length === 0 ||
+            DataTwoFour.length === 0 ||
+            DataTwoThreeOne.length === 0
+          }
           variant={TwoA ? "contained" : "outlined"}
           color="error"
           onClick={() => {
             setOne(false);
             setTwoA(true);
-            setTwoB(false);
             setTwoOne(false);
             setTwoTwo(false);
             setTwoThreeOne(false);
             setTwoThreeTwo(false);
             setTwoFour(false);
+            setChullora(false);
+            setMatraville(false);
+            setWetherill(false);
           }}
         >
           2.A Score Table
         </Button>
-        {/* <Button
-          disabled={DataTwoOne.length===0 || DataTwoTwo.length===0 || DataTwoFour.length===0 || DataTwoThreeOne.length===0}
-          variant={TwoB ? "contained" : "outlined"}
-          color="error"
-          onClick={() => {
-            setOne(false);
-            setTwoA(false);
-            setTwoB(true);
-            setTwoOne(false);
-            setTwoTwo(false);
-            setTwoThreeOne(false);
-            setTwoThreeTwo(false);
-            setTwoFour(false);
-          }}
-        >
-          2.B Score Table
-        </Button> */}
         <Button
           disabled={disabledTwoOne}
           variant={TwoOne ? "contained" : "outlined"}
@@ -203,12 +213,14 @@ function Main() {
           onClick={() => {
             setOne(false);
             setTwoA(false);
-            setTwoB(false);
             setTwoOne(true);
             setTwoTwo(false);
             setTwoThreeOne(false);
             setTwoThreeTwo(false);
             setTwoFour(false);
+            setChullora(false);
+            setMatraville(false);
+            setWetherill(false);
           }}
         >
           2.1 Data Control Tower
@@ -220,29 +232,37 @@ function Main() {
           onClick={() => {
             setOne(false);
             setTwoA(false);
-            setTwoB(false);
             setTwoOne(false);
             setTwoTwo(true);
             setTwoThreeOne(false);
             setTwoThreeTwo(false);
             setTwoFour(false);
+            setChullora(false);
+            setMatraville(false);
+            setWetherill(false);
           }}
         >
           2.2 Missed Pickup Data
         </Button>
         <Button
-          disabled={DataTwoOne.length===0 || DataTwoThreeTwo.length===0 || DataTwoFour===0}
+          disabled={
+            DataTwoOne.length === 0 ||
+            DataTwoThreeTwo.length === 0 ||
+            DataTwoFour === 0
+          }
           variant={TwoThreeOne ? "contained" : "outlined"}
           color="error"
           onClick={() => {
             setOne(false);
             setTwoA(false);
-            setTwoB(false);
             setTwoOne(false);
             setTwoTwo(false);
             setTwoThreeOne(true);
             setTwoThreeTwo(false);
             setTwoFour(false);
+            setChullora(false);
+            setMatraville(false);
+            setWetherill(false);
           }}
         >
           2.3.1 Check in-check Analysis
@@ -254,12 +274,14 @@ function Main() {
           onClick={() => {
             setOne(false);
             setTwoA(false);
-            setTwoB(false);
             setTwoOne(false);
             setTwoTwo(false);
             setTwoThreeOne(false);
             setTwoThreeTwo(true);
             setTwoFour(false);
+            setChullora(false);
+            setMatraville(false);
+            setWetherill(false);
           }}
         >
           2.3.2 Check in-check Data
@@ -271,27 +293,148 @@ function Main() {
           onClick={() => {
             setOne(false);
             setTwoA(false);
-            setTwoB(false);
             setTwoOne(false);
             setTwoTwo(false);
             setTwoThreeOne(false);
             setTwoThreeTwo(false);
             setTwoFour(true);
+            setChullora(false);
+            setMatraville(false);
+            setWetherill(false);
           }}
         >
           2.4 Cage Scan Compliance
         </Button>
       </div>
-
+      <div className="flex justify-center">
+        <div className="flex justify-between mt-[1%] w-[500px]">
+          <Button
+            color="error"
+            disabled={DataOne.length === 0}
+            variant={chullora ? "contained" : "outlined"}
+            onClick={() => {
+              setOne(false);
+              setTwoA(false);
+              setTwoOne(false);
+              setTwoTwo(false);
+              setTwoThreeOne(false);
+              setTwoThreeTwo(false);
+              setTwoFour(false);
+              setChullora(true);
+              setMatraville(false);
+              setWetherill(false);
+            }}
+          >
+            Chullora
+          </Button>
+          <Button
+            color="error"
+            disabled={DataOne.length === 0}
+            variant={matraville ? "contained" : "outlined"}
+            onClick={() => {
+              setOne(false);
+              setTwoA(false);
+              setTwoOne(false);
+              setTwoTwo(false);
+              setTwoThreeOne(false);
+              setTwoThreeTwo(false);
+              setTwoFour(false);
+              setChullora(false);
+              setMatraville(true);
+              setWetherill(false);
+            }}
+          >
+            Matraville
+          </Button>
+          <Button
+            color="error"
+            disabled={DataOne.length === 0}
+            variant={wetherill ? "contained" : "outlined"}
+            onClick={() => {
+              setOne(false);
+              setTwoA(false);
+              setTwoOne(false);
+              setTwoTwo(false);
+              setTwoThreeOne(false);
+              setTwoThreeTwo(false);
+              setTwoFour(false);
+              setChullora(false);
+              setMatraville(false);
+              setWetherill(true);
+            }}
+          >
+            Wetherill Park
+          </Button>
+        </div>
+      </div>
       <div className="mt-[3%] flex justify-center">
-        {One && <TableOne uploadTwoOne={uploadTwoOne} DataTwoA={DataTwoA} DataTwoOne={DataTwoOne} DataTwoFour={DataTwoFour}/>}
-        {TwoA && <TableTwoA DataTwoOne={DataTwoOne} DataTwoTwo={DataTwoTwo} DataTwoFour={DataTwoFour} DataTwoThreeOne={DataTwoThreeOne} setDataTwoA={setDataTwoA}/>}
-        {/* {TwoB && <TableTwoB  DataTwoOne={DataTwoOne} DataTwoTwo={DataTwoTwo} DataTwoFour={DataTwoFour} DataTwoThreeOne={DataTwoThreeOne} setDataTwoB={setDataTwoB}/>} */}
-        {TwoOne && <TableTwoOne uploadTwoOne={uploadTwoOne} setDataTwoOne={setDataTwoOne}/>}
-        {TwoTwo && <TableTwoTwo uploadTwoTwo={uploadTwoTwo} setDataTwoTwo={setDataTwoTwo} selectedDate={selectedDate}/>}
-        {TwoThreeOne && <TableTwoThreeOne DataTwoOne={DataTwoOne} DataTwoThreeTwo={DataTwoThreeTwo} DataTwoFour={DataTwoFour} setDataTwoThreeOne={setDataTwoThreeOne}/>}
-        {TwoThreeTwo && <TableTwoThreeTwo uploadTwoThreeTwo={uploadTwoThreeTwo} setDataTwoThreeTwo={setDataTwoThreeTwo} selectedDate={selectedDate}/>}
-        {TwoFour && <TableTwoFour uploadTwoFour={uploadTwoFour} setDataTwoFour={setDataTwoFour}/>}
+        {One && (
+          <TableOne
+            uploadTwoOne={uploadTwoOne}
+            DataTwoA={DataTwoA}
+            DataTwoOne={DataTwoOne}
+            DataTwoFour={DataTwoFour}
+            setDataOne={setDataOne}
+          />
+        )}
+        {TwoA && (
+          <TableTwoA
+            DataTwoOne={DataTwoOne}
+            DataTwoTwo={DataTwoTwo}
+            DataTwoFour={DataTwoFour}
+            DataTwoThreeOne={DataTwoThreeOne}
+            setDataTwoA={setDataTwoA}
+          />
+        )}
+        {TwoOne && (
+          <TableTwoOne
+            uploadTwoOne={uploadTwoOne}
+            setDataTwoOne={setDataTwoOne}
+          />
+        )}
+        {TwoTwo && (
+          <TableTwoTwo
+            uploadTwoTwo={uploadTwoTwo}
+            setDataTwoTwo={setDataTwoTwo}
+            selectedDate={selectedDate}
+          />
+        )}
+        {TwoThreeOne && (
+          <TableTwoThreeOne
+            DataTwoOne={DataTwoOne}
+            DataTwoThreeTwo={DataTwoThreeTwo}
+            DataTwoFour={DataTwoFour}
+            setDataTwoThreeOne={setDataTwoThreeOne}
+          />
+        )}
+        {TwoThreeTwo && (
+          <TableTwoThreeTwo
+            uploadTwoThreeTwo={uploadTwoThreeTwo}
+            setDataTwoThreeTwo={setDataTwoThreeTwo}
+            selectedDate={selectedDate}
+          />
+        )}
+        {TwoFour && (
+          <TableTwoFour
+            uploadTwoFour={uploadTwoFour}
+            setDataTwoFour={setDataTwoFour}
+          />
+        )}
+        {chullora && (
+          <Chullora
+            DataTwoA={DataTwoA}
+          />
+        )}
+        {matraville && (
+          <Matraville
+            DataTwoA={DataTwoA}
+          />
+        )}
+        {wetherill && (
+          <Wetherill
+            DataTwoA={DataTwoA}
+          />
+        )}
       </div>
     </>
   );

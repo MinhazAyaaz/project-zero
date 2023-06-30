@@ -48,7 +48,7 @@ function TableOne(props){
     let overdue = 0
     let sortedCageScore = 0
     let count = 0
-    
+    let hoursWorked = 0
 
 
     props.DataTwoA?.map((temp) => {
@@ -77,7 +77,11 @@ function TableOne(props){
         if (temp["Overdue"] !== "") {
           overdue += parseInt(temp["Overdue"]);
         }
+        if (temp["Active status"] == "Active"){
+        hoursWorked = hoursWorked + temp["Hours worked"]
+        }
       }
+
     })
 
     props.DataTwoFour?.map((temp) => {
@@ -94,7 +98,7 @@ function TableOne(props){
       ...item,
       "Active" : activeCount,
       "No PM check in" : pmCheckInCount,
-      "Avg hours worked per active ID" : 0,
+      "Avg hours worked per active ID" : (activeCount==0) ? 0 : (hoursWorked/activeCount),
       "Total load time:(hour)" : 0,
       "Load speed: Item/min, per active  ID": 0,
       "Overall score (%)" : (activeCount==0) ? 0 + "%" : Math.round(overallScore / activeCount) + "%",
@@ -107,6 +111,8 @@ function TableOne(props){
       "Sorted to cage score" : (count==0) ? 0 + "%" : Math.round(sortedCageScore / count) + "%",
     };
   })
+
+  props.setDataOne(newData)
 
     newData.map((d) => {
       rowsArray.push(Object.keys(d));

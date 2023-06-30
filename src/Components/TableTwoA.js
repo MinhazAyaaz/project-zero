@@ -5,11 +5,12 @@ import { TwoA } from "../data/TwoA";
 function TableTwoA(props){
   const [tableRows, setTableRows] = useState([]);
   const [tableValues, setTableValues] = useState([]);
+  const [dataFetched, setDataFetched] = useState(false);
   
 
   useEffect(() => {
 
-    if (tableRows.length > 0) {
+    if (dataFetched) {
       // Data has already been fetched and processed, no need to do it again
       return;
     }
@@ -212,7 +213,8 @@ function TableTwoA(props){
 
     setTableRows(rowsArray[0]);
     setTableValues(valuesArray);
-  }, []);
+    setDataFetched(true);
+  },[]);
 
 
 return(
