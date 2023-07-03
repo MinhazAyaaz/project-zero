@@ -5,6 +5,7 @@ import { ChulloraRun } from "../data/ChulloraRun";
 function Chullora(props) {
   const [tableRows, setTableRows] = useState([]);
   const [tableValues, setTableValues] = useState([]);
+  let bottom = 0;
 
   useEffect(() => {
 
@@ -13,11 +14,11 @@ function Chullora(props) {
 
   const json = ChulloraRun.ChulloraRun.map((item) => {
 
-  let pickupScore;
-  let deliveryScore;
-  let complianceScore;
-  let productivityScore;
-  let totalScore;
+  let pickupScore="NA";
+  let deliveryScore="NA";
+  let complianceScore="NA";
+  let productivityScore="NA";
+  let totalScore="Run not active";
 
   props.DataTwoA?.map((temp) => {
     if(item["Run #"]==temp["Run #"]){
@@ -36,12 +37,31 @@ function Chullora(props) {
       "Compliance Score": complianceScore,
       "Productivity Score": productivityScore,
       "Total Score (%)": totalScore,
-      "Bottom 5?":0,
-      "OSH cost grouping" : "Chullora",
     };
   });
 
-  json.map((d) => {
+  // Sort JSON based on "Total Score (%)"
+  json.sort((a, b) => {
+    const scoreA = parseFloat(a["Total Score (%)"]);
+    const scoreB = parseFloat(b["Total Score (%)"]);
+    return scoreB - scoreA; // Sort in descending order
+  });
+
+  const newData = json.map((item) => {
+    if(item["Total Score (%)"]!="Run not active"){
+      bottom++;
+    }
+    else{
+      bottom = ""
+    }
+    return{
+      ...item,
+    "Bottom 5?":bottom,
+    "OSH cost grouping" : "Chullora",
+    }
+  });
+
+  newData.map((d) => {
     rowsArray.push(Object.keys(d));
     valuesArray.push(Object.values(d));
   });

@@ -159,7 +159,7 @@ function TableTwoA(props){
 
       return {
         ...item,
-        "Pickup Score": (pickupScore=="NA") ? pickupScore : Math.round(pickupScore) + "%",
+        "Pickup Score": (pickupScore=="NA") ? pickupScore : Math.round(parseFloat(pickupScore)) + "%",
         "Delivery Score" : deliveryScore,
         "Compliance Score" : (complianceScore=="NA") ? complianceScore : Math.round(complianceScore) + "%",
         "Sorted to Cage Score" : (sortedCageScore) ? sortedCageScore : "No interstate pickups",
