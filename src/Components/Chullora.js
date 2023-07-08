@@ -1,6 +1,7 @@
 import React from "react";
 import { useState, useEffect } from "react";
 import { ChulloraRun } from "../data/ChulloraRun";
+import Detailed from "./Detailed";
 
 function Chullora(props) {
   const [tableRows, setTableRows] = useState([]);
@@ -74,6 +75,7 @@ function Chullora(props) {
 }, []);
 
   return (
+    <div className="w-full">
     <table class="table-auto border-x border-b w-full text-left text-gray-800">
       <thead className="">
         <tr>
@@ -105,6 +107,59 @@ function Chullora(props) {
         })}
       </tbody>
     </table>
+    <div className="w-full flex flex-wrap justify-between">
+    <Detailed runNumber={"055"} DataTwoA={props.DataTwoA} DataTwoFour={props.DataTwoFour}/>
+    <Detailed runNumber={"055"}/>
+    <Detailed runNumber={"055"}/>
+    <Detailed runNumber={"055"}/>
+    </div>
+    <div className="w-full flex flex-wrap justify-between">
+    <Detailed runNumber={"055"}/>
+    <Detailed runNumber={"055"}/>
+    <Detailed runNumber={"055"}/>
+    <Detailed runNumber={"055"}/>
+    </div>
+    <div className="w-full flex flex-wrap justify-between">
+    <Detailed runNumber={"055"}/>
+    <Detailed runNumber={"055"}/>
+    <Detailed runNumber={"055"}/>
+    <Detailed runNumber={"055"}/>
+    </div>
+    <div className="w-full flex flex-wrap justify-between">
+    <Detailed runNumber={"055"}/>
+    <Detailed runNumber={"055"}/>
+    <Detailed runNumber={"055"}/>
+    <Detailed runNumber={"055"}/>
+    </div>
+    <div className="w-full flex flex-wrap justify-between">
+    <Detailed runNumber={"055"}/>
+    <Detailed runNumber={"055"}/>
+    <Detailed runNumber={"055"}/>
+    <Detailed runNumber={"055"}/>
+    </div>
+    <div className="w-full flex flex-wrap justify-between">
+    <Detailed runNumber={"055"}/>
+    <Detailed runNumber={"055"}/>
+    <Detailed runNumber={"055"}/>
+    <Detailed runNumber={"055"}/>
+    </div>
+    <div className="w-full flex flex-wrap justify-between">
+    <Detailed runNumber={"055"}/>
+    <Detailed runNumber={"055"}/>
+    <Detailed runNumber={"055"}/>
+    <Detailed runNumber={"055"}/>
+    </div>
+    <div className="w-full flex flex-wrap justify-between">
+    <Detailed runNumber={"055"}/>
+    <Detailed runNumber={"055"}/>
+    <Detailed runNumber={"055"}/>
+    <Detailed runNumber={"055"}/>
+    </div>
+    <div className="w-full flex flex-wrap justify-center">
+    <Detailed runNumber={"055"}/>
+    <Detailed runNumber={"055"}/>
+    </div>
+    </div>
   );
 }
 

@@ -422,6 +422,7 @@ function Main() {
         )}
         {chullora && (
           <Chullora
+            DataTwoFour={DataTwoFour}
             DataTwoA={DataTwoA}
           />
         )}
