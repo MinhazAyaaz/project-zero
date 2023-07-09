@@ -15,7 +15,7 @@ function Detailed(props) {
   let onboardComp
   let overdueFreight
   let inOutComp
-  let interbranchComp
+  let interbranchComp = "0%"
   let outOfTimeComp
   let stopsPerHour
   let minimumHour
@@ -37,7 +37,7 @@ function Detailed(props) {
 
   props.DataTwoFour?.map((temp) => {
     if(props.runNumber==temp["Pickup CF"]){
-      
+      interbranchComp = temp["TotalSorted%"]
     }
   })
 
@@ -52,7 +52,7 @@ function Detailed(props) {
     {" ": "2.2 Overdue Freight:","Target":"-","Result": overdueFreight},
     {" ": "3. Compliances:","Target":"100%","Result": 0},
     {" ": "3.0 Check in and out compliance:","Target":"Pass","Result": inOutComp},
-    {" ": "3.1 Interbranch pickup RF-Scaning compliance:","Target":"100%","Result": 0},
+    {" ": "3.1 Interbranch pickup RF-Scaning compliance:","Target":"100%","Result": interbranchComp},
     {" ": "3.2 Out of time scan compliance:","Target":"Pass","Result": outOfTimeComp},
     {" ": "4. On road Productivity:","Target":"95%","Result": 0},
     {" ": "4.0 Productivity Stops Per Hour:","Target":"15","Result": stopsPerHour},

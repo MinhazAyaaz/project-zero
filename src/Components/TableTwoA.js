@@ -204,7 +204,9 @@ function TableTwoA(props){
       }
     });
 
+    props.setDataTwoAFull(newData)
     props.setDataTwoA(filteredData)
+
 
     filteredData.map((d) => {
       rowsArray.push(Object.keys(d));

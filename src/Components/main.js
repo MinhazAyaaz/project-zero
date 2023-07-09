@@ -22,6 +22,7 @@ function Main() {
   const [selectedDate, setSelectedDate] = useState(new Date());
 
   const [DataTwoA, setDataTwoA] = useState([]);
+  const [DataTwoAFull, setDataTwoAFull] = useState([]);
   const [DataTwoThreeOne, setDataTwoThreeOne] = useState([]);
   const [DataTwoThreeTwo, setDataTwoThreeTwo] = useState([]);
   const [DataTwoOne, setDataTwoOne] = useState([]);
@@ -384,6 +385,7 @@ function Main() {
             DataTwoFour={DataTwoFour}
             DataTwoThreeOne={DataTwoThreeOne}
             setDataTwoA={setDataTwoA}
+            setDataTwoAFull={setDataTwoAFull}
           />
         )}
         {TwoOne && (
@@ -424,6 +426,7 @@ function Main() {
           <Chullora
             DataTwoFour={DataTwoFour}
             DataTwoA={DataTwoA}
+            DataTwoAFull={DataTwoAFull}
           />
         )}
         {matraville && (

@@ -108,56 +108,56 @@ function Chullora(props) {
       </tbody>
     </table>
     <div className="w-full flex flex-wrap justify-between">
-    <Detailed runNumber={"055"} DataTwoA={props.DataTwoA} DataTwoFour={props.DataTwoFour}/>
-    <Detailed runNumber={"055"}/>
-    <Detailed runNumber={"055"}/>
-    <Detailed runNumber={"055"}/>
+    <Detailed runNumber={"055"} DataTwoA={props.DataTwoAFull} DataTwoFour={props.DataTwoFour}/>
+    <Detailed runNumber={"358"} DataTwoA={props.DataTwoAFull} DataTwoFour={props.DataTwoFour}/>
+    <Detailed runNumber={"257"} DataTwoA={props.DataTwoAFull} DataTwoFour={props.DataTwoFour}/>
+    <Detailed runNumber={"155"} DataTwoA={props.DataTwoAFull} DataTwoFour={props.DataTwoFour}/>
     </div>
     <div className="w-full flex flex-wrap justify-between">
-    <Detailed runNumber={"055"}/>
-    <Detailed runNumber={"055"}/>
-    <Detailed runNumber={"055"}/>
-    <Detailed runNumber={"055"}/>
+    <Detailed runNumber={"160"} DataTwoA={props.DataTwoAFull} DataTwoFour={props.DataTwoFour}/>
+    <Detailed runNumber={"358"} DataTwoA={props.DataTwoAFull} DataTwoFour={props.DataTwoFour}/>
+    <Detailed runNumber={"059"} DataTwoA={props.DataTwoAFull} DataTwoFour={props.DataTwoFour}/>
+    <Detailed runNumber={"060"} DataTwoA={props.DataTwoAFull} DataTwoFour={props.DataTwoFour}/>
     </div>
     <div className="w-full flex flex-wrap justify-between">
-    <Detailed runNumber={"055"}/>
-    <Detailed runNumber={"055"}/>
-    <Detailed runNumber={"055"}/>
-    <Detailed runNumber={"055"}/>
+    <Detailed runNumber={"152"} DataTwoA={props.DataTwoAFull} DataTwoFour={props.DataTwoFour}/>
+    <Detailed runNumber={"153"} DataTwoA={props.DataTwoAFull} DataTwoFour={props.DataTwoFour}/>
+    <Detailed runNumber={"155"} DataTwoA={props.DataTwoAFull} DataTwoFour={props.DataTwoFour}/>
+    <Detailed runNumber={"156"} DataTwoA={props.DataTwoAFull} DataTwoFour={props.DataTwoFour}/>
     </div>
     <div className="w-full flex flex-wrap justify-between">
-    <Detailed runNumber={"055"}/>
-    <Detailed runNumber={"055"}/>
-    <Detailed runNumber={"055"}/>
-    <Detailed runNumber={"055"}/>
+    <Detailed runNumber={"157"} DataTwoA={props.DataTwoAFull} DataTwoFour={props.DataTwoFour}/>
+    <Detailed runNumber={"158"} DataTwoA={props.DataTwoAFull} DataTwoFour={props.DataTwoFour}/>
+    <Detailed runNumber={"160"} DataTwoA={props.DataTwoAFull} DataTwoFour={props.DataTwoFour}/>
+    <Detailed runNumber={"255"} DataTwoA={props.DataTwoAFull} DataTwoFour={props.DataTwoFour}/>
     </div>
     <div className="w-full flex flex-wrap justify-between">
-    <Detailed runNumber={"055"}/>
-    <Detailed runNumber={"055"}/>
-    <Detailed runNumber={"055"}/>
-    <Detailed runNumber={"055"}/>
+    <Detailed runNumber={"256"} DataTwoA={props.DataTwoAFull} DataTwoFour={props.DataTwoFour}/>
+    <Detailed runNumber={"257"} DataTwoA={props.DataTwoAFull} DataTwoFour={props.DataTwoFour}/>
+    <Detailed runNumber={"258"} DataTwoA={props.DataTwoAFull} DataTwoFour={props.DataTwoFour}/>
+    <Detailed runNumber={"260"} DataTwoA={props.DataTwoAFull} DataTwoFour={props.DataTwoFour}/>
     </div>
     <div className="w-full flex flex-wrap justify-between">
-    <Detailed runNumber={"055"}/>
-    <Detailed runNumber={"055"}/>
-    <Detailed runNumber={"055"}/>
-    <Detailed runNumber={"055"}/>
+    <Detailed runNumber={"352"} DataTwoA={props.DataTwoAFull} DataTwoFour={props.DataTwoFour}/>
+    <Detailed runNumber={"358"} DataTwoA={props.DataTwoAFull} DataTwoFour={props.DataTwoFour}/>
+    <Detailed runNumber={"359"} DataTwoA={props.DataTwoAFull} DataTwoFour={props.DataTwoFour}/>
+    <Detailed runNumber={"360"} DataTwoA={props.DataTwoAFull} DataTwoFour={props.DataTwoFour}/>
     </div>
     <div className="w-full flex flex-wrap justify-between">
-    <Detailed runNumber={"055"}/>
-    <Detailed runNumber={"055"}/>
-    <Detailed runNumber={"055"}/>
-    <Detailed runNumber={"055"}/>
+    <Detailed runNumber={"452"} DataTwoA={props.DataTwoAFull} DataTwoFour={props.DataTwoFour}/>
+    <Detailed runNumber={"458"} DataTwoA={props.DataTwoAFull} DataTwoFour={props.DataTwoFour}/>
+    <Detailed runNumber={"460"} DataTwoA={props.DataTwoAFull} DataTwoFour={props.DataTwoFour}/>
+    <Detailed runNumber={"558"} DataTwoA={props.DataTwoAFull} DataTwoFour={props.DataTwoFour}/>
     </div>
     <div className="w-full flex flex-wrap justify-between">
-    <Detailed runNumber={"055"}/>
-    <Detailed runNumber={"055"}/>
-    <Detailed runNumber={"055"}/>
-    <Detailed runNumber={"055"}/>
+    <Detailed runNumber={"559"} DataTwoA={props.DataTwoAFull} DataTwoFour={props.DataTwoFour}/>
+    <Detailed runNumber={"560"} DataTwoA={props.DataTwoAFull} DataTwoFour={props.DataTwoFour}/>
+    <Detailed runNumber={"658"} DataTwoA={props.DataTwoAFull} DataTwoFour={props.DataTwoFour}/>
+    <Detailed runNumber={"660"} DataTwoA={props.DataTwoAFull} DataTwoFour={props.DataTwoFour}/>
     </div>
     <div className="w-full flex flex-wrap justify-center">
-    <Detailed runNumber={"055"}/>
-    <Detailed runNumber={"055"}/>
+    <Detailed runNumber={"758"} DataTwoA={props.DataTwoAFull} DataTwoFour={props.DataTwoFour}/>
+    <Detailed runNumber={"760"} DataTwoA={props.DataTwoAFull} DataTwoFour={props.DataTwoFour}/>
     </div>
     </div>
   );
