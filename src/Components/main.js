@@ -16,7 +16,7 @@ import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import dayjs from "dayjs";
 import Matraville from "./Matraville";
 import Wetherill from "./Wetherill";
-
+import ExcludedModal from "./ExcludedModal";
 
 function Main() {
   const [selectedDate, setSelectedDate] = useState(new Date());
@@ -51,9 +51,9 @@ function Main() {
   const [matraville, setMatraville] = useState(false);
   const [wetherill, setWetherill] = useState(false);
 
-  useEffect(() => {
-    console.log(selectedDate);
-  }, [selectedDate]);
+  const [modalButton, setModalButton] = useState(false);
+
+  useEffect(() => {}, [selectedDate]);
 
   const handleDateChange = (newValue) => {
     const selectedDateAsDate = newValue.toDate(); // create a new Date object from the dayjs value
@@ -82,6 +82,12 @@ function Main() {
 
   return (
     <>
+    <ExcludedModal trigger={modalButton} setTrigger={setModalButton}/>
+      <div className="absolute mr-[8%] mt-[3%] right-10">
+        <Button variant="outlined" color="error" onClick={() => setModalButton(true)} className="w-[100%]">
+          Excluded Runs for 2.3.1
+        </Button>
+      </div>
       <div className="absolute ml-[8%] mt-[3%]">
         <LocalizationProvider dateAdapter={AdapterDayjs}>
           <DatePicker
@@ -431,16 +437,16 @@ function Main() {
         )}
         {matraville && (
           <Matraville
-          DataTwoFour={DataTwoFour}
-          DataTwoA={DataTwoA}
-          DataTwoAFull={DataTwoAFull}
+            DataTwoFour={DataTwoFour}
+            DataTwoA={DataTwoA}
+            DataTwoAFull={DataTwoAFull}
           />
         )}
         {wetherill && (
           <Wetherill
-          DataTwoFour={DataTwoFour}
-          DataTwoA={DataTwoA}
-          DataTwoAFull={DataTwoAFull}
+            DataTwoFour={DataTwoFour}
+            DataTwoA={DataTwoA}
+            DataTwoAFull={DataTwoAFull}
           />
         )}
       </div>
