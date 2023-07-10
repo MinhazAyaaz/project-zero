@@ -431,12 +431,16 @@ function Main() {
         )}
         {matraville && (
           <Matraville
-            DataTwoA={DataTwoA}
+          DataTwoFour={DataTwoFour}
+          DataTwoA={DataTwoA}
+          DataTwoAFull={DataTwoAFull}
           />
         )}
         {wetherill && (
           <Wetherill
-            DataTwoA={DataTwoA}
+          DataTwoFour={DataTwoFour}
+          DataTwoA={DataTwoA}
+          DataTwoAFull={DataTwoAFull}
           />
         )}
       </div>

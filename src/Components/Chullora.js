@@ -6,7 +6,7 @@ import Detailed from "./Detailed";
 function Chullora(props) {
   const [tableRows, setTableRows] = useState([]);
   const [tableValues, setTableValues] = useState([]);
-  let bottom = 0;
+  let top = 0;
 
   useEffect(() => {
 
@@ -50,14 +50,14 @@ function Chullora(props) {
 
   const newData = json.map((item) => {
     if(item["Total Score (%)"]!="Run not active"){
-      bottom++;
+      top++;
     }
     else{
-      bottom = ""
+      top = ""
     }
     return{
       ...item,
-    "Bottom 5?":bottom,
+    "Top 5?":top,
     "OSH cost grouping" : "Chullora",
     }
   });

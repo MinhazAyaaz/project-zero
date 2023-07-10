@@ -1,11 +1,12 @@
 import React from "react";
 import { useState, useEffect } from "react";
 import { MatravilleRun } from "../data/MatravilleRun";
+import Detailed from "./Detailed";
 
 function Matraville(props) {
   const [tableRows, setTableRows] = useState([]);
   const [tableValues, setTableValues] = useState([]);
-  let bottom = 0;
+  let top = 0;
 
   useEffect(() => {
 
@@ -49,14 +50,14 @@ function Matraville(props) {
 
   const newData = json.map((item) => {
     if(item["Total Score (%)"]!="Run not active"){
-      bottom++;
+      top++;
     }
     else{
-      bottom = ""
+      top = ""
     }
     return{
       ...item,
-      "Bottom 5?":bottom,
+      "Top 5?":top,
       "OSH cost grouping" : "Matraville",
     }
   });
@@ -74,6 +75,7 @@ function Matraville(props) {
 }, []);
 
   return (
+    <div className="w-full">
     <table class="table-auto border-x border-b w-full text-left text-gray-800">
       <thead className="">
         <tr>
@@ -105,6 +107,17 @@ function Matraville(props) {
         })}
       </tbody>
     </table>
+    <div className="w-full flex flex-wrap justify-between">
+    <Detailed runNumber={"244"} DataTwoA={props.DataTwoAFull} DataTwoFour={props.DataTwoFour}/>
+    <Detailed runNumber={"243"} DataTwoA={props.DataTwoAFull} DataTwoFour={props.DataTwoFour}/>
+    <Detailed runNumber={"044"} DataTwoA={props.DataTwoAFull} DataTwoFour={props.DataTwoFour}/>
+    <Detailed runNumber={"125"} DataTwoA={props.DataTwoAFull} DataTwoFour={props.DataTwoFour}/>
+    </div>
+    <div className="w-full flex flex-wrap justify-center">
+    <Detailed runNumber={"241"} DataTwoA={props.DataTwoAFull} DataTwoFour={props.DataTwoFour}/>
+    <Detailed runNumber={"052"} DataTwoA={props.DataTwoAFull} DataTwoFour={props.DataTwoFour}/>
+    </div>
+    </div>
   );
 }
 
