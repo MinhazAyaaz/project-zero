@@ -7,36 +7,15 @@ import { TwoA } from "../data/TwoA";
 function TableTwoThreeOne(props){
   const [tableRows, setTableRows] = useState([]);
   const [tableValues, setTableValues] = useState([]);
-  let exclude = [];
+  let exclude = props.exclude;
 
   //Using useEffect hook to make sure page doesn't render infinite times
   useEffect(() => {
     const rowsArray = [];
     const valuesArray = [];
 
-      //Adding all the excluded run values by storing them in an array
-      exclude.push("237".padStart(3, '0'))
-      exclude.push("A01".padStart(3, '0'))
-      exclude.push("A02".padStart(3, '0'))
-      exclude.push("A03".padStart(3, '0'))
-      exclude.push("A04".padStart(3, '0'))
-      exclude.push("A05".padStart(3, '0'))
-      exclude.push("255".padStart(3, '0'))
-      exclude.push("414".padStart(3, '0'))
-      exclude.push("339".padStart(3, '0'))
-      exclude.push("439".padStart(3, '0'))
-      exclude.push("34".padStart(3, '0'))
-      exclude.push("734".padStart(3, '0'))
-      exclude.push("633".padStart(3, '0'))
-      exclude.push("132".padStart(3, '0'))
-      exclude.push("232".padStart(3, '0'))
-      exclude.push("244".padStart(3, '0'))
-      exclude.push("124".padStart(3, '0'))
-      exclude.push("413".padStart(3, '0'))
-
     //Storing data imported from 2.3.1 and 2.A
     const json = TwoThreeOneData['TwoThreeOne'];
-    const TwoAData = TwoA['TwoA']
 
     const newData = json.map((item) => {
       //Defining all the variables which are needed to populate the tables
@@ -101,6 +80,10 @@ function TableTwoThreeOne(props){
               
             }
         });
+      }
+      else if(PickupTotal === undefined  && freight === undefined){
+        checkInPM = "No Pm Check In"
+        checkOutPM = "No PM Check Out"
       }
       else{
         checkInPM = "No Check in required"
@@ -181,7 +164,6 @@ function TableTwoThreeOne(props){
       };
     })
 
-
     props.setDataTwoThreeOne(newData)
 
     newData.map((d) => {
@@ -189,14 +171,9 @@ function TableTwoThreeOne(props){
       valuesArray.push(Object.values(d));
     });
 
-
-
     setTableRows(rowsArray[0]);
     setTableValues(valuesArray);
-  },[])
-
-
-  
+  },[props.exclude])
 
 return(
     <table class="table-auto border-x border-b w-full text-left text-gray-800">

@@ -4,7 +4,7 @@ import DeleteIcon from "@mui/icons-material/DeleteOutline";
 
 function ExcludedModal(props) {
   const [textField, setTextField] = useState("");
-  const [elements, setElements] = useState(["237","A01","A02","A03","A04","A05","255","414","339","439","34","734","633","132","232","244","124","413"]);
+  const [elements, setElements] = useState(["237","A01","A02","A03","A04","A05","255","414","339","439","034","734","633","132","232","244","124","413"]);
 
   useEffect(() => {
     console.log(elements); // Logs the updated collection of elements
@@ -27,6 +27,7 @@ function ExcludedModal(props) {
 
   function closeModal(){
     props.setTrigger(false)
+    props.setExclude(elements)
   }
 
   return props.trigger ? (

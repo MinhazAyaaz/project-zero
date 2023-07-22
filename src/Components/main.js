@@ -52,6 +52,7 @@ function Main() {
   const [wetherill, setWetherill] = useState(false);
 
   const [modalButton, setModalButton] = useState(false);
+  const [exclude,setExclude] = useState(["237","A01","A02","A03","A04","A05","255","414","339","439","034","734","633","132","232","244","124","413"]);
 
   useEffect(() => {}, [selectedDate]);
 
@@ -82,7 +83,7 @@ function Main() {
 
   return (
     <>
-    <ExcludedModal trigger={modalButton} setTrigger={setModalButton}/>
+    <ExcludedModal trigger={modalButton} setTrigger={setModalButton} setExclude={setExclude}/>
       <div className="absolute mr-[8%] mt-[3%] right-10">
         <Button variant="outlined" color="error" onClick={() => setModalButton(true)} className="w-[100%]">
           Excluded Runs for 2.3.1
@@ -413,6 +414,7 @@ function Main() {
             DataTwoThreeTwo={DataTwoThreeTwo}
             DataTwoFour={DataTwoFour}
             setDataTwoThreeOne={setDataTwoThreeOne}
+            exclude={exclude}
           />
         )}
         {TwoThreeTwo && (
