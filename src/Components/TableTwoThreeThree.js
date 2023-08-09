@@ -3,7 +3,7 @@ import {useState,useEffect} from 'react'
 import * as XLSX from "xlsx";
 import Papa from 'papaparse';
 
-export default function TableTwoThreeTwo(props) {
+function TableTwoThreeThree(props){
 
   const [tableRows,setTableRows] = useState([])
   const [tableValues,setTableValues] = useState([])
@@ -64,10 +64,33 @@ export default function TableTwoThreeTwo(props) {
         json = results.data;
       }
 
+      const extractedData = json.map((row) => {
+        return {
+          CourierNo: row["CourierNo"],
+          ScanDate: row["ScanDate"] ? scanDateFormatter(row["ScanDate"]) : null,
+          Description: row["Description"],
+          Latitude: row["Latitude"],
+          Longitude: row["Longitude"],
+        };
+      });
 
-      props.setDataTwoThreeTwo(json)
+
+      const newData = extractedData.map((item) => ({
+        ...item,
+        "CF AM In": (item.ScanDate && dateChecker(item.ScanDate)=="AM" && item.Description=="Check In") ? item.CourierNo : "",
+        "Check in AM": (item.ScanDate && dateChecker(item.ScanDate)=="AM" && item.Description=="Check In") ? item.ScanDate : "",
+        "CF AM OUT": (item.ScanDate && dateChecker(item.ScanDate)=="AM" && item.Description=="Check Out") ? item.CourierNo : "",
+        "Check out AM": (item.ScanDate && dateChecker(item.ScanDate)=="AM" && item.Description=="Check Out") ? item.ScanDate : "",
+        "CF PM IN" : (item.ScanDate && dateChecker(item.ScanDate)=="PM" && item.Description=="Check In") ? item.CourierNo : "",
+        "Check in PM": (item.ScanDate && dateChecker(item.ScanDate)=="PM" && item.Description=="Check In") ? item.ScanDate : "",
+        "CF PM OUT": (item.ScanDate && dateChecker(item.ScanDate)=="PM" && item.Description=="Check Out") ? item.CourierNo : "",
+        "Check out PM": (item.ScanDate && dateChecker(item.ScanDate)=="PM" && item.Description=="Check Out") ? item.ScanDate : "",
+      }));
+
+      props.setDataTwoThreeThree(newData)
       
-      json.map((d) => {
+
+      newData.map((d) => {
         rowsArray.push(Object.keys(d));
         valuesArray.push(Object.values(d));
       });
@@ -80,7 +103,7 @@ export default function TableTwoThreeTwo(props) {
     };
 
     useEffect(() => {
-      const file = props.uploadTwoThreeTwo.target.files[0];
+      const file = props.uploadTwoThreeThree.target.files[0];
       const fileName = file.name; // get the file name from the File object
       const reader = new FileReader();
       reader.onload = (event) => {
@@ -88,7 +111,7 @@ export default function TableTwoThreeTwo(props) {
         processData(data,fileName);
       };
       reader.readAsBinaryString(file);
-    }, [props.uploadTwoThreeTwo,props.selectedDate]);
+    }, [props.uploadTwoThreeThree,props.selectedDate]);
 
 
 
@@ -129,4 +152,7 @@ return(
         </table>
 )
 
+
 }
+
+export default TableTwoThreeThree

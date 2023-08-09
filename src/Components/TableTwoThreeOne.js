@@ -46,7 +46,7 @@ function TableTwoThreeOne(props){
         }
       });
 
-      props?.DataTwoThreeTwo?.map((temp2) => {
+      props?.DataTwoThreeThree?.map((temp2) => {
         if(item["CF"]==temp2["CF AM In"]){
           checkInAM = temp2["Check in AM"]
         }
@@ -66,7 +66,7 @@ function TableTwoThreeOne(props){
         checkOutPM = "No Check out required"
       }
       else if(PickupTotal > 0 || freight > 0){
-        props?.DataTwoThreeTwo?.map((temp2) => {
+        props?.DataTwoThreeThree?.map((temp2) => {
             if(item["CF run converted"]==temp2["CF PM IN"]){
               checkInPM = temp2["Check in PM"]
           }

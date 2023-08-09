@@ -6,7 +6,7 @@ import TableTwoA from "./TableTwoA";
 import TableTwoOne from "./TableTwoOne";
 import TableTwoTwo from "./TableTwoTwo";
 import TableTwoThreeOne from "./TableTwoThreeOne";
-import TableTwoThreeTwo from "./TableTwoThreeTwo";
+import TableTwoThreeThree from "./TableTwoThreeThree";
 import TableTwoFour from "./TableTwoFour";
 import Chullora from "./Chullora";
 import Logo from "../data/logo.png";
@@ -17,6 +17,7 @@ import dayjs from "dayjs";
 import Matraville from "./Matraville";
 import Wetherill from "./Wetherill";
 import ExcludedModal from "./ExcludedModal";
+import TableTwoThreeTwo from "./TableTwoThreeTwo";
 
 function Main() {
   const [selectedDate, setSelectedDate] = useState(new Date());
@@ -25,6 +26,7 @@ function Main() {
   const [DataTwoAFull, setDataTwoAFull] = useState([]);
   const [DataTwoThreeOne, setDataTwoThreeOne] = useState([]);
   const [DataTwoThreeTwo, setDataTwoThreeTwo] = useState([]);
+  const [DataTwoThreeThree, setDataTwoThreeThree] = useState([]);
   const [DataTwoOne, setDataTwoOne] = useState([]);
   const [DataTwoTwo, setDataTwoTwo] = useState([]);
   const [DataTwoFour, setDataTwoFour] = useState([]);
@@ -33,11 +35,13 @@ function Main() {
   const [disabledTwoOne, setDisabledTwoOne] = useState(true);
   const [disabledTwoTwo, setDisabledTwoTwo] = useState(true);
   const [disabledTwoThreeTwo, setDisabledTwoThreeTwo] = useState(true);
+  const [disabledTwoThreeThree, setDisabledTwoThreeThree] = useState(true);
   const [disabledTwoFour, setDisabledTwoFour] = useState(true);
 
   const [uploadTwoOne, setUploadTwoOne] = useState([]);
   const [uploadTwoTwo, setUploadTwoTwo] = useState([]);
   const [uploadTwoThreeTwo, setUploadTwoThreeTwo] = useState([]);
+  const [uploadTwoThreeThree, setUploadTwoThreeThree] = useState([]);
   const [uploadTwoFour, setUploadTwoFour] = useState([]);
 
   const [One, setOne] = useState(false);
@@ -46,6 +50,7 @@ function Main() {
   const [TwoTwo, setTwoTwo] = useState(false);
   const [TwoThreeOne, setTwoThreeOne] = useState(false);
   const [TwoThreeTwo, setTwoThreeTwo] = useState(false);
+  const [TwoThreeThree, setTwoThreeThree] = useState(false);
   const [TwoFour, setTwoFour] = useState(false);
   const [chullora, setChullora] = useState(false);
   const [matraville, setMatraville] = useState(false);
@@ -61,22 +66,27 @@ function Main() {
     setSelectedDate(selectedDateAsDate);
   };
 
-  const changeHandler6 = (event) => {
+  const twoFourHandler = (event) => {
     setDisabledTwoFour(false);
     setUploadTwoFour(event);
   };
 
-  const changeHandler5 = (event) => {
+  const twoThreeTwoHandler = (event) => {
     setDisabledTwoThreeTwo(false);
     setUploadTwoThreeTwo(event);
   };
 
-  const changeHandler4 = (event) => {
+  const twoThreeThreeHandler = (event) => {
+    setDisabledTwoThreeThree(false);
+    setUploadTwoThreeThree(event);
+  };
+
+  const twoOneHandler = (event) => {
     setDisabledTwoOne(false);
     setUploadTwoOne(event);
   };
 
-  const changeHandler3 = (event) => {
+  const twoTwoHandler = (event) => {
     setDisabledTwoTwo(false);
     setUploadTwoTwo(event);
   };
@@ -108,9 +118,9 @@ function Main() {
           <input
             type="file"
             name="file"
-            onChange={changeHandler4}
+            onChange={twoOneHandler}
             accept=".xlsm,.csv,.xlsx"
-            class="mt-[5%] relative m-0 block w-full min-w-0 flex-auto cursor-pointer rounded border border-solid border-neutral-300 bg-white bg-clip-padding px-3 py-1.5 text-base font-normal text-neutral-700 outline-none transition duration-300 ease-in-out file:-mx-3 file:-my-1.5 file:cursor-pointer file:overflow-hidden file:rounded-none file:border-0 file:border-solid file:border-inherit file:bg-neutral-100 file:px-3 file:py-1.5 file:text-neutral-700 file:transition file:duration-150 file:ease-in-out file:[margin-inline-end:0.75rem] file:[border-inline-end-width:1px] hover:file:bg-neutral-200 focus:border-primary focus:bg-white focus:text-neutral-700 focus:shadow-[0_0_0_1px] focus:shadow-primary focus:outline-none dark:bg-transparent dark:text-neutral-400 dark:focus:bg-transparent"
+            class="mt-[5%] relative m-0 block w-[90%] min-w-0 flex-auto cursor-pointer rounded border border-solid border-neutral-300 bg-white bg-clip-padding px-3 py-1.5 text-base font-normal text-neutral-700 outline-none transition duration-300 ease-in-out file:-mx-3 file:-my-1.5 file:cursor-pointer file:overflow-hidden file:rounded-none file:border-0 file:border-solid file:border-inherit file:bg-neutral-100 file:px-3 file:py-1.5 file:text-neutral-700 file:transition file:duration-150 file:ease-in-out file:[margin-inline-end:0.75rem] file:[border-inline-end-width:1px] hover:file:bg-neutral-200 focus:border-primary focus:bg-white focus:text-neutral-700 focus:shadow-[0_0_0_1px] focus:shadow-primary focus:outline-none dark:bg-transparent dark:text-neutral-400 dark:focus:bg-transparent"
           />
           <label className="text-neutral-500 mt-[2%] ml-[2%]">
             Upload .csv or .xlxs files only
@@ -122,9 +132,9 @@ function Main() {
           <input
             type="file"
             name="file"
-            onChange={changeHandler3}
+            onChange={twoTwoHandler}
             accept=".xlsm,.csv,.xlsx"
-            class="mt-[5%] relative m-0 block w-full min-w-0 flex-auto cursor-pointer rounded border border-solid border-neutral-300 bg-white bg-clip-padding px-3 py-1.5 text-base font-normal text-neutral-700 outline-none transition duration-300 ease-in-out file:-mx-3 file:-my-1.5 file:cursor-pointer file:overflow-hidden file:rounded-none file:border-0 file:border-solid file:border-inherit file:bg-neutral-100 file:px-3 file:py-1.5 file:text-neutral-700 file:transition file:duration-150 file:ease-in-out file:[margin-inline-end:0.75rem] file:[border-inline-end-width:1px] hover:file:bg-neutral-200 focus:border-primary focus:bg-white focus:text-neutral-700 focus:shadow-[0_0_0_1px] focus:shadow-primary focus:outline-none dark:bg-transparent dark:text-neutral-400 dark:focus:bg-transparent"
+            class="mt-[5%] relative m-0 block w-[90%] min-w-0 flex-auto cursor-pointer rounded border border-solid border-neutral-300 bg-white bg-clip-padding px-3 py-1.5 text-base font-normal text-neutral-700 outline-none transition duration-300 ease-in-out file:-mx-3 file:-my-1.5 file:cursor-pointer file:overflow-hidden file:rounded-none file:border-0 file:border-solid file:border-inherit file:bg-neutral-100 file:px-3 file:py-1.5 file:text-neutral-700 file:transition file:duration-150 file:ease-in-out file:[margin-inline-end:0.75rem] file:[border-inline-end-width:1px] hover:file:bg-neutral-200 focus:border-primary focus:bg-white focus:text-neutral-700 focus:shadow-[0_0_0_1px] focus:shadow-primary focus:outline-none dark:bg-transparent dark:text-neutral-400 dark:focus:bg-transparent"
           />
           <label className="text-neutral-500 mt-[2%] ml-[2%]">
             Upload .csv or .xlxs files only
@@ -136,9 +146,23 @@ function Main() {
           <input
             type="file"
             name="file"
-            onChange={changeHandler5}
+            onChange={twoThreeTwoHandler}
             accept=".xlsm,.csv,.xlsx"
-            class="mt-[5%] relative m-0 block w-full min-w-0 flex-auto cursor-pointer rounded border border-solid border-neutral-300 bg-white bg-clip-padding px-3 py-1.5 text-base font-normal text-neutral-700 outline-none transition duration-300 ease-in-out file:-mx-3 file:-my-1.5 file:cursor-pointer file:overflow-hidden file:rounded-none file:border-0 file:border-solid file:border-inherit file:bg-neutral-100 file:px-3 file:py-1.5 file:text-neutral-700 file:transition file:duration-150 file:ease-in-out file:[margin-inline-end:0.75rem] file:[border-inline-end-width:1px] hover:file:bg-neutral-200 focus:border-primary focus:bg-white focus:text-neutral-700 focus:shadow-[0_0_0_1px] focus:shadow-primary focus:outline-none dark:bg-transparent dark:text-neutral-400 dark:focus:bg-transparent"
+            class="mt-[5%] relative m-0 block w-[90%] min-w-0 flex-auto cursor-pointer rounded border border-solid border-neutral-300 bg-white bg-clip-padding px-3 py-1.5 text-base font-normal text-neutral-700 outline-none transition duration-300 ease-in-out file:-mx-3 file:-my-1.5 file:cursor-pointer file:overflow-hidden file:rounded-none file:border-0 file:border-solid file:border-inherit file:bg-neutral-100 file:px-3 file:py-1.5 file:text-neutral-700 file:transition file:duration-150 file:ease-in-out file:[margin-inline-end:0.75rem] file:[border-inline-end-width:1px] hover:file:bg-neutral-200 focus:border-primary focus:bg-white focus:text-neutral-700 focus:shadow-[0_0_0_1px] focus:shadow-primary focus:outline-none dark:bg-transparent dark:text-neutral-400 dark:focus:bg-transparent"
+          />
+          <label className="text-neutral-500 mt-[2%] ml-[2%]">
+            Upload .csv or .xlxs files only
+          </label>
+        </div>
+        <div className="flex flex-col px-[3%]">
+          <h1 className="text-xl text-neutral-700">Upload 2.3.3 Here:</h1>
+          {/* File Uploader */}
+          <input
+            type="file"
+            name="file"
+            onChange={twoThreeThreeHandler}
+            accept=".xlsm,.csv,.xlsx"
+            class="mt-[5%] relative m-0 block w-[90%] min-w-0 flex-auto cursor-pointer rounded border border-solid border-neutral-300 bg-white bg-clip-padding px-3 py-1.5 text-base font-normal text-neutral-700 outline-none transition duration-300 ease-in-out file:-mx-3 file:-my-1.5 file:cursor-pointer file:overflow-hidden file:rounded-none file:border-0 file:border-solid file:border-inherit file:bg-neutral-100 file:px-3 file:py-1.5 file:text-neutral-700 file:transition file:duration-150 file:ease-in-out file:[margin-inline-end:0.75rem] file:[border-inline-end-width:1px] hover:file:bg-neutral-200 focus:border-primary focus:bg-white focus:text-neutral-700 focus:shadow-[0_0_0_1px] focus:shadow-primary focus:outline-none dark:bg-transparent dark:text-neutral-400 dark:focus:bg-transparent"
           />
           <label className="text-neutral-500 mt-[2%] ml-[2%]">
             Upload .csv or .xlxs files only
@@ -150,9 +174,9 @@ function Main() {
           <input
             type="file"
             name="file"
-            onChange={changeHandler6}
+            onChange={twoFourHandler}
             accept=".xlsm,.csv,.xlsx"
-            class="mt-[5%] relative m-0 block w-full min-w-0 flex-auto cursor-pointer rounded border border-solid border-neutral-300 bg-white bg-clip-padding px-3 py-1.5 text-base font-normal text-neutral-700 outline-none transition duration-300 ease-in-out file:-mx-3 file:-my-1.5 file:cursor-pointer file:overflow-hidden file:rounded-none file:border-0 file:border-solid file:border-inherit file:bg-neutral-100 file:px-3 file:py-1.5 file:text-neutral-700 file:transition file:duration-150 file:ease-in-out file:[margin-inline-end:0.75rem] file:[border-inline-end-width:1px] hover:file:bg-neutral-200 focus:border-primary focus:bg-white focus:text-neutral-700 focus:shadow-[0_0_0_1px] focus:shadow-primary focus:outline-none dark:bg-transparent dark:text-neutral-400 dark:focus:bg-transparent"
+            class="mt-[5%] relative m-0 block w-[90%] min-w-0 flex-auto cursor-pointer rounded border border-solid border-neutral-300 bg-white bg-clip-padding px-3 py-1.5 text-base font-normal text-neutral-700 outline-none transition duration-300 ease-in-out file:-mx-3 file:-my-1.5 file:cursor-pointer file:overflow-hidden file:rounded-none file:border-0 file:border-solid file:border-inherit file:bg-neutral-100 file:px-3 file:py-1.5 file:text-neutral-700 file:transition file:duration-150 file:ease-in-out file:[margin-inline-end:0.75rem] file:[border-inline-end-width:1px] hover:file:bg-neutral-200 focus:border-primary focus:bg-white focus:text-neutral-700 focus:shadow-[0_0_0_1px] focus:shadow-primary focus:outline-none dark:bg-transparent dark:text-neutral-400 dark:focus:bg-transparent"
           />
           <label className="text-neutral-500 mt-[2%] ml-[2%]">
             Upload .csv or .xlxs files only
@@ -166,8 +190,9 @@ function Main() {
         </h2>
       </div>
 
-      <div className="flex justify-between mt-[1%]">
+      <div className="flex justify-evenly mt-[1%]">
         <Button
+          size="small"
           color="error"
           disabled={
             DataTwoOne.length === 0 ||
@@ -182,6 +207,7 @@ function Main() {
             setTwoTwo(false);
             setTwoThreeOne(false);
             setTwoThreeTwo(false);
+            setTwoThreeThree(false);
             setTwoFour(false);
             setChullora(false);
             setMatraville(false);
@@ -199,6 +225,7 @@ function Main() {
           }
           variant={TwoA ? "contained" : "outlined"}
           color="error"
+          size="small"
           onClick={() => {
             setOne(false);
             setTwoA(true);
@@ -206,6 +233,7 @@ function Main() {
             setTwoTwo(false);
             setTwoThreeOne(false);
             setTwoThreeTwo(false);
+            setTwoThreeThree(false);
             setTwoFour(false);
             setChullora(false);
             setMatraville(false);
@@ -218,6 +246,7 @@ function Main() {
           disabled={disabledTwoOne}
           variant={TwoOne ? "contained" : "outlined"}
           color="error"
+          size="small"
           onClick={() => {
             setOne(false);
             setTwoA(false);
@@ -225,6 +254,7 @@ function Main() {
             setTwoTwo(false);
             setTwoThreeOne(false);
             setTwoThreeTwo(false);
+            setTwoThreeThree(false);
             setTwoFour(false);
             setChullora(false);
             setMatraville(false);
@@ -234,6 +264,7 @@ function Main() {
           2.1 Data Control Tower
         </Button>
         <Button
+        size="small"
           disabled={disabledTwoTwo}
           variant={TwoTwo ? "contained" : "outlined"}
           color="error"
@@ -244,6 +275,7 @@ function Main() {
             setTwoTwo(true);
             setTwoThreeOne(false);
             setTwoThreeTwo(false);
+            setTwoThreeThree(false);
             setTwoFour(false);
             setChullora(false);
             setMatraville(false);
@@ -255,11 +287,12 @@ function Main() {
         <Button
           disabled={
             DataTwoOne.length === 0 ||
-            DataTwoThreeTwo.length === 0 ||
+            DataTwoThreeThree.length === 0 ||
             DataTwoFour === 0
           }
           variant={TwoThreeOne ? "contained" : "outlined"}
           color="error"
+          size="small"
           onClick={() => {
             setOne(false);
             setTwoA(false);
@@ -267,6 +300,7 @@ function Main() {
             setTwoTwo(false);
             setTwoThreeOne(true);
             setTwoThreeTwo(false);
+            setTwoThreeThree(false);
             setTwoFour(false);
             setChullora(false);
             setMatraville(false);
@@ -279,6 +313,7 @@ function Main() {
           disabled={disabledTwoThreeTwo}
           variant={TwoThreeTwo ? "contained" : "outlined"}
           color="error"
+          size="small"
           onClick={() => {
             setOne(false);
             setTwoA(false);
@@ -286,18 +321,20 @@ function Main() {
             setTwoTwo(false);
             setTwoThreeOne(false);
             setTwoThreeTwo(true);
+            setTwoThreeThree(false);
             setTwoFour(false);
             setChullora(false);
             setMatraville(false);
             setWetherill(false);
           }}
         >
-          2.3.2 Check in-check Data
+          2.3.2 RFID Data
         </Button>
         <Button
-          disabled={disabledTwoFour}
-          variant={TwoFour ? "contained" : "outlined"}
+          disabled={disabledTwoThreeThree}
+          variant={TwoThreeThree ? "contained" : "outlined"}
           color="error"
+          size="small"
           onClick={() => {
             setOne(false);
             setTwoA(false);
@@ -305,6 +342,27 @@ function Main() {
             setTwoTwo(false);
             setTwoThreeOne(false);
             setTwoThreeTwo(false);
+            setTwoThreeThree(true);
+            setTwoFour(false);
+            setChullora(false);
+            setMatraville(false);
+            setWetherill(false);
+          }}
+        >
+          2.3.3 CK1CK2
+        </Button>
+        <Button
+          disabled={disabledTwoFour}
+          variant={TwoFour ? "contained" : "outlined"}
+          color="error"
+          size="small"
+          onClick={() => {
+            setOne(false);
+            setTwoA(false);
+            setTwoOne(false);
+            setTwoTwo(false);
+            setTwoThreeOne(false);
+            setTwoThreeThree(false);
             setTwoFour(true);
             setChullora(false);
             setMatraville(false);
@@ -318,6 +376,7 @@ function Main() {
         <div className="flex justify-between mt-[1%] w-[500px]">
           <Button
             color="error"
+            size="small"
             disabled={DataOne.length === 0}
             variant={chullora ? "contained" : "outlined"}
             onClick={() => {
@@ -326,7 +385,7 @@ function Main() {
               setTwoOne(false);
               setTwoTwo(false);
               setTwoThreeOne(false);
-              setTwoThreeTwo(false);
+              setTwoThreeThree(false);
               setTwoFour(false);
               setChullora(true);
               setMatraville(false);
@@ -337,6 +396,7 @@ function Main() {
           </Button>
           <Button
             color="error"
+            size="small"
             disabled={DataOne.length === 0}
             variant={matraville ? "contained" : "outlined"}
             onClick={() => {
@@ -345,7 +405,7 @@ function Main() {
               setTwoOne(false);
               setTwoTwo(false);
               setTwoThreeOne(false);
-              setTwoThreeTwo(false);
+              setTwoThreeThree(false);
               setTwoFour(false);
               setChullora(false);
               setMatraville(true);
@@ -356,6 +416,7 @@ function Main() {
           </Button>
           <Button
             color="error"
+            size="small"
             disabled={DataOne.length === 0}
             variant={wetherill ? "contained" : "outlined"}
             onClick={() => {
@@ -364,7 +425,7 @@ function Main() {
               setTwoOne(false);
               setTwoTwo(false);
               setTwoThreeOne(false);
-              setTwoThreeTwo(false);
+              setTwoThreeThree(false);
               setTwoFour(false);
               setChullora(false);
               setMatraville(false);
@@ -411,7 +472,7 @@ function Main() {
         {TwoThreeOne && (
           <TableTwoThreeOne
             DataTwoOne={DataTwoOne}
-            DataTwoThreeTwo={DataTwoThreeTwo}
+            DataTwoThreeTwo={DataTwoThreeThree}
             DataTwoFour={DataTwoFour}
             setDataTwoThreeOne={setDataTwoThreeOne}
             exclude={exclude}
@@ -420,7 +481,14 @@ function Main() {
         {TwoThreeTwo && (
           <TableTwoThreeTwo
             uploadTwoThreeTwo={uploadTwoThreeTwo}
-            setDataTwoThreeTwo={setDataTwoThreeTwo}
+            setDataTwoThreeThree={setDataTwoThreeTwo}
+            selectedDate={selectedDate}
+          />
+        )}
+        {TwoThreeThree && (
+          <TableTwoThreeThree
+            uploadTwoThreeThree={uploadTwoThreeThree}
+            setDataTwoThreeThree={setDataTwoThreeThree}
             selectedDate={selectedDate}
           />
         )}
