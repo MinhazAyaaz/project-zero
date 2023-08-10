@@ -17,23 +17,34 @@ export default function TableTwoThreeTwo(props) {
     };
 
     function scanDateFormatter(scanDate){
-
-      const [date, time] = scanDate.split(' ');
-      const [month,day, year] = date.split('/');
-      const [hours, minutes] = time.split(':');
-
-      const formattedDay = day.padStart(2, '0');
-      const formattedMonth = month.padStart(2, '0');
-
-      return formattedDay+"-"+formattedMonth+"-"+year+" "+hours+":"+minutes
-
+      const [date, time, period] = scanDate.split(' ');
+      const [day, month, year] = date.split('/');
+    
+      let [hours, minutes] = time.split(':');
+      hours = parseInt(hours, 10);
+    
+      if (period === 'PM' && hours !== 12) {
+        hours += 12;
+      } else if (period === 'AM' && hours === 12) {
+        hours = 0;
+      }
+    
+      return `${day}/${month}/${year} ${hours.toString().padStart(2, '0')}:${minutes}`;
     }
 
     function dateChecker(rawDate){
+      const [date, time, period] = rawDate.split(' ');
+      const [day, month, year] = date.split('/');
     
-      const [date, time] = rawDate.split(' ');
-      const [month,day, year] = date.split('-');
-      const [hours, minutes] = time.split(':');
+      let [hours, minutes] = time.split(':');
+      hours = parseInt(hours, 10);
+    
+      if (period === 'PM' && hours !== 12) {
+        hours += 12;
+      } else if (period === 'AM' && hours === 12) {
+        hours = 0;
+      }
+
       const dateTime = new Date(parseInt(year,10),month-1,day, hours, minutes);
     
       const now = props.selectedDate
@@ -60,14 +71,60 @@ export default function TableTwoThreeTwo(props) {
         json = XLSX.utils.sheet_to_json(sheet,{raw: false, dateNF: 'dd-mm-yy hh:mm' });
       }
       else if(getFileExtension(fileName) =="csv"){
-        const results = Papa.parse(data, { header: true });
+        const results = Papa.parse(data, { header: true,dynamicTyping: false });
         json = results.data;
       }
 
+      const updatedData = json.map((item, index) => {
 
-      props.setDataTwoThreeTwo(json)
+        const IsOut = index % 2 === 0 ? false : true;
+
+        let Run1 = "";
+        let Run2 = "";
+        let Run3 = "";
+        let Run4 = "";
+        let CheckInAM = "";
+        let CheckOutAM = "";
+        let CheckInPM = "";
+        let CheckOutPM = "";
+
+        if (item["Date Moved"] && !IsOut && dateChecker(item["Date Moved"]) === "AM") {
+          Run1 = item["Item Name"]=="Blank Tag" ? "123" : item["Item Name"];
+          CheckInAM = item["Date Moved"];
+        }
+        else if(item["Date Moved"] && IsOut && dateChecker(item["Date Moved"]) === "AM"){
+          Run2 = item["Item Name"]=="Blank Tag" ? "123" : item["Item Name"];
+          CheckOutAM = item["Date Moved"];
+        }
+        else if(item["Date Moved"] && !IsOut && dateChecker(item["Date Moved"]) === "PM"){
+          Run3 = item["Item Name"]=="Blank Tag" ? "123" : item["Item Name"];
+          CheckInPM = item["Date Moved"];
+        }
+        else if(item["Date Moved"] && IsOut && dateChecker(item["Date Moved"]) === "PM"){
+          Run4 = item["Item Name"]=="Blank Tag" ? "123" : item["Item Name"];
+          CheckOutPM = item["Date Moved"];
+        }
+        
+
+        return{
+        ...item,
+        "Date Moved" : item["Date Moved"] ? scanDateFormatter(item["Date Moved"]) : null,
+        "Cycle": "",
+        "Run #1": Run1,
+        "Check In AM": CheckInAM,
+        "Run #2": Run2,
+        "Check Out AM": CheckOutAM,
+        "Run #3": Run3,
+        "Check In PM": CheckInPM,
+        "Run #4": Run4,
+        "Check Out PM": CheckOutPM,
+        }
+      })
+
+
+      props.setDataTwoThreeTwo(updatedData)
       
-      json.map((d) => {
+      updatedData.map((d) => {
         rowsArray.push(Object.keys(d));
         valuesArray.push(Object.values(d));
       });

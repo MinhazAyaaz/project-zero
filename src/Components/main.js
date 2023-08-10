@@ -362,6 +362,7 @@ function Main() {
             setTwoOne(false);
             setTwoTwo(false);
             setTwoThreeOne(false);
+            setTwoThreeTwo(false);
             setTwoThreeThree(false);
             setTwoFour(true);
             setChullora(false);
@@ -385,6 +386,7 @@ function Main() {
               setTwoOne(false);
               setTwoTwo(false);
               setTwoThreeOne(false);
+              setTwoThreeTwo(false);
               setTwoThreeThree(false);
               setTwoFour(false);
               setChullora(true);
@@ -481,7 +483,7 @@ function Main() {
         {TwoThreeTwo && (
           <TableTwoThreeTwo
             uploadTwoThreeTwo={uploadTwoThreeTwo}
-            setDataTwoThreeThree={setDataTwoThreeTwo}
+            setDataTwoThreeTwo={setDataTwoThreeTwo}
             selectedDate={selectedDate}
           />
         )}
