@@ -105,7 +105,6 @@ export default function TableTwoThreeTwo(props) {
           CheckOutPM = item["Date Moved"];
         }
         
-
         return{
         ...item,
         "Date Moved" : item["Date Moved"] ? scanDateFormatter(item["Date Moved"]) : null,
