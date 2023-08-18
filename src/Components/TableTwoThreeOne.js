@@ -1,8 +1,6 @@
 import React from 'react'
 import {useState,useEffect} from 'react'
 import { TwoThreeOneData } from "../data/TwoThreeOne";
-import { TwoA } from "../data/TwoA";
-
 
 function TableTwoThreeOne(props){
   const [tableRows, setTableRows] = useState([]);
@@ -46,14 +44,23 @@ function TableTwoThreeOne(props){
         }
       });
 
-      props?.DataTwoThreeThree?.map((temp2) => {
-        if(item["CF"]==temp2["CF AM In"]){
-          checkInAM = temp2["Check in AM"]
+      props?.DataTwoThreeThree?.map((temp) => {
+        if(item["CF"]==temp["CF AM In"]){
+          checkInAM = temp["Check in AM"]
         }
-        if(item["CF"]==temp2["CF AM OUT"]){
-          checkOutAM = temp2["Check out AM"]
+        if(item["CF"]==temp["CF AM OUT"]){
+          checkOutAM = temp["Check out AM"]
         }
       });
+
+      props.DataTwoThreeTwo?.map((temp) => {
+        if(item["CF"]==temp["Run #1"]){
+          checkInAM = temp["Check In AM"]
+        }
+        if(item["CF"]==temp["Run #2"]){
+          checkOutAM = temp["Check Out AM"]
+        }
+      })
 
       props?.DataTwoFour?.map((temp) => {
         if(item["CF run converted"]==temp["Pickup CF"]){
@@ -62,32 +69,41 @@ function TableTwoThreeOne(props){
       })
 
       if(excludeCheck=="Yes"){
-        checkInPM = "No Check in required"
-        checkOutPM = "No Check out required"
+        checkInPM = "No Pm Check In"
+        checkOutPM = "No PM Check Out"
       }
       else if(PickupTotal > 0 || freight > 0){
-        props?.DataTwoThreeThree?.map((temp2) => {
-            if(item["CF run converted"]==temp2["CF PM IN"]){
-              checkInPM = temp2["Check in PM"]
+        props?.DataTwoThreeThree?.map((temp) => {
+            if(item["CF"]==temp["CF PM IN"]){
+              checkInPM = temp["Check in PM"]
           }
-            if(item["CF run converted"]==temp2["CF PM OUT"]){
-              if(checkInPM == "No Pm Check In"){
-                checkOutPM = "No PM Check Out"
-              }
-              else{
-                checkOutPM = temp2["Check out PM"]
-              }
-              
+            if(item["CF"]==temp["CF PM OUT"]){
+                checkOutPM = temp["Check out PM"]
             }
         });
+
+        props?.DataTwoThreeTwo?.map((temp) => {
+          if(item["CF"]==temp["Run #3"]){
+            checkInPM = temp["Check In PM"]
+        }
+          if(item["CF"]==temp["Run #4"]){
+            if(checkInPM == "No Pm Check In"){
+              checkOutPM = "No PM Check Out"
+            }
+            else{
+              checkOutPM = temp["Check Out PM"]
+            }
+            
+          }
+      });
       }
       else if(PickupTotal === undefined  && freight === undefined){
         checkInPM = "No Pm Check In"
         checkOutPM = "No PM Check Out"
       }
       else{
-        checkInPM = "No Check in required"
-        checkOutPM = "No Check out required"
+        checkInPM = "No Pm Check In"
+        checkOutPM = "No PM Check Out"
       }
 
       if(DeliveryTotal+freight+PickupTotal==0 && (TotalSorted==undefined || TotalSorted=="0%")){
@@ -104,17 +120,17 @@ function TableTwoThreeOne(props){
       else if(checkOutAM){
         firstCheckIn = checkOutAM
       }
-      else if(checkInPM && checkInPM !== "No Check in required" && checkInPM !== "No Pm Check In"){
+      else if(checkInPM && checkInPM !== "No Pm Check In"){
         firstCheckIn = checkInPM
       }
-      else if(checkOutPM && checkOutPM !== "No Check out required" && checkOutPM !== "No PM Check Out"){
+      else if(checkOutPM && checkOutPM !== "No PM Check Out"){
         firstCheckIn = checkOutPM
       }
 
-      if(checkOutPM && checkOutPM !== "No Check out required" && checkOutPM !== "No PM Check Out"){
+      if(checkOutPM && checkOutPM !== "No PM Check Out"){
         lastCheckOut = checkOutPM
       }
-      else if(checkInPM && checkInPM !== "No Check in required" && checkInPM !== "No Pm Check In"){
+      else if(checkInPM && checkInPM !== "No Pm Check In"){
         lastCheckOut = checkInPM
       }
       else if(checkOutAM){
@@ -129,10 +145,7 @@ function TableTwoThreeOne(props){
         lastCheckOut = "Check Out Missing"
       }
 
-      if(checkInPM=="No Check in required" && checkOutPM=="No Check out required"){
-        PMReturn = "No PM check in required"
-      }
-      else if(checkInPM!="No Pm Check In" || checkOutPM!="No PM Check Out"){
+      if(checkInPM!="No Pm Check In" || checkOutPM!="No PM Check Out"){
         PMReturn = "PM Return"
       }
       else{
@@ -140,10 +153,10 @@ function TableTwoThreeOne(props){
       }
 
       
-      if(checkInAM){totalCheck++}
+      if (checkInAM){totalCheck++}
       if (checkOutAM){totalCheck++}
-      if (checkInPM!= "No Pm Check In"){totalCheck++}
-      if (checkOutPM != "No PM Check Out"){totalCheck++}
+      if (checkInPM != "No Pm Check In" && checkInPM != "No Check in required"){totalCheck++}
+      if (checkOutPM != "No PM Check Out" && checkOutPM != "No Check out required"){totalCheck++}
 
 
 
