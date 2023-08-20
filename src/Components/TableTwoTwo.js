@@ -3,6 +3,7 @@ import { useState, useEffect } from "react";
 import * as XLSX from "xlsx";
 import Papa from "papaparse";
 import { OSHUsageData } from "../data/OSHUsage";
+import { BayData } from "../data/Bay";
 
 function TableTwoTwo(props) {
   const [tableRows, setTableRows] = useState([]);
@@ -94,6 +95,10 @@ function TableTwoTwo(props) {
     });
 
     const finalData = newFilteredData.map((item) => {
+
+      let FinalRun = "Run not found"
+      let BayItem
+
       function KPIStatus(data) {
         if (data["CourierMessageResultText"] == "Accepted") {
           return "Fail";
@@ -114,18 +119,24 @@ function TableTwoTwo(props) {
         }
       }
 
+      OSHUsageData.OSHUsage.map((temp) => {
+        if (item["PickupCourierNumber"] == temp["Run #"]) {
+          BayItem =  temp["Subdepot codes"];
+        }
+      })
+
+      BayData.Bay.map((temp) => {
+        if(item["PickupCourierNumber"] == temp["CF"]){
+          FinalRun = temp["CF"]
+        }
+      })
+
+
       return {
         ...item,
         "KPI Status": KPIStatus(item),
-        "Final Run":
-          item["PickupCourierNumber"] == ""
-            ? "Pickup CF detail missing"
-            : item["PickupCourierNumber"],
-        Bay: OSHUsageData.OSHUsage.map((temp) => {
-          if (item["PickupCourierNumber"] == temp["Run #"]) {
-            return temp["Subdepot codes"];
-          }
-        }),
+        "Final Run": FinalRun,
+        Bay: BayItem,
       };
     });
 
