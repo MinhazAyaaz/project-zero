@@ -106,13 +106,31 @@ function TableTwoThreeOne(props){
         checkOutPM = "No PM Check Out"
       }
 
-      if(DeliveryTotal+freight+PickupTotal==0 && (TotalSorted==undefined || TotalSorted=="0%")){
-        runActivity = "Inactive"
+      if (DeliveryTotal === undefined || DeliveryTotal === null || DeliveryTotal === ""){
+        DeliveryTotal = 0;
       }
-      else{
-        runActivity = "Active"
+      if(freight === undefined || freight === null || freight === ""){
+        freight = 0;
+      }
+      if(PickupTotal === undefined || PickupTotal === null || PickupTotal === ""){
+        PickupTotal = 0;
+      }
+      if(TotalSorted === undefined || TotalSorted === null || TotalSorted === "0%"){
+        TotalSorted = 0;
       }
 
+      console.log("Run",item["CF"])
+      console.log("DeliveryTotal",DeliveryTotal)
+      console.log("freight",freight)
+      console.log("PickupTotal",PickupTotal)
+      console.log("TotalSorted",TotalSorted)
+
+      if (parseInt(DeliveryTotal)+freight+PickupTotal+TotalSorted===0) {
+        runActivity = "Inactive";
+      } else {
+        runActivity = "Active";
+      }
+      
 
       if(checkInAM){
         firstCheckIn = checkInAM

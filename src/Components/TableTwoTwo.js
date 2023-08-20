@@ -5,7 +5,6 @@ import Papa from "papaparse";
 import { OSHUsageData } from "../data/OSHUsage";
 
 function TableTwoTwo(props) {
-  const [parsedData, setParsedData] = useState([]);
   const [tableRows, setTableRows] = useState([]);
   const [tableValues, setTableValues] = useState([]);
 
