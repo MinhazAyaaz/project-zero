@@ -136,7 +136,7 @@ function TableTwoTwo(props) {
         ...item,
         "KPI Status": KPIStatus(item),
         "Final Run": FinalRun,
-        Bay: BayItem,
+        "Bay": BayItem,
       };
     });
 
