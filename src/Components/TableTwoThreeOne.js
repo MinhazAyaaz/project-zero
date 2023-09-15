@@ -72,7 +72,7 @@ function TableTwoThreeOne(props){
         checkInPM = "No Pm Check In"
         checkOutPM = "No PM Check Out"
       }
-      else if(PickupTotal > 0 || freight > 0){
+      else{
         props?.DataTwoThreeThree?.map((temp) => {
             if(item["CF"]==temp["CF PM IN"]){
               checkInPM = temp["Check in PM"]
@@ -97,14 +97,6 @@ function TableTwoThreeOne(props){
           }
       });
       }
-      else if(PickupTotal === undefined  && freight === undefined){
-        checkInPM = "No Pm Check In"
-        checkOutPM = "No PM Check Out"
-      }
-      else{
-        checkInPM = "No Pm Check In"
-        checkOutPM = "No PM Check Out"
-      }
 
       if (DeliveryTotal === undefined || DeliveryTotal === null || DeliveryTotal === ""){
         DeliveryTotal = 0;
@@ -119,18 +111,11 @@ function TableTwoThreeOne(props){
         TotalSorted = 0;
       }
 
-      console.log("Run",item["CF"])
-      console.log("DeliveryTotal",DeliveryTotal)
-      console.log("freight",freight)
-      console.log("PickupTotal",PickupTotal)
-      console.log("TotalSorted",TotalSorted)
-
       if (parseInt(DeliveryTotal)+freight+PickupTotal+TotalSorted===0) {
         runActivity = "Inactive";
       } else {
         runActivity = "Active";
       }
-      
 
       if(checkInAM){
         firstCheckIn = checkInAM

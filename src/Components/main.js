@@ -462,6 +462,7 @@ function Main() {
           <TableTwoOne
             uploadTwoOne={uploadTwoOne}
             setDataTwoOne={setDataTwoOne}
+            DataTwoThreeOne={DataTwoThreeOne}
           />
         )}
         {TwoTwo && (

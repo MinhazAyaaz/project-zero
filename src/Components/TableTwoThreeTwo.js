@@ -2,11 +2,14 @@ import React from 'react'
 import {useState,useEffect} from 'react'
 import * as XLSX from "xlsx";
 import Papa from 'papaparse';
+import { Iso } from '@mui/icons-material';
 
 export default function TableTwoThreeTwo(props) {
 
   const [tableRows,setTableRows] = useState([])
   const [tableValues,setTableValues] = useState([])
+  let previousRun
+  let IsOut = false
 
     const getFileExtension = (fileName) => {
       const lastDotIndex = fileName.lastIndexOf(".");
@@ -77,7 +80,12 @@ export default function TableTwoThreeTwo(props) {
 
       const updatedData = json.map((item, index) => {
 
-        const IsOut = index % 2 === 0 ? false : true;
+        if(previousRun){
+          if(previousRun["Item Name"]!==item["Item Name"]){
+            IsOut=false
+          }
+        }
+        previousRun = item
 
         let Run1 = "";
         let Run2 = "";
@@ -89,21 +97,23 @@ export default function TableTwoThreeTwo(props) {
         let CheckOutPM = "";
 
         if (item["Date Moved"] && !IsOut && dateChecker(item["Date Moved"]) === "AM") {
-          Run1 = item["Item Name"]=="Blank Tag" ? "123" : item["Item Name"];
+          Run1 = item["Item Name"];
           CheckInAM = item["Date Moved"];
         }
         else if(item["Date Moved"] && IsOut && dateChecker(item["Date Moved"]) === "AM"){
-          Run2 = item["Item Name"]=="Blank Tag" ? "123" : item["Item Name"];
+          Run2 = item["Item Name"];
           CheckOutAM = item["Date Moved"];
         }
         else if(item["Date Moved"] && !IsOut && dateChecker(item["Date Moved"]) === "PM"){
-          Run3 = item["Item Name"]=="Blank Tag" ? "123" : item["Item Name"];
+          Run3 = item["Item Name"];
           CheckInPM = item["Date Moved"];
         }
         else if(item["Date Moved"] && IsOut && dateChecker(item["Date Moved"]) === "PM"){
-          Run4 = item["Item Name"]=="Blank Tag" ? "123" : item["Item Name"];
+          Run4 = item["Item Name"];
           CheckOutPM = item["Date Moved"];
         }
+
+        IsOut = !IsOut
         
         return{
         ...item,

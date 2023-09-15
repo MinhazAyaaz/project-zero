@@ -93,6 +93,24 @@ function TableTwoOne(props) {
     let newData = trimmedSheetData.map((item) => {
 
       let finalBay = ""
+      let firstCheckIn 
+      let lastCheckOut
+      let checkInAm
+      let checkOutAm
+      let checkInPm
+      let checkOutPm
+      let loadingtime
+
+      props?.DataTwoThreeOne?.map((temp) => {
+        if(item["CF"]==temp["CF run converted"]){
+          firstCheckIn = temp["First Check In"]
+          lastCheckOut = temp["Last Check Out"]
+          checkInAm = temp["Check In AM"]
+          checkOutAm = temp["Check Out AM"]
+          checkInPm = temp["Check In PM"]
+          checkOutPm = temp["Check Out PM"]
+        }
+      })
 
       const typicalPaymentTime = PaymentData.payment.reduce((acc, temp) => {
         if (item["Scanner"] === temp["Run"]) {
@@ -100,7 +118,6 @@ function TableTwoOne(props) {
         }
         return acc;
       }, undefined);
-
 
       const paymentTime = typicalPaymentTime || "Not OSH"; // Use the || operator to assign "Not OSH" if paymentTime is false
 
@@ -110,8 +127,25 @@ function TableTwoOne(props) {
         }
       })
 
+      if(checkInAm == "No AM Check In" || checkOutAm == "No AM Check Out"){
+        loadingtime = item["Onboard Total"] > 1 ? "Active" : "Inactive"
+      }
+      else{
+        const dateTime1 = new Date(checkInAm);
+        const dateTime2 = new Date(checkOutAm);
+        const timeDifference = Math.abs(dateTime2 - dateTime1);
+        loadingtime = Math.floor(timeDifference / (1000 * 60));
+      }
+
       return {
         ...item,
+        "First Check In": firstCheckIn,
+        "Last Check Out": lastCheckOut,
+        "Check In AM": checkInAm,
+        "Check Out Am": checkOutAm,
+        "Check In PM": checkInPm,
+        "Check Out PM": checkOutPm,
+        "Loading Time(min)": loadingtime,
         "Hours worked": isNaN(
           getHoursBetween(item["Start Time"], item["Finish Time"])
         )
