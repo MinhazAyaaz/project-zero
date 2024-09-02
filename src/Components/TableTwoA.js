@@ -1,12 +1,26 @@
 import React from 'react'
-import {useState,useEffect} from 'react'
+import {useState,useEffect,useRef} from 'react'
 import { TwoA } from "../data/TwoA";
+import {
+  Table,
+  TableHead,
+  TableBody,
+  TableRow,
+  TableCell,
+  Paper,
+  TablePagination,
+  TableContainer,
+} from "@mui/material";
+import "./styles.css";
 
 function TableTwoA(props){
   const [tableRows, setTableRows] = useState([]);
   const [tableValues, setTableValues] = useState([]);
   const [dataFetched, setDataFetched] = useState(false);
-  
+  const [page, setPage] = useState(0);
+  const [rowsPerPage, setRowsPerPage] = useState(10);
+  const [selectedRow, setSelectedRow] = useState(null);
+  const tableRef = useRef(null);
 
   useEffect(() => {
 
@@ -216,46 +230,88 @@ function TableTwoA(props){
     setTableRows(rowsArray[0]);
     setTableValues(valuesArray);
     setDataFetched(true);
+
+    // Add click event listener to Paper component
+    const handleOutsideClick = (event) => {
+      if (tableRef.current && !tableRef.current.contains(event.target)) {
+        setSelectedRow(null); // Clicked outside the table, deselect the row
+      }
+    };
+
+    document.addEventListener("click", handleOutsideClick);
+    return () => {
+      document.removeEventListener("click", handleOutsideClick);
+    };
   },[]);
 
+  const handleChangePage = (event, newPage) => {
+    setPage(newPage);
+  };
+
+  const handleChangeRowsPerPage = (event) => {
+    setRowsPerPage(parseInt(event.target.value, 10));
+    setPage(0);
+  };
+
+  const handleRowClick = (rowData) => {
+    if (selectedRow === rowData) {
+      setSelectedRow(null); // Deselect the row if it's already selected
+    } else {
+      setSelectedRow(rowData);
+    }
+  };
 
 return(
-  <div style={{ width: "100%", overflowX: "auto",overflow: "visible" }}>
-    <table class="table-auto border-x border-b w-full text-left text-gray-800" style={{ tableLayout: 'fixed', width: '200%' }}>
-          <thead className="">
-            <tr>
-              {tableRows.map((rows, index) => {
-                return (
-                  <th
-                    className="font-bold p-2 border-b border-l border-[#dc291e] text-left bg-[#dc291e] text-white"
-                    key={index}
+  <Paper className="w-full px-[30px]">
+      <TableContainer>
+      <Table>
+        <TableHead className="bg-[#d32f2f]">
+          <TableRow>
+            {tableRows.map((row, index) => (
+              <TableCell key={index} sx={{ color: "#ffffff", fontWeight: 600 }}>
+                {row}
+              </TableCell>
+            ))}
+          </TableRow>
+        </TableHead>
+        <TableBody ref={tableRef}>
+          {tableValues
+            .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+            .map((value, index) => (
+              <TableRow
+                selected={selectedRow === value}
+                key={index}
+                className={`hover:bg-red-200 ${
+                  index % 2 === 0 ? "odd:bg-gray-100" : ""
+                }`}
+                onClick={() => handleRowClick(value)}
+              >
+                {value.map((val, i) => (
+                  <TableCell
+                    key={i}
+                    sx={{
+                      color: selectedRow === value ? "#ffffff" : "",
+                      fontWeight: 400,
+                    }}
                   >
-                    {rows}
-                  </th>
-                );
-              })}
-            </tr>
-          </thead>
-          <tbody>
-            {tableValues.map((value, index) => {
-              return (
-                <tr className="odd:bg-gray-100 hover:!bg-red-200" key={index}>
-                  {value.map((val, i) => {
-                    return (
-                      <td
-                        className="p-2 border-b border-l text-left"
-                        key={i}
-                      >
-                        {val}
-                      </td>
-                    );
-                  })}
-                </tr>
-              );
-            })}
-          </tbody>
-        </table>
-        </div>
+                    {val}
+                  </TableCell>
+                ))}
+              </TableRow>
+            ))}
+        </TableBody>
+      </Table>
+      </TableContainer>
+      <TablePagination
+        rowsPerPageOptions={[10, 25, 50]}
+        component="div"
+        count={tableValues.length}
+        rowsPerPage={rowsPerPage}
+        page={page}
+        onPageChange={handleChangePage}
+        onRowsPerPageChange={handleChangeRowsPerPage}
+      />
+    </Paper>
 )
 
 
