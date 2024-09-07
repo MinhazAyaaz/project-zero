@@ -16,8 +16,3 @@ name = "javascript"
 [[analyzers]]
 name = "test-coverage"
 enabled = true
-
-  [analyzers.meta]
-  language = "javascript"
-  coverage_format = "cobertura"
-  coverage_path = "./coverage/cobertura-coverage.xml"
