@@ -1,5 +1,6 @@
 version = 1
 
+# JavaScript Analyzer
 [[analyzers]]
 name = "javascript"
 
@@ -10,3 +11,13 @@ name = "javascript"
     "nodejs",
     "vitest"
   ]
+
+# Test Coverage Analyzer
+[[analyzers]]
+name = "test-coverage"
+enabled = true
+
+  [analyzers.meta]
+  language = "javascript"
+  coverage_format = "cobertura"
+  coverage_path = "./coverage/cobertura-coverage.xml"
